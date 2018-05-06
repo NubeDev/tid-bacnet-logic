@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../../errors';
 
-import { TyperUtil, BACnetReaderUtil } from '../../utils';
+import { TyperUtil, BACnetReaderUtil, BACnetWriterUtil } from '../../utils';
 
 import { BACnetReader, BACnetWriter } from '../../io';
 
@@ -164,17 +164,15 @@ export class ComplexACKPDU {
         params.unitObjId.writeParam(writer, { num: 0, type: BACnetTagTypes.context });
 
         // Write Property ID
-        const unitPropId = new BACnetTypes.BACnetEnumerated(params.unitProp.id);
-        unitPropId.writeParam(writer, { num: 1, type: BACnetTagTypes.context });
+        params.unitProp.id.writeParam(writer, { num: 1, type: BACnetTagTypes.context });
 
-        if (_.isNumber(params.unitProp.index)) {
+        if (params.unitProp.index) {
             // Write Property Array Index
-            const unitPropIndex = new BACnetTypes.BACnetUnsignedInteger(params.unitProp.index);
-            unitPropIndex.writeParam(writer, { num: 2, type: BACnetTagTypes.context });
+            params.unitProp.index.writeParam(writer, { num: 2, type: BACnetTagTypes.context });
         }
 
         // Write Property Value
-        writer.writeValue(params.unitProp.payload, { num: 3, type: BACnetTagTypes.context });
+        BACnetWriterUtil.writeValue(writer, params.unitProp.values, { num: 3, type: BACnetTagTypes.context });
 
         return writer;
     }
