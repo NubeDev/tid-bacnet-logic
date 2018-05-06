@@ -4,8 +4,6 @@ import * as chai from 'chai';
 import { expect } from 'chai';
 import { spy, SinonSpy } from 'sinon';
 
-import { ApiError } from '../../errors';
-
 import { BLVC } from './blvc.layer';
 import { NPDU } from './npdu.layer';
 
