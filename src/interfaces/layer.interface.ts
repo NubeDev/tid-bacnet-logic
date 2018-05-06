@@ -1,185 +1,330 @@
-import {
-    BACnetServiceTypes,
-    BLVCFunction,
-    BACnetConfirmedService,
-    BACnetUnconfirmedService,
-} from '../enums';
-
-import {
-    BACnetUnsignedInteger,
-    BACnetObjectId,
-    BACnetTypeBase,
-} from '../types';
+import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
 import { IBACnetPropertyValue } from './bacnet.interface';
 
-export interface ILayer {
-    blvc: ILayerBLVC;
-    npdu: ILayerNPDU;
-    apdu: ILayerAPDU;
+import { BACnetWriter } from '../io';
+
+export interface ILayerLogic {
+    blvc: BLVC.Read.Layer;
+    npdu: NPDU.Read.Layer;
+    apdu: APDU.Read.Layer;
 }
 
-/*
- * BLVC Layer
- */
-export interface ILayerBLVC {
-    type: number;
-    func: BLVCFunction;
-    length: number;
-    npdu: ILayerNPDU;
+export namespace BLVC {
+    export namespace Read {
+        export interface Layer {
+            type: number;
+            func: Enums.BLVCFunction;
+            length: number;
+            npdu: NPDU.Read.Layer;
+        }
+    }
+
+    export namespace Write {
+        export interface Layer {
+            func: Enums.BLVCFunction;
+            npdu: BACnetWriter;
+            apdu: BACnetWriter;
+        }
+    }
 }
 
-/*
- * NPDU Layer
- */
-export interface ILayerNPDU {
-    version: number;
-    control: ILayerNPDUControl;
-    dest: ILayerNPDUNetworkDest;
-    src: ILayerNPDUNetworkSrc;
-    apdu: ILayerAPDU;
+export namespace NPDU {
+    export namespace Read {
+        export interface Layer {
+            version: number;
+            control: Control;
+            dest: NetworkDest;
+            src: NetworkSrc;
+            apdu: APDU.Read.Layer;
+        }
+
+        export interface Control {
+            noApduMessageType: boolean;
+            reserved1: number;
+            destSpecifier: boolean;
+            reserved2: number;
+            srcSpecifier: boolean;
+            expectingReply: boolean;
+            priority1: number;
+            priority2: number;
+        }
+
+        export interface Network {
+            networkAddress: number;
+            macAddressLen: number;
+            macAddress?: string;
+        }
+
+        export interface NetworkDest
+                extends Network {
+            hopCount?: number;
+        }
+
+        export interface NetworkSrc
+                extends Network {
+        }
+    }
+
+    export namespace Write {
+        export interface Layer {
+            control?: Control;
+            destNetworkAddress?: number;
+            destMacAddress?: string;
+            srcNetworkAddress?: number;
+            srcMacAddress?: string;
+            hopCount?: number;
+        }
+
+        export interface Control {
+            noApduMessageType?: boolean;
+            destSpecifier?: boolean;
+            srcSpecifier?: boolean;
+            expectingReply?: boolean;
+            priority1?: number;
+            priority2?: number;
+        }
+    }
+
 }
 
-export interface ILayerNPDUControl {
-    noApduMessageType: boolean;
-    reserved1: number;
-    destSpecifier: boolean;
-    reserved2: number;
-    srcSpecifier: boolean;
-    expectingReply: boolean;
-    priority1: number;
-    priority2: number;
+export namespace APDU {
+    export namespace Read {
+        export type Layer = ConfirmedRequest.Read.Layer | UnconfirmedRequest.Read.Layer
+            | ComplexACK.Read.Layer | SimpleACK.Read.Layer;
+    }
 }
 
-export interface ILayerNPDUNetwork {
-    networkAddress: number;
-    macAddressLen: number;
-    macAddress?: string;
+export namespace ConfirmedRequest {
+    export namespace Read {
+        export interface Layer {
+            type: Enums.BACnetServiceTypes;
+            seg: boolean;
+            mor: boolean;
+            sa: boolean;
+            maxSegs: number;
+            maxResp: number;
+            invokeId: number;
+            serviceChoice: Enums.BACnetConfirmedService;
+            service: ServiceChoice;
+        }
+
+        export type ServiceChoice = ReadProperty | SubscribeCOV | WriteProperty;
+
+        export interface ReadProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+
+        export interface WriteProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+
+        export interface SubscribeCOV {
+            objId: BACnetTypes.BACnetObjectId;
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
+            issConfNotif: BACnetTypes.BACnetBoolean;
+            lifetime: BACnetTypes.BACnetUnsignedInteger;
+        }
+    }
+
+    export namespace Write {
+        export interface Layer {
+            segAccepted?: boolean;
+            invokeId: number;
+        }
+
+        export interface ReadProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+
+        export interface WriteProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+
+        export interface SubscribeCOV {
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
+            objId: BACnetTypes.BACnetObjectId;
+            issConfNotif: BACnetTypes.BACnetBoolean;
+            lifetime: BACnetTypes.BACnetUnsignedInteger;
+        }
+
+        export interface UnsubscribeCOV {
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
+            objId: BACnetTypes.BACnetObjectId;
+        }
+    }
+
+    export namespace Service {
+        export interface ReadProperty
+            extends ConfirmedRequest.Write.Layer, ConfirmedRequest.Write.ReadProperty {
+        }
+
+        export interface WriteProperty
+            extends ConfirmedRequest.Write.Layer, ConfirmedRequest.Write.WriteProperty {
+        }
+
+        export interface SubscribeCOV
+            extends ConfirmedRequest.Write.Layer, ConfirmedRequest.Write.SubscribeCOV {
+        }
+
+        export interface UnsubscribeCOV
+            extends ConfirmedRequest.Write.Layer, ConfirmedRequest.Write.UnsubscribeCOV {
+        }
+    }
 }
 
-export interface ILayerNPDUNetworkDest
-        extends ILayerNPDUNetwork {
-    hopCount?: number;
+export namespace UnconfirmedRequest {
+    export namespace Read {
+        export interface Layer {
+            type: Enums.BACnetServiceTypes;
+            serviceChoice: Enums.BACnetUnconfirmedService;
+            service: ServiceChoice;
+        }
+
+        export type ServiceChoice = IAm | WhoIs | COVNotification;
+
+        export interface IAm {
+            objId: BACnetTypes.BACnetObjectId;
+            maxAPDUlength: BACnetTypes.BACnetUnsignedInteger;
+            segmSupported: BACnetTypes.BACnetEnumerated;
+            vendorId: BACnetTypes.BACnetUnsignedInteger;
+        }
+
+        export interface WhoIs {
+        }
+
+        export interface COVNotification {
+            // Identify the process within the COV client.
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
+            // Device that initiated the `COV Notification` service request
+            devId: BACnetTypes.BACnetObjectId;
+            // Object that has changed
+            objId: BACnetTypes.BACnetObjectId;
+            // Remaining lifetime of the subscription in seconds. 00 - indefinite lifetime
+            timeRemaining: BACnetTypes.BACnetUnsignedInteger;
+            // List of one or more `notification` property values
+            listOfValues: IBACnetPropertyValue[];
+        }
+    }
+
+    export namespace Write {
+        export interface Layer {
+        }
+
+        export interface WhoIs {
+        }
+
+        export interface IAm {
+            objId: BACnetTypes.BACnetObjectId;
+            vendorId: BACnetTypes.BACnetUnsignedInteger;
+        }
+
+        export interface COVNotification {
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
+            devId: BACnetTypes.BACnetObjectId;
+            objId: BACnetTypes.BACnetObjectId;
+            timeRemaining?: BACnetTypes.BACnetUnsignedInteger;
+            listOfValues: IBACnetPropertyValue[];
+        }
+    }
+
+    export namespace Service {
+        export interface COVNotification
+            extends UnconfirmedRequest.Write.Layer, UnconfirmedRequest.Write.COVNotification {
+        }
+        export interface WhoIs
+            extends UnconfirmedRequest.Write.Layer, UnconfirmedRequest.Write.WhoIs {
+        }
+        export interface IAm
+            extends UnconfirmedRequest.Write.Layer, UnconfirmedRequest.Write.IAm {
+        }
+    }
 }
 
-export interface ILayerNPDUNetworkSrc
-        extends ILayerNPDUNetwork {
+export namespace ComplexACK {
+    export namespace Read {
+        export interface Layer {
+            type: Enums.BACnetServiceTypes;
+            seg: boolean;
+            mor: boolean;
+            invokeId: number;
+            sequenceNumber: number;
+            proposedWindowSize: number;
+            serviceChoice: Enums.BACnetConfirmedService;
+            service: ServiceChoice;
+        }
+
+        export type ServiceChoice = ReadProperty;
+
+        export interface ReadProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+    }
+
+    export namespace Write {
+        export interface Layer {
+            seg?: boolean;
+            mor?: boolean;
+            invokeId: number;
+        }
+
+        export interface ReadProperty {
+            objId: BACnetTypes.BACnetObjectId;
+            prop: IBACnetPropertyValue;
+        }
+    }
+
+    export namespace Service {
+        export interface ReadProperty
+            extends ComplexACK.Write.Layer, ComplexACK.Write.ReadProperty {
+        }
+    }
 }
 
+export namespace SimpleACK {
+    export namespace Read {
+        export interface Layer {
+            type: Enums.BACnetServiceTypes;
+            invokeId: number;
+            serviceChoice: Enums.BACnetConfirmedService;
+            service: ServiceChoice;
+        }
 
-/*
- * APDU Layer
- */
-export type ILayerAPDU = ILayerConfirmedReq | ILayerUnconfirmedReq
-    | ILayerComplexACK | ILayerSimpleACK;
+        export type ServiceChoice = SubscribeCOV | WriteProperty;
 
-/*
- * Confirmed Request APDU Layer
- */
-export interface ILayerConfirmedReq {
-    type: BACnetServiceTypes;
-    seg: boolean;
-    mor: boolean;
-    sa: boolean;
-    maxSegs: number;
-    maxResp: number;
-    invokeId: number;
-    serviceChoice: BACnetConfirmedService;
-    service: ILayerConfirmedReqService;
-}
+        export interface SubscribeCOV {
+        }
 
-export type ILayerConfirmedReqService = ILayerConfirmedReqServiceReadProperty
-    | ILayerConfirmedReqServiceSubscribeCOV
-    | ILayerConfirmedReqServiceWriteProperty;
+        export interface WriteProperty {
+        }
+    }
 
-export interface ILayerConfirmedReqServiceReadProperty {
-    objId: BACnetTypes.BACnetObjectId;
-    propId: BACnetTypes.BACnetEnumerated;
-}
+    export namespace Write {
+        export interface Layer {
+            invokeId: number;
+        }
 
-export interface ILayerConfirmedReqServiceSubscribeCOV {
-    objId: BACnetTypes.BACnetObjectId;
-    subscriberProcessId: BACnetTypes.BACnetUnsignedInteger;
-    issConfNotif: BACnetTypes.BACnetBoolean;
-    lifeTime: BACnetTypes.BACnetUnsignedInteger;
-}
+        export interface SubscribeCOV {
+        }
 
-export interface ILayerConfirmedReqServiceWriteProperty {
-    objId: BACnetTypes.BACnetObjectId;
-    prop: IBACnetPropertyValue;
-}
+        export interface WriteProperty {
+        }
+    }
 
-/*
- * Unconfirmed Request APDU Layer
- */
-export interface ILayerUnconfirmedReq {
-    type: BACnetServiceTypes;
-    serviceChoice: BACnetUnconfirmedService;
-    service: ILayerUnconfirmedReqService;
-}
+    export namespace Service {
+        export interface SubscribeCOV
+            extends SimpleACK.Write.Layer, SimpleACK.Write.SubscribeCOV {
+        }
 
-export type ILayerUnconfirmedReqService = ILayerUnconfirmedReqServiceIAm
-    | ILayerUnconfirmedReqServiceWhoIs;
-
-export interface ILayerUnconfirmedReqServiceIAm {
-    objId: BACnetTypes.BACnetObjectId;
-    maxAPDUlength: BACnetTypes.BACnetUnsignedInteger;
-    segmSupported: BACnetTypes.BACnetEnumerated;
-    vendorId: BACnetTypes.BACnetUnsignedInteger;
-}
-
-export interface ILayerUnconfirmedReqServiceWhoIs {
-}
-export interface ILayerUnconfirmedReqServiceCOVNotification {
-    // Identify the process within the COV client.
-    subProcessId: BACnetTypes.BACnetUnsignedInteger;
-    // Device that initiated the `COV Notification` service request
-    devId: BACnetTypes.BACnetObjectId;
-    // Object that has changed
-    objId: BACnetTypes.BACnetObjectId;
-    // Remaining lifetime of the subscription in seconds. 00 - indefinite lifetime
-    timeRemaining: BACnetTypes.BACnetUnsignedInteger;
-    // List of one or more `notification` property values
-    listOfValues: IBACnetPropertyValue[];
-}
-
-/*
- * Complex ACK APDU Layer
- */
-export interface ILayerComplexACK {
-    type: BACnetServiceTypes;
-    seg: boolean;
-    mor: boolean;
-    invokeId: number;
-    sequenceNumber: number;
-    proposedWindowSize: number;
-    serviceChoice: BACnetConfirmedService;
-    service: ILayerComplexACKService;
-}
-
-export type ILayerComplexACKService = ILayerComplexACKServiceReadProperty;
-
-export interface ILayerComplexACKServiceReadProperty {
-    objId: BACnetTypes.BACnetObjectId;
-    prop: IBACnetPropertyValue;
-}
-
-/*
- * Simple ACK APDU Layer
- */
-export interface ILayerSimpleACK {
-    type: BACnetServiceTypes;
-    invokeId: number;
-    serviceChoice: BACnetConfirmedService;
-    service: ILayerSimpleACKService;
-}
-
-export type ILayerSimpleACKService = ILayerSimpleACKServiceSubscribeCOV
-    | ILayerSimpleACKServiceWriteProperty;
-
-export interface ILayerSimpleACKServiceSubscribeCOV {
-}
-export interface ILayerSimpleACKServiceWriteProperty {
+        export interface WriteProperty
+            extends SimpleACK.Write.Layer, SimpleACK.Write.WriteProperty {
+        }
+    }
 }

@@ -8,23 +8,20 @@ import { blvc, npdu } from '../layers';
 import { BACnetWriter } from '../io';
 
 import {
-    IServiceConfirmedReqReadProperty,
-    IServiceConfirmedReqWriteProperty,
-    IServiceConfirmedReqSubscribeCOV,
-    IServiceConfirmedReqUnsubscribeCOV,
+    ConfirmedRequest,
 } from '../interfaces';
 
 export class ConfirmedReqService {
     static readonly className: string = 'ConfirmedReq';
 
     /**
-     * readProperty - sends the "readProperty" confirmed request.
+     * Creates the "readProperty" confirmed request message.
      *
      * @static
-     * @param  {IServiceConfirmedReqReadProperty} opts - request options
+     * @param  {ConfirmedRequest.Service.ReadProperty} opts - request options
      * @return {Buffer}
      */
-    static readProperty (opts: IServiceConfirmedReqReadProperty): Buffer {
+    static readProperty (opts: ConfirmedRequest.Service.ReadProperty): Buffer {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerReadProperty = confirmedReqPDU.writeReadProperty(opts);
@@ -49,13 +46,13 @@ export class ConfirmedReqService {
     }
 
     /**
-     * readProperty - sends the "writeProperty" confirmed request.
+     * Creates the "writeProperty" confirmed request message.
      *
      * @static
-     * @param  {IServiceConfirmedReqWriteProperty} opts - request options
+     * @param  {ConfirmedRequest.Service.WriteProperty} opts - request options
      * @return {Buffer}
      */
-    static writeProperty (opts: IServiceConfirmedReqWriteProperty): Buffer {
+    static writeProperty (opts: ConfirmedRequest.Service.WriteProperty): Buffer {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerWriteProperty = confirmedReqPDU.writeWriteProperty(opts);
@@ -80,13 +77,13 @@ export class ConfirmedReqService {
     }
 
     /**
-     * readProperty - sends the "subscribeCOV" confirmed request.
+     * Creates the "subscribeCOV" confirmed request message.
      *
      * @static
-     * @param  {IServiceConfirmedReqSubscribeCOV} opts - request options
+     * @param  {ConfirmedRequest.Service.SubscribeCOV} opts - request options
      * @return {Buffer}
      */
-    static subscribeCOV (opts: IServiceConfirmedReqSubscribeCOV): Buffer {
+    static subscribeCOV (opts: ConfirmedRequest.Service.SubscribeCOV): Buffer {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerSubscribeCOV = confirmedReqPDU.writeSubscribeCOV(opts);
@@ -111,13 +108,13 @@ export class ConfirmedReqService {
     }
 
     /**
-     * unsubscribeCOV - sends the "unsubscribeCOV" confirmed request.
+     * Creates the "unsubscribeCOV" confirmed request message.
      *
      * @static
-     * @param  {IServiceConfirmedReqUnsubscribeCOV} opts - request options
+     * @param  {ConfirmedRequest.Service.UnsubscribeCOV} opts - request options
      * @return {Buffer}
      */
-    static unsubscribeCOV (opts: IServiceConfirmedReqUnsubscribeCOV): Buffer {
+    static unsubscribeCOV (opts: ConfirmedRequest.Service.UnsubscribeCOV): Buffer {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerUnsubscribeCOV = confirmedReqPDU.writeUnsubscribeCOV(opts);

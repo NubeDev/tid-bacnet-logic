@@ -8,22 +8,20 @@ import { blvc, npdu } from '../layers';
 import { BACnetWriter } from '../io';
 
 import {
-    IServiceSimpleACKSubscribeCOV,
-    IServiceSimpleACKWriteProperty,
+    SimpleACK,
 } from '../interfaces';
 
 export class SimpleACKService {
     static readonly className: string = 'SimpleACK';
 
     /**
-     * subscribeCOV - sends the "subscribeCOV" simple ack request.
+     * Create the "subscribeCOV" simple ack request message.
      *
      * @static
-     * @param  {IServiceSimpleACKSubscribeCOV} opts - request options
-     * @param  {OutputSocket} outputSoc - output socket
-     * @return {type}
+     * @param  {SimpleACK.Service.SubscribeCOV} opts - request options
+     * @return {Buffer}
      */
-    static subscribeCOV (opts: IServiceSimpleACKSubscribeCOV) {
+    static subscribeCOV (opts: SimpleACK.Service.SubscribeCOV): Buffer {
         // Generate APDU writer
         const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
         const writerSubscribeCOV = simpleACKPDU.writeSubscribeCOV(opts);
@@ -48,15 +46,13 @@ export class SimpleACKService {
     }
 
     /**
-     * writeProperty - sends the "writeProperty" simple ack request.
+     * Creates the "writeProperty" simple ack request message.
      *
      * @static
-     * @param  {IServiceSimpleACKWriteProperty} opts - request options
-     * @param  {OutputSocket} outputSoc - output socket
-     * @return {type}
+     * @param  {SimpleACK.Service.WriteProperty} opts - request options
+     * @return {Buffer}
      */
-    static writeProperty (
-            opts: IServiceSimpleACKWriteProperty) {
+    static writeProperty (opts: SimpleACK.Service.WriteProperty): Buffer {
         // Generate APDU writer
         const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
         const writerSubscribeCOV = simpleACKPDU.writeWriteProperty(opts);

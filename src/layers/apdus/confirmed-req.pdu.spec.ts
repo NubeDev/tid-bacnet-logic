@@ -6,9 +6,7 @@ import { spy, SinonSpy } from 'sinon';
 
 import { confirmedReqPDU } from './confirmed-req.pdu';
 
-import {
-    ILayerConfirmedReqServiceReadProperty,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 describe('ConfirmedReqPDU', () => {
     describe('getFromBuffer', () => {
@@ -29,7 +27,7 @@ describe('ConfirmedReqPDU', () => {
             expect(newBuf.maxResp).to.equal(0x05);
             expect(newBuf.invokeId).to.equal(0x01);
             expect(newBuf.serviceChoice).to.equal(0x0c);
-            const service = newBuf.service as ILayerConfirmedReqServiceReadProperty;
+            const service = newBuf.service as Interfaces.ConfirmedRequest.Read.ReadProperty;
 
             const objId = service.objId;
             const objTag = objId.getTag();
@@ -39,14 +37,6 @@ describe('ConfirmedReqPDU', () => {
             const objIdPayload = objId.getValue();
             expect(objIdPayload.type).to.equal(8);
             expect(objIdPayload.instance).to.equal(9999);
-
-            const propId = service.propId;
-            const propTag = propId.getTag();
-            expect(propTag.num).to.equal(1);
-            expect(propTag.type).to.equal(1);
-            expect(propTag.value).to.equal(1);
-            const propIdPayload = propId.getValue();
-            expect(propIdPayload).to.equal(77);
         });
     });
 });

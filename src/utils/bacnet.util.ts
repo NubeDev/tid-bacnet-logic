@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 import { blvc, npdu, apdu } from '../layers';
 
-import { ILayer, ILayerBLVC } from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 import * as BACnetTypes from '../types';
 
@@ -13,10 +13,10 @@ export class BACnetUtil {
      * using the `layer` logic.
      *
      * @param  {Buffer} buf - buffer with BACnet message
-     * @return {ILayer}
+     * @return {Interfaces.ILayerLogic}
      */
-    static bufferToLayer (buf: Buffer): ILayer {
-        let blvcMessage: ILayerBLVC = blvc.getFromBuffer(buf);
+    static bufferToLayer (buf: Buffer): Interfaces.ILayerLogic {
+        let blvcMessage = blvc.getFromBuffer(buf);
         return {
             blvc: blvcMessage,
             npdu: _.get(blvcMessage, 'npdu'),

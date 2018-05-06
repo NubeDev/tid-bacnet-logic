@@ -6,29 +6,9 @@ import { TyperUtil, BACnetReaderUtil, BACnetWriterUtil } from '../../utils';
 
 import { BACnetReader, BACnetWriter } from '../../io';
 
-import {
-    IBACnetPropertyValue,
-    ILayerConfirmedReq,
-    ILayerConfirmedReqService,
-    ILayerConfirmedReqServiceReadProperty,
-    ILayerConfirmedReqServiceSubscribeCOV,
-    ILayerConfirmedReqServiceWriteProperty,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
-import {
-    IWriteConfirmedReq,
-    IWriteConfirmedReqReadProperty,
-    IWriteConfirmedReqWriteProperty,
-    IWriteConfirmedReqSubscribeCOVProperty,
-    IWriteConfirmedReqUnsubscribeCOVProperty,
-} from '../../interfaces';
-
-import {
-    BACnetPropTypes,
-    BACnetTagTypes,
-    BACnetConfirmedService,
-    BACnetServiceTypes,
-} from '../../enums';
+import * as Enums from '../../enums';
 
 import * as BACnetTypes from '../../types';
 
@@ -39,13 +19,13 @@ export class ConfirmedReqPDU {
      * getFromBuffer - parses the "APDU Confirmed Request" message.
      *
      * @param  {Buffer} buf - js Buffer with "APDU Confirmed Request" message
-     * @return {ILayerConfirmedReq}
+     * @return {Interfaces.ConfirmedRequest.Read.Layer}
      */
-    public getFromBuffer (buf: Buffer): ILayerConfirmedReq {
+    public getFromBuffer (buf: Buffer): Interfaces.ConfirmedRequest.Read.Layer {
         const reader = new BACnetReader(buf);
 
-        let reqMap: ILayerConfirmedReq;
-        let serviceChoice: BACnetConfirmedService, serviceData: ILayerConfirmedReqService;
+        let reqMap: Interfaces.ConfirmedRequest.Read.Layer;
+        let serviceChoice: Enums.BACnetConfirmedService, serviceData: Interfaces.ConfirmedRequest.Read.ServiceChoice;
         let pduType: number, pduSeg: boolean, pduMor: boolean, pduSa: boolean;
         let invokeId: number, sequenceNumber: number, proposedWindowSize: number;
         let maxResp: number, maxSegs: number;
@@ -81,13 +61,13 @@ export class ConfirmedReqPDU {
             serviceChoice = reader.readUInt8();
 
             switch (serviceChoice) {
-                case BACnetConfirmedService.SubscribeCOV:
+                case Enums.BACnetConfirmedService.SubscribeCOV:
                     serviceData = this.getSubscribeCOV(reader);
                     break;
-                case BACnetConfirmedService.ReadProperty:
+                case Enums.BACnetConfirmedService.ReadProperty:
                     serviceData = this.getReadProperty(reader);
                     break;
-                case BACnetConfirmedService.WriteProperty:
+                case Enums.BACnetConfirmedService.WriteProperty:
                     serviceData = this.getWriteProperty(reader);
                     break;
             }
@@ -114,10 +94,10 @@ export class ConfirmedReqPDU {
      * getReadProperty - parses the "APDU Confirmed Request Read Property" message.
      *
      * @param  {BACnetReader} reader - BACnet reader with "APDU Confirmed Request Read Property" message
-     * @return {ILayerConfirmedReqServiceReadProperty}
+     * @return {Interfaces.ConfirmedRequest.Read.ReadProperty}
      */
-    private getReadProperty (reader: BACnetReader): ILayerConfirmedReqServiceReadProperty {
-        let serviceData: ILayerConfirmedReqServiceReadProperty;
+    private getReadProperty (reader: BACnetReader): Interfaces.ConfirmedRequest.Read.ReadProperty {
+        let serviceData: Interfaces.ConfirmedRequest.Read.ReadProperty;
         let objId: BACnetTypes.BACnetObjectId, propId: BACnetTypes.BACnetEnumerated;
 
         try {
@@ -130,7 +110,9 @@ export class ConfirmedReqPDU {
 
         serviceData = {
             objId: objId,
-            propId: propId,
+            prop: {
+                id: propId,
+            },
         };
 
         return serviceData;
@@ -140,10 +122,10 @@ export class ConfirmedReqPDU {
      * getSubscribeCOV - parses the "APDU Confirmed Request Subscribe CoV" message.
      *
      * @param  {BACnetReader} reader - BACnet reader with "APDU Confirmed Request Subscribe CoV" message
-     * @return {ILayerConfirmedReqServiceSubscribeCOV}
+     * @return {Interfaces.ConfirmedRequest.Read.SubscribeCOV}
      */
-    private getSubscribeCOV (reader: BACnetReader): ILayerConfirmedReqServiceSubscribeCOV {
-        let serviceData: ILayerConfirmedReqServiceSubscribeCOV;
+    private getSubscribeCOV (reader: BACnetReader): Interfaces.ConfirmedRequest.Read.SubscribeCOV {
+        let serviceData: Interfaces.ConfirmedRequest.Read.SubscribeCOV;
         let objId: BACnetTypes.BACnetObjectId,
             subscriberProcessId: BACnetTypes.BACnetUnsignedInteger,
             issConfNotif: BACnetTypes.BACnetBoolean,
@@ -163,9 +145,9 @@ export class ConfirmedReqPDU {
 
         serviceData = {
             objId: objId,
-            subscriberProcessId: subscriberProcessId,
+            subProcessId: subscriberProcessId,
             issConfNotif: issConfNotif,
-            lifeTime: lifeTime,
+            lifetime: lifeTime,
         };
 
         return serviceData;
@@ -175,12 +157,12 @@ export class ConfirmedReqPDU {
      * getWriteProperty - parses the "APDU Confirmed Request Write Property" message.
      *
      * @param  {BACnetReader} reader - BACnet reader with "APDU Confirmed Request Write Property" message
-     * @return {ILayerConfirmedReqServiceWriteProperty}
+     * @return {Interfaces.ConfirmedRequest.Read.WriteProperty}
      */
-    private getWriteProperty (reader: BACnetReader): ILayerConfirmedReqServiceWriteProperty {
-        let serviceData: ILayerConfirmedReqServiceWriteProperty;
+    private getWriteProperty (reader: BACnetReader): Interfaces.ConfirmedRequest.Read.WriteProperty {
+        let serviceData: Interfaces.ConfirmedRequest.Read.WriteProperty;
         let objId: BACnetTypes.BACnetObjectId;
-        let prop: IBACnetPropertyValue;
+        let prop: Interfaces.IBACnetPropertyValue;
 
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);
@@ -201,15 +183,15 @@ export class ConfirmedReqPDU {
     /**
      * writeReq - writes the "APDU Confirmed Request" header.
      *
-     * @param  {IWriteConfirmedReq} params - "APDU Confirmed Request" write params
+     * @param  {Interfaces.ConfirmedRequest.Write.Layer} params - "APDU Confirmed Request" write params
      * @return {BACnetWriter}
      */
-    public writeReq (params: IWriteConfirmedReq): BACnetWriter {
+    public writeReq (params: Interfaces.ConfirmedRequest.Write.Layer): BACnetWriter {
         const writer = new BACnetWriter();
 
         // Write Service Type
         let mMeta = TyperUtil.setBitRange(0x00,
-            BACnetServiceTypes.ConfirmedReqPDU, 4, 4);
+            Enums.BACnetServiceTypes.ConfirmedReqPDU, 4, 4);
         mMeta = TyperUtil.setBit(mMeta, 1, params.segAccepted || false);
         writer.writeUInt8(mMeta);
 
@@ -225,24 +207,24 @@ export class ConfirmedReqPDU {
     /**
      * writeReadProperty - writes the "APDU Confirmed Request Read Property" message.
      *
-     * @param  {IWriteConfirmedReqReadProperty} params - "APDU Confirmed Request Read Property" write params
+     * @param  {Interfaces.ConfirmedRequest.Write.ReadProperty} params - "APDU Confirmed Request Read Property" write params
      * @return {BACnetWriter}
      */
-    public writeReadProperty (params: IWriteConfirmedReqReadProperty): BACnetWriter {
+    public writeReadProperty (params: Interfaces.ConfirmedRequest.Write.ReadProperty): BACnetWriter {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(BACnetConfirmedService.ReadProperty);
+        writer.writeUInt8(Enums.BACnetConfirmedService.ReadProperty);
 
         // Write Object identifier
-        params.unitObjId.writeParam(writer, { num: 0, type: BACnetTagTypes.context });
+        params.objId.writeParam(writer, { num: 0, type: Enums.BACnetTagTypes.context });
 
         // Write Property ID
-        params.unitProp.id.writeParam(writer, { num: 1, type: BACnetTagTypes.context });
+        params.prop.id.writeParam(writer, { num: 1, type: Enums.BACnetTagTypes.context });
 
-        if (params.unitProp.index) {
+        if (params.prop.index) {
             // Write Property Array Index
-            params.unitProp.index.writeParam(writer, { num: 2, type: BACnetTagTypes.context });
+            params.prop.index.writeParam(writer, { num: 2, type: Enums.BACnetTagTypes.context });
         }
 
         return writer;
@@ -251,32 +233,32 @@ export class ConfirmedReqPDU {
     /**
      * writeWriteProperty - writes the "APDU Confirmed Request Write Property" message.
      *
-     * @param  {IWriteConfirmedReqWriteProperty} params - "APDU Confirmed Request Write Property" write params
+     * @param  {Interfaces.ConfirmedRequest.Write.WriteProperty} params - "APDU Confirmed Request Write Property" write params
      * @return {BACnetWriter}
      */
-    public writeWriteProperty (params: IWriteConfirmedReqWriteProperty): BACnetWriter {
+    public writeWriteProperty (params: Interfaces.ConfirmedRequest.Write.WriteProperty): BACnetWriter {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(BACnetConfirmedService.WriteProperty);
+        writer.writeUInt8(Enums.BACnetConfirmedService.WriteProperty);
 
         // Write Object identifier
-        params.unitObjId.writeParam(writer, { num: 0, type: BACnetTagTypes.context });
+        params.objId.writeParam(writer, { num: 0, type: Enums.BACnetTagTypes.context });
 
         // Write Property ID
-        params.unitProp.id.writeParam(writer, { num: 1, type: BACnetTagTypes.context });
+        params.prop.id.writeParam(writer, { num: 1, type: Enums.BACnetTagTypes.context });
 
-        if (params.unitProp.index) {
+        if (params.prop.index) {
             // Write Property Array Index
-            params.unitProp.index.writeParam(writer, { num: 2, type: BACnetTagTypes.context });
+            params.prop.index.writeParam(writer, { num: 2, type: Enums.BACnetTagTypes.context });
         }
 
         // Write Property Value
-        BACnetWriterUtil.writeValue(writer, params.unitProp.values, { num: 3, type: BACnetTagTypes.context });
+        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.BACnetTagTypes.context });
 
-        if (params.unitProp.priority) {
+        if (params.prop.priority) {
             // Write Property Priority
-            params.unitProp.priority.writeParam(writer, { num: 4, type: BACnetTagTypes.context });
+            params.prop.priority.writeParam(writer, { num: 4, type: Enums.BACnetTagTypes.context });
         }
 
         return writer;
@@ -286,34 +268,34 @@ export class ConfirmedReqPDU {
      * writeSubscribeCOV - writes the "APDU Confirmed Request Subscribe CoV" message
      * to subscribe or re-subscribe to the CoV events.
      *
-     * @param  {IWriteConfirmedReqSubscribeCOVProperty} params - "APDU Confirmed Request Subscribe CoV" write params
+     * @param  {Interfaces.ConfirmedRequest.Write.SubscribeCOV} params - "APDU Confirmed Request Subscribe CoV" write params
      * @return {BACnetWriter}
      */
-    public writeSubscribeCOV (params: IWriteConfirmedReqSubscribeCOVProperty): BACnetWriter {
+    public writeSubscribeCOV (params: Interfaces.ConfirmedRequest.Write.SubscribeCOV): BACnetWriter {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(BACnetConfirmedService.SubscribeCOV);
+        writer.writeUInt8(Enums.BACnetConfirmedService.SubscribeCOV);
 
         // Write Subscriber Process Identifier
-        params.processId.writeParam(writer, { num: 0, type: BACnetTagTypes.context });
+        params.subProcessId.writeParam(writer, { num: 0, type: Enums.BACnetTagTypes.context });
 
         // Monitored Object Identifier
-        params.unitObjId.writeParam(writer, { num: 1, type: BACnetTagTypes.context });
+        params.objId.writeParam(writer, { num: 1, type: Enums.BACnetTagTypes.context });
 
         if (_.isNil(params.issConfNotif)) {
             return writer;
         }
 
         // Issue Confirmed Notifications
-        params.issConfNotif.writeParam(writer, { num: 2, type: BACnetTagTypes.context });
+        params.issConfNotif.writeParam(writer, { num: 2, type: Enums.BACnetTagTypes.context });
 
         if (_.isNil(params.lifetime)) {
             return writer;
         }
 
         // Issue Confirmed Notifications
-        params.lifetime.writeParam(writer, { num: 3, type: BACnetTagTypes.context });
+        params.lifetime.writeParam(writer, { num: 3, type: Enums.BACnetTagTypes.context });
 
         return writer;
     }
@@ -322,11 +304,11 @@ export class ConfirmedReqPDU {
      * writeUnsubscribeCOV - writes the "APDU Confirmed Request Subscribe CoV" message
      * to cancel the CoV subscription.
      *
-     * @param  {IWriteConfirmedReqUnsubscribeCOVProperty} params - "APDU Confirmed Request Subscribe CoV" write params
+     * @param  {Interfaces.ConfirmedRequest.Write.UnsubscribeCOV} params - "APDU Confirmed Request Subscribe CoV" write params
      * @return {BACnetWriter}
      */
-    public writeUnsubscribeCOV (params: IWriteConfirmedReqUnsubscribeCOVProperty): BACnetWriter {
-        return this.writeSubscribeCOV(params as IWriteConfirmedReqSubscribeCOVProperty);
+    public writeUnsubscribeCOV (params: Interfaces.ConfirmedRequest.Write.UnsubscribeCOV): BACnetWriter {
+        return this.writeSubscribeCOV(params as Interfaces.ConfirmedRequest.Write.SubscribeCOV);
     }
 }
 

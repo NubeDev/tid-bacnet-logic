@@ -8,21 +8,20 @@ import { blvc, npdu } from '../layers';
 import { BACnetWriter } from '../io';
 
 import {
-    IServiceComplexACKReadProperty,
+    ComplexACK,
 } from '../interfaces';
 
 export class ComplexACKService {
     static readonly className: string = 'ComplexACK';
 
     /**
-     * readProperty - sends the "readProperty" complex ack request.
+     * Creates the "readProperty" complex ack request message.
      *
      * @static
-     * @param  {IServiceComplexACKReadProperty} opts - request options
-     * @param  {OutputSocket} outputSoc - output socket
+     * @param  {ComplexACK.Service.ReadProperty} opts - request options
      * @return {type}
      */
-    static readProperty (opts: IServiceComplexACKReadProperty): Buffer {
+    static readProperty (opts: ComplexACK.Service.ReadProperty): Buffer {
         // Generate APDU writer
         const writerComplexACK = complexACKPDU.writeReq(opts);
         const writerReadProperty = complexACKPDU.writeReadProperty(opts);

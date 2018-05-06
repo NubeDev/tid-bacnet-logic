@@ -8,23 +8,20 @@ import { blvc, npdu } from '../layers';
 import { BACnetWriter } from '../io';
 
 import {
-    IServiceUnconfirmedReqCOVNotification,
-    IServiceUnconfirmedReqWhoIs,
-    IServiceUnconfirmedReqIAm,
+    UnconfirmedRequest,
 } from '../interfaces';
 
 export class UnconfirmedReqService {
     static readonly className: string = 'UnconfirmedReq';
 
     /**
-     * whoIs - sends the "whoIs" request.
+     * Create the "whoIs" unconfirmed request message.
      *
      * @static
-     * @param  {IServiceUnconfirmReqWhoIs} opts - request options
-     * @param  {OutputSocket} outputSoc - output socket
-     * @return {type}
+     * @param  {UnconfirmedRequest.Service.WhoIs} opts - request options
+     * @return {Buffer}
      */
-    static whoIs (opts: IServiceUnconfirmedReqWhoIs) {
+    static whoIs (opts: UnconfirmedRequest.Service.WhoIs): Buffer {
         // Generate APDU writer
         const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
         const writerWhoIs = unconfirmedReqPDU.writeWhoIs(opts);
@@ -55,14 +52,13 @@ export class UnconfirmedReqService {
     }
 
     /**
-     * iAm - sends the "iAm" unconfirmed request.
+     * Creates the "iAm" unconfirmed request message.
      *
      * @static
-     * @param  {IServiceUnconfirmReqIAm} opts - request options
-     * @param  {OutputSocket} outputSoc - output socket
-     * @return {type}
+     * @param  {UnconfirmedRequest.Service.IAm} opts - request options
+     * @return {Buffer}
      */
-    static iAm (opts: IServiceUnconfirmedReqIAm) {
+    static iAm (opts: UnconfirmedRequest.Service.IAm): Buffer {
         // Generate APDU writer
         const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
         const writerIAm = unconfirmedReqPDU.writeIAm(opts);
@@ -93,14 +89,13 @@ export class UnconfirmedReqService {
     }
 
     /**
-     * covNotification - sends the "COV notification" unconfirmed request.
+     * Creates the "COV notification" unconfirmed request message.
      *
      * @static
-     * @param  {RequestSocket} req - request object (socket)
-     * @param  {ResponseSocket} resp - response object (socket)
-     * @return {type}
+     * @param  {UnconfirmedRequest.Service.COVNotification} opts - request options
+     * @return {Buffer}
      */
-    static covNotification (opts: IServiceUnconfirmedReqCOVNotification) {
+    static covNotification (opts: UnconfirmedRequest.Service.COVNotification): Buffer {
         // Generate APDU writer
         const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
         const writerCOVNotification = unconfirmedReqPDU.writeCOVNotification(opts);

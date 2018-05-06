@@ -8,16 +8,7 @@ import { BACnetReader, BACnetWriter } from '../io';
 
 import { apdu, APDU } from './apdu.layer';
 
-import {
-    ILayerAPDU,
-    ILayerNPDU,
-    ILayerNPDUControl,
-    ILayerNPDUNetworkDest,
-    ILayerNPDUNetworkSrc,
-
-    IWriteNPDU,
-    IWriteNPDUControl,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 export class NPDU {
     public readonly className: string = 'NPDU';
@@ -31,9 +22,9 @@ export class NPDU {
      * getControlFlags - parses the NPDU control byte.
      *
      * @param  {number} mControl - NPDU control byte
-     * @return {ILayerNPDUControl}
+     * @return {Interfaces.NPDU.Read.Control}
      */
-    public getControlFlags (mControl: number): ILayerNPDUControl {
+    public getControlFlags (mControl: number): Interfaces.NPDU.Read.Control {
         const noApduMessageType = !!TyperUtil.getBit(mControl, 7);
 
         const reserved1 = TyperUtil.getBit(mControl, 6);
@@ -50,7 +41,7 @@ export class NPDU {
 
         const priority2 = TyperUtil.getBit(mControl, 0);
 
-        const mControlMap: ILayerNPDUControl = {
+        const mControlMap: Interfaces.NPDU.Read.Control = {
             noApduMessageType: noApduMessageType,
             reserved1: reserved1,
             destSpecifier: destSpecifier,
@@ -68,15 +59,15 @@ export class NPDU {
      * getFromBuffer - parses the NPDU message.
      *
      * @param  {Buffer} buf - js Buffer with NPDU message
-     * @return {ILayerNPDU}
+     * @return {Interfaces.NPDU.Read.Layer}
      */
-    public getFromBuffer (buf: Buffer): ILayerNPDU {
+    public getFromBuffer (buf: Buffer): Interfaces.NPDU.Read.Layer {
         const readerUtil = new BACnetReader(buf);
 
-        let mVersion: number, mControl: ILayerNPDUControl;
-        let destNetwork: ILayerNPDUNetworkDest,
-            srcNetwork: ILayerNPDUNetworkSrc;
-        let APDUMessage: ILayerAPDU;
+        let mVersion: number, mControl: Interfaces.NPDU.Read.Control;
+        let destNetwork: Interfaces.NPDU.Read.NetworkDest,
+            srcNetwork: Interfaces.NPDU.Read.NetworkSrc;
+        let APDUMessage: Interfaces.APDU.Read.Layer;
 
         try {
             mVersion = readerUtil.readUInt8();
@@ -129,7 +120,7 @@ export class NPDU {
             throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
-        const NPDUMessage: ILayerNPDU = {
+        const NPDUMessage: Interfaces.NPDU.Read.Layer = {
             version: mVersion,
             control: mControl,
             dest: destNetwork,
@@ -143,10 +134,10 @@ export class NPDU {
     /**
      * writeNPDULayer - writes the "NPDU" layer message.
      *
-     * @param  {IWriteNPDU} params - "NPDU" write params
+     * @param  {Interfaces.NPDU.Write.Layer} params - "NPDU" write params
      * @return {BACnetWriter} - instance of the writer utility
      */
-    public writeNPDULayer (params: IWriteNPDU): BACnetWriter {
+    public writeNPDULayer (params: Interfaces.NPDU.Write.Layer): BACnetWriter {
         let writer = new BACnetWriter();
 
         // Write NPDU version
@@ -195,10 +186,10 @@ export class NPDU {
     /**
      * writeNPDULayerControl - writes the "control byte" of "NPDU" layer.
      *
-     * @param  {IWriteNPDUControl} params - "NPDU" write params for "control byte"
+     * @param  {Interfaces.NPDU.Write.Control} params - "NPDU" write params for "control byte"
      * @return {BACnetWriter} - instance of the writer utility
      */
-    public writeNPDULayerControl (params: IWriteNPDUControl): BACnetWriter {
+    public writeNPDULayerControl (params: Interfaces.NPDU.Write.Control): BACnetWriter {
         const writer = new BACnetWriter();
 
         // Write Service choice

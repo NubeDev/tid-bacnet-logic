@@ -6,11 +6,7 @@ import { BACnetReader, BACnetWriter } from '../io';
 
 import { npdu, NPDU } from './npdu.layer';
 
-import {
-    IWriteBLVC,
-    ILayerBLVC,
-    ILayerNPDU,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 export class BLVC {
     public readonly className: string = 'BLVC';
@@ -24,13 +20,13 @@ export class BLVC {
      * getFromBuffer - parses the "BLVC" message.
      *
      * @param  {Buffer} buf - js Buffer with "BLVC" message
-     * @return {ILayerBLVC}
+     * @return {Interfaces.BLVC.Read.Layer}
      */
-    public getFromBuffer (buf: Buffer): ILayerBLVC {
+    public getFromBuffer (buf: Buffer): Interfaces.BLVC.Read.Layer {
         const readerUtil = new BACnetReader(buf);
 
         let mType: number, mFunction: number, mLenght: number;
-        let NPDUMessage: ILayerNPDU;
+        let NPDUMessage: Interfaces.NPDU.Read.Layer;
 
         try {
             mType = readerUtil.readUInt8();
@@ -45,7 +41,7 @@ export class BLVC {
             throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
-        const BLVCMessage: ILayerBLVC = {
+        const BLVCMessage: Interfaces.BLVC.Read.Layer = {
             type: mType,
             func: mFunction,
             length: mLenght,
@@ -58,10 +54,10 @@ export class BLVC {
     /**
      * writeBLVCLayer - writes the "BLVC" layer message.
      *
-     * @param  {IWriteBLVC} params - "BLVC" write params
+     * @param  {Interfaces.BLVC.Write.Layer} params - "BLVC" write params
      * @return {BACnetWriter} - instance of the writer utility
      */
-    public writeBLVCLayer (params: IWriteBLVC): BACnetWriter {
+    public writeBLVCLayer (params: Interfaces.BLVC.Write.Layer): BACnetWriter {
         let writer = new BACnetWriter();
 
         // Write BLVC type

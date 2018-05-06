@@ -13,9 +13,7 @@ import {
 
 import { BACnetServiceTypes } from '../enums';
 
-import {
-    ILayerAPDU,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 export class APDU {
     public readonly className: string = 'APDU';
@@ -26,10 +24,10 @@ export class APDU {
      * @param  {Buffer} buf - js Buffer with "APDU" message
      * @return {ILayerAPDU}
      */
-    public getFromBuffer (buf: Buffer): ILayerAPDU {
+    public getFromBuffer (buf: Buffer): Interfaces.APDU.Read.Layer {
         const reader = new BACnetReader(buf);
 
-        let APDUMessage: ILayerAPDU;
+        let APDUMessage: Interfaces.APDU.Read.Layer;
         try {
             const mType = reader.readUInt8();
             const pduType = (mType >> 4) & 0x0F
