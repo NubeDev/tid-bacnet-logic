@@ -17,15 +17,6 @@ export interface IBACnetPropertyValue {
     priority?: BACnetTypes.BACnetUnsignedInteger;
 }
 
-export interface IBACnetObjectProperty {
-    id: BACnetPropertyId;
-    payload?: BACnetTypes.BACnetTypeBase | BACnetTypes.BACnetTypeBase[];
-    writable?: boolean;
-    priority?: number;
-    index?: number;
-    commandable?: boolean;
-}
-
 export interface IBACnetTag {
     num: number;
     type: BACnetTagTypes;
