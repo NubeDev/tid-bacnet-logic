@@ -1,5 +1,5 @@
 import {
-    IBACnetObjectProperty,
+    IBACnetPropertyValue,
 } from './bacnet.interface';
 
 import {
@@ -49,7 +49,7 @@ export interface IWriteUnconfirmedReqCOVNotification {
     processId: BACnetTypes.BACnetUnsignedInteger;
     devObjId: BACnetTypes.BACnetObjectId;
     unitObjId: BACnetTypes.BACnetObjectId;
-    reportedProps: IBACnetObjectProperty[];
+    reportedProps: IBACnetPropertyValue[];
 }
 
 export interface IServiceUnconfirmedReqCOVNotification
@@ -72,11 +72,11 @@ export interface IWriteConfirmedReq {
 }
 export interface IWriteConfirmedReqReadProperty {
     unitObjId: BACnetTypes.BACnetObjectId;
-    unitProp: IBACnetObjectProperty;
+    unitProp: IBACnetPropertyValue;
 }
 export interface IWriteConfirmedReqWriteProperty {
     unitObjId: BACnetTypes.BACnetObjectId;
-    unitProp: IBACnetObjectProperty;
+    unitProp: IBACnetPropertyValue;
 }
 export interface IWriteConfirmedReqSubscribeCOVProperty {
     processId: BACnetTypes.BACnetUnsignedInteger;
@@ -131,7 +131,7 @@ export interface IWriteComplexACK {
 }
 export interface IWriteComplexACKReadProperty {
     unitObjId: BACnetTypes.BACnetObjectId;
-    unitProp: IBACnetObjectProperty;
+    unitProp: IBACnetPropertyValue;
 }
 
 export interface IServiceComplexACKReadProperty
