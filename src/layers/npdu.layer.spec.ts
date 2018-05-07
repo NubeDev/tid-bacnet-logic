@@ -198,7 +198,7 @@ describe('NPDU', () => {
         // it('should return writer with correct signature if APDU is not defained and NPDU is defined', () => {
         //     const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
         //     const writer = blvc.writeBLVCLayer({
-        //         func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
+        //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: npduWriter,
         //         apdu: null,
         //     });
@@ -210,7 +210,7 @@ describe('NPDU', () => {
         // it('should return writer with correct signature if APDU is defained and NPDU is not defined', () => {
         //     const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
         //     const writer = blvc.writeBLVCLayer({
-        //         func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
+        //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: null,
         //         apdu: apduWriter,
         //     });
@@ -223,7 +223,7 @@ describe('NPDU', () => {
         //     const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
         //     const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
         //     const writer = blvc.writeBLVCLayer({
-        //         func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
+        //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: npduWriter,
         //         apdu: apduWriter,
         //     });

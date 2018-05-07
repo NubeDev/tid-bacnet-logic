@@ -25,7 +25,7 @@ export class ConfirmedReqPDU {
         const reader = new BACnetReader(buf);
 
         let reqMap: Interfaces.ConfirmedRequest.Read.Layer;
-        let serviceChoice: Enums.BACnet.ConfirmedServiceChoice;
+        let serviceChoice: Enums.ConfirmedServiceChoice;
         let serviceData: Interfaces.ConfirmedRequest.Read.ServiceChoice;
         let pduType: number, pduSeg: boolean, pduMor: boolean, pduSa: boolean;
         let invokeId: number, sequenceNumber: number, proposedWindowSize: number;
@@ -62,13 +62,13 @@ export class ConfirmedReqPDU {
             serviceChoice = reader.readUInt8();
 
             switch (serviceChoice) {
-                case Enums.BACnet.ConfirmedServiceChoice.SubscribeCOV:
+                case Enums.ConfirmedServiceChoice.SubscribeCOV:
                     serviceData = this.getSubscribeCOV(reader);
                     break;
-                case Enums.BACnet.ConfirmedServiceChoice.ReadProperty:
+                case Enums.ConfirmedServiceChoice.ReadProperty:
                     serviceData = this.getReadProperty(reader);
                     break;
-                case Enums.BACnet.ConfirmedServiceChoice.WriteProperty:
+                case Enums.ConfirmedServiceChoice.WriteProperty:
                     serviceData = this.getWriteProperty(reader);
                     break;
             }
@@ -192,7 +192,7 @@ export class ConfirmedReqPDU {
 
         // Write Service Type
         let mMeta = TyperUtil.setBitRange(0x00,
-            Enums.BACnet.ServiceType.ConfirmedReqPDU, 4, 4);
+            Enums.ServiceType.ConfirmedReqPDU, 4, 4);
         mMeta = TyperUtil.setBit(mMeta, 1, params.segAccepted || false);
         writer.writeUInt8(mMeta);
 
@@ -215,17 +215,17 @@ export class ConfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.ReadProperty);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.ReadProperty);
 
         // Write Object identifier
-        params.objId.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
+        params.objId.writeParam(writer, { num: 0, type: Enums.TagType.context });
 
         // Write Property ID
-        params.prop.id.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
+        params.prop.id.writeParam(writer, { num: 1, type: Enums.TagType.context });
 
         if (params.prop.index) {
             // Write Property Array Index
-            params.prop.index.writeParam(writer, { num: 2, type: Enums.BACnet.TagType.context });
+            params.prop.index.writeParam(writer, { num: 2, type: Enums.TagType.context });
         }
 
         return writer;
@@ -241,25 +241,25 @@ export class ConfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.WriteProperty);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.WriteProperty);
 
         // Write Object identifier
-        params.objId.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
+        params.objId.writeParam(writer, { num: 0, type: Enums.TagType.context });
 
         // Write Property ID
-        params.prop.id.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
+        params.prop.id.writeParam(writer, { num: 1, type: Enums.TagType.context });
 
         if (params.prop.index) {
             // Write Property Array Index
-            params.prop.index.writeParam(writer, { num: 2, type: Enums.BACnet.TagType.context });
+            params.prop.index.writeParam(writer, { num: 2, type: Enums.TagType.context });
         }
 
         // Write Property Value
-        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.BACnet.TagType.context });
+        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
 
         if (params.prop.priority) {
             // Write Property Priority
-            params.prop.priority.writeParam(writer, { num: 4, type: Enums.BACnet.TagType.context });
+            params.prop.priority.writeParam(writer, { num: 4, type: Enums.TagType.context });
         }
 
         return writer;
@@ -276,27 +276,27 @@ export class ConfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.SubscribeCOV);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.SubscribeCOV);
 
         // Write Subscriber Process Identifier
-        params.subProcessId.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
+        params.subProcessId.writeParam(writer, { num: 0, type: Enums.TagType.context });
 
         // Monitored Object Identifier
-        params.objId.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
+        params.objId.writeParam(writer, { num: 1, type: Enums.TagType.context });
 
         if (_.isNil(params.issConfNotif)) {
             return writer;
         }
 
         // Issue Confirmed Notifications
-        params.issConfNotif.writeParam(writer, { num: 2, type: Enums.BACnet.TagType.context });
+        params.issConfNotif.writeParam(writer, { num: 2, type: Enums.TagType.context });
 
         if (_.isNil(params.lifetime)) {
             return writer;
         }
 
         // Issue Confirmed Notifications
-        params.lifetime.writeParam(writer, { num: 3, type: Enums.BACnet.TagType.context });
+        params.lifetime.writeParam(writer, { num: 3, type: Enums.TagType.context });
 
         return writer;
     }

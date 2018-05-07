@@ -30,7 +30,7 @@ export class SimpleACKService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: Enums.BACnet.BLVCFunction.originalUnicastNPDU,
+            func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });
@@ -61,7 +61,7 @@ export class SimpleACKService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: Enums.BACnet.BLVCFunction.originalUnicastNPDU,
+            func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });

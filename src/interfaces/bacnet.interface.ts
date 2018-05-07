@@ -12,7 +12,7 @@ export namespace BACnet {
 
     export interface Tag {
         num: number;
-        type: Enums.BACnet.TagType;
+        type: Enums.TagType;
         value?: number;
     }
 

@@ -12,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetNull extends BACnetTypeBase {
     public readonly className: string = 'BACnetNull';
-    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.nullData;
+    public readonly type: Enums.PropertyType = Enums.PropertyType.nullData;
 
     protected tag: Interfaces.BACnet.Tag;
 
@@ -43,7 +43,7 @@ export class BACnetNull extends BACnetTypeBase {
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
-        writer.writeTag(Enums.BACnet.PropertyType.nullData, 0, 0);
+        writer.writeTag(Enums.PropertyType.nullData, 0, 0);
     }
 
     /**

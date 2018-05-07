@@ -19,16 +19,16 @@ export class BACnetWriterUtil {
      * @return {Map<string, any>}
      */
     static writeProperty (writer: BACnetWriter, prop: Interfaces.BACnet.PropertyValue): void {
-        prop.id.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
+        prop.id.writeParam(writer, { num: 0, type: Enums.TagType.context });
 
         if (prop.index) {
-            prop.index.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
+            prop.index.writeParam(writer, { num: 1, type: Enums.TagType.context });
         }
 
-        this.writeValue(writer, prop.values, { num: 2, type: Enums.BACnet.TagType.context });
+        this.writeValue(writer, prop.values, { num: 2, type: Enums.TagType.context });
 
         if (prop.priority) {
-            prop.priority.writeParam(writer, { num: 3, type: Enums.BACnet.TagType.context });
+            prop.priority.writeParam(writer, { num: 3, type: Enums.TagType.context });
         }
     }
     /**

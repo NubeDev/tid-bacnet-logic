@@ -36,7 +36,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
+            func: Enums.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });
@@ -73,7 +73,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
+            func: Enums.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });
@@ -104,7 +104,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: Enums.BACnet.BLVCFunction.originalUnicastNPDU,
+            func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });

@@ -12,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetEnumerated extends BACnetTypeBase {
     public readonly className: string = 'BACnetEnumerated';
-    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.enumerated;
+    public readonly type: Enums.PropertyType = Enums.PropertyType.enumerated;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: number;
@@ -51,8 +51,8 @@ export class BACnetEnumerated extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         this.writeParam(writer, {
-            num: Enums.BACnet.PropertyType.enumerated,
-            type: Enums.BACnet.TagType.application,
+            num: Enums.PropertyType.enumerated,
+            type: Enums.TagType.application,
         });
     }
 

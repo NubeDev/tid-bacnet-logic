@@ -12,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetObjectId extends BACnetTypeBase {
     public readonly className: string = 'BACnetObjectId';
-    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.objectIdentifier;
+    public readonly type: Enums.PropertyType = Enums.PropertyType.objectIdentifier;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: Interfaces.BACnet.Type.ObjectId;
@@ -54,8 +54,8 @@ export class BACnetObjectId extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         this.writeParam(writer, {
-            num: Enums.BACnet.PropertyType.objectIdentifier,
-            type: Enums.BACnet.TagType.application,
+            num: Enums.PropertyType.objectIdentifier,
+            type: Enums.TagType.application,
         });
     }
 

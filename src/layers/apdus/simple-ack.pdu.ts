@@ -25,7 +25,7 @@ export class SimpleACKPDU {
         const reader = new BACnetReader(buf);
 
         let reqMap: Interfaces.SimpleACK.Read.Layer;
-        let serviceChoice: Enums.BACnet.ConfirmedServiceChoice, serviceData: Interfaces.SimpleACK.Read.ServiceChoice;
+        let serviceChoice: Enums.ConfirmedServiceChoice, serviceData: Interfaces.SimpleACK.Read.ServiceChoice;
         let pduType: number, invokeId: number;
 
         try {
@@ -40,10 +40,10 @@ export class SimpleACKPDU {
             serviceChoice = reader.readUInt8();
 
             switch (serviceChoice) {
-                case Enums.BACnet.ConfirmedServiceChoice.SubscribeCOV:
+                case Enums.ConfirmedServiceChoice.SubscribeCOV:
                     serviceData = this.getSubscribeCOV(reader);
                     break;
-                case Enums.BACnet.ConfirmedServiceChoice.WriteProperty:
+                case Enums.ConfirmedServiceChoice.WriteProperty:
                     serviceData = this.getWriteProperty(reader);
                     break;
             }
@@ -96,7 +96,7 @@ export class SimpleACKPDU {
 
         // Write Service Type
         const mMeta = TyperUtil.setBitRange(0x00,
-            Enums.BACnet.ServiceType.SimpleACKPDU, 4, 4);
+            Enums.ServiceType.SimpleACKPDU, 4, 4);
         writer.writeUInt8(mMeta);
 
         // Write InvokeID
@@ -115,7 +115,7 @@ export class SimpleACKPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.SubscribeCOV);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.SubscribeCOV);
 
         return writer;
     }
@@ -130,7 +130,7 @@ export class SimpleACKPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.WriteProperty);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.WriteProperty);
 
         return writer;
     }

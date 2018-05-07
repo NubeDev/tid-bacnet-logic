@@ -12,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetUnsignedInteger extends BACnetTypeBase {
     public readonly className: string = 'BACnetUnsignedInteger';
-    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.unsignedInt;
+    public readonly type: Enums.PropertyType = Enums.PropertyType.unsignedInt;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: number;
@@ -63,8 +63,8 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         this.writeParam(writer, {
-            num: Enums.BACnet.PropertyType.unsignedInt,
-            type: Enums.BACnet.TagType.application,
+            num: Enums.PropertyType.unsignedInt,
+            type: Enums.TagType.application,
         });
     }
 

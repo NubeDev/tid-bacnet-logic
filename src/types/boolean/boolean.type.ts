@@ -12,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetBoolean extends BACnetTypeBase {
     public readonly className: string = 'BACnetBoolean';
-    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.boolean;
+    public readonly type: Enums.PropertyType = Enums.PropertyType.boolean;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: boolean;
@@ -49,7 +49,7 @@ export class BACnetBoolean extends BACnetTypeBase {
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
-        writer.writeTag(Enums.BACnet.PropertyType.boolean, Enums.BACnet.TagType.application, +this.data);
+        writer.writeTag(Enums.PropertyType.boolean, Enums.TagType.application, +this.data);
     }
 
     /**

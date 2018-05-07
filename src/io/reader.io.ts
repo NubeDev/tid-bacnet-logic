@@ -182,7 +182,7 @@ export class BACnetReader {
      * @return {boolean}
      */
     public isOpeningTag (tag: Interfaces.BACnet.Tag): boolean {
-        return tag.type === Enums.BACnet.TagType.context
+        return tag.type === Enums.TagType.context
             && tag.value === 0x06;
     }
 
@@ -193,7 +193,7 @@ export class BACnetReader {
      * @return {boolean}
      */
     public isClosingTag (tag: Interfaces.BACnet.Tag): boolean {
-        return tag.type === Enums.BACnet.TagType.context
+        return tag.type === Enums.TagType.context
             && tag.value === 0x07;
     }
 }

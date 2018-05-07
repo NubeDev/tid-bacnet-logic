@@ -34,19 +34,19 @@ export class APDU {
 
             let reqInst;
             switch (pduType) {
-                case Enums.BACnet.ServiceType.ConfirmedReqPDU: {
+                case Enums.ServiceType.ConfirmedReqPDU: {
                     reqInst = new ConfirmedReqPDU();
                     break;
                 }
-                case Enums.BACnet.ServiceType.UnconfirmedReqPDU: {
+                case Enums.ServiceType.UnconfirmedReqPDU: {
                     reqInst = new UnconfirmedReqPDU();
                     break;
                 }
-                case Enums.BACnet.ServiceType.SimpleACKPDU: {
+                case Enums.ServiceType.SimpleACKPDU: {
                     reqInst = new SimpleACKPDU();
                     break;
                 }
-                case Enums.BACnet.ServiceType.ComplexACKPDU: {
+                case Enums.ServiceType.ComplexACKPDU: {
                     reqInst = new ComplexACKPDU();
                     break;
                 }

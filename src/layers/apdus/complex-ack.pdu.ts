@@ -25,7 +25,7 @@ export class ComplexACKPDU {
         const reader = new BACnetReader(buf);
 
         let reqMap: Interfaces.ComplexACK.Read.Layer;
-        let serviceChoice: Enums.BACnet.ConfirmedServiceChoice;
+        let serviceChoice: Enums.ConfirmedServiceChoice;
         let serviceData: Interfaces.ComplexACK.Read.ServiceChoice;
         let pduType: number, pduSeg: boolean, pduMor: boolean;
         let invokeId: number, sequenceNumber: number, proposedWindowSize: number;
@@ -52,7 +52,7 @@ export class ComplexACKPDU {
             serviceChoice = reader.readUInt8();
 
             switch (serviceChoice) {
-                case Enums.BACnet.ConfirmedServiceChoice.ReadProperty:
+                case Enums.ConfirmedServiceChoice.ReadProperty:
                     serviceData = this.getReadProperty(reader);
                     break;
             }
@@ -114,7 +114,7 @@ export class ComplexACKPDU {
         // Write service meta
         // Set service type
         let mMeta = TyperUtil.setBitRange(0x00,
-            Enums.BACnet.ServiceType.ComplexACKPDU, 4, 4);
+            Enums.ServiceType.ComplexACKPDU, 4, 4);
 
         // Set service SEG flag
         if (!_.isNil(params.seg)) {
@@ -144,21 +144,21 @@ export class ComplexACKPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnet.ConfirmedServiceChoice.ReadProperty);
+        writer.writeUInt8(Enums.ConfirmedServiceChoice.ReadProperty);
 
         // Write Object identifier
-        params.objId.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
+        params.objId.writeParam(writer, { num: 0, type: Enums.TagType.context });
 
         // Write Property ID
-        params.prop.id.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
+        params.prop.id.writeParam(writer, { num: 1, type: Enums.TagType.context });
 
         if (params.prop.index) {
             // Write Property Array Index
-            params.prop.index.writeParam(writer, { num: 2, type: Enums.BACnet.TagType.context });
+            params.prop.index.writeParam(writer, { num: 2, type: Enums.TagType.context });
         }
 
         // Write Property Value
-        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.BACnet.TagType.context });
+        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
 
         return writer;
     }
