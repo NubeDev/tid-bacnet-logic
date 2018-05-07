@@ -1,6 +1,4 @@
-import {
-    BLVCFunction,
-} from '../enums';
+import * as Enums from '../enums';
 
 import { complexACKPDU } from '../layers/apdus';
 import { blvc, npdu } from '../layers';
@@ -32,7 +30,7 @@ export class ComplexACKService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: BLVCFunction.originalUnicastNPDU,
+            func: Enums.BACnet.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });

@@ -2,9 +2,7 @@ import * as _ from 'lodash';
 
 import { BACnetTypeBase } from '../type.base';
 
-import {
-    BACnetPropTypes,
-} from '../../enums';
+import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
@@ -18,7 +16,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetStatusFlags extends BACnetTypeBase {
     public readonly className: string = 'BACnetBitString';
-    public readonly type: BACnetPropTypes = BACnetPropTypes.bitString;
+    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.bitString;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: Interfaces.BACnet.Type.StatusFlags;
@@ -68,7 +66,7 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * @return {void}
      */
     public writeValue (writer: BACnetWriter) {
-        writer.writeTag(BACnetPropTypes.bitString, 0, 2);
+        writer.writeTag(Enums.BACnet.PropertyType.bitString, 0, 2);
 
         // Write unused bits
         writer.writeUInt8(0x04);

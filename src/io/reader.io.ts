@@ -4,12 +4,6 @@ import * as Errors from '../errors';
 
 import * as Interfaces from '../interfaces';
 
-import {
-    BACnetPropertyId,
-    BACnetPropTypes,
-    BACnetTagTypes,
-} from '../enums';
-
 import * as Enums from '../enums';
 
 import { Offset } from './offset.io';
@@ -188,7 +182,7 @@ export class BACnetReader {
      * @return {boolean}
      */
     public isOpeningTag (tag: Interfaces.BACnet.Tag): boolean {
-        return tag.type === BACnetTagTypes.context
+        return tag.type === Enums.BACnet.TagType.context
             && tag.value === 0x06;
     }
 
@@ -199,7 +193,7 @@ export class BACnetReader {
      * @return {boolean}
      */
     public isClosingTag (tag: Interfaces.BACnet.Tag): boolean {
-        return tag.type === BACnetTagTypes.context
+        return tag.type === Enums.BACnet.TagType.context
             && tag.value === 0x07;
     }
 }

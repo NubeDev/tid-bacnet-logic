@@ -1,7 +1,4 @@
-import {
-    BACnetPropertyId,
-    BACnetTagTypes,
-} from '../enums';
+import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
@@ -15,7 +12,7 @@ export namespace BACnet {
 
     export interface Tag {
         num: number;
-        type: BACnetTagTypes;
+        type: Enums.BACnet.TagType;
         value?: number;
     }
 

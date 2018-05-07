@@ -73,29 +73,29 @@ export class BACnetReaderUtil {
                 // Context Number - Context tag - "Closing" Tag
                 break;
             }
-            const paramValueType: Enums.BACnetPropTypes = paramValueTag.num;
+            const paramValueType: Enums.BACnet.PropertyType = paramValueTag.num;
 
             let inst: BACnetTypes.BACnetTypeBase;
             switch (paramValueType) {
-                case Enums.BACnetPropTypes.boolean:
+                case Enums.BACnet.PropertyType.boolean:
                     inst = new BACnetTypes.BACnetBoolean();
                     break;
-                case Enums.BACnetPropTypes.unsignedInt:
+                case Enums.BACnet.PropertyType.unsignedInt:
                     inst = new BACnetTypes.BACnetUnsignedInteger();
                     break;
-                case Enums.BACnetPropTypes.real:
+                case Enums.BACnet.PropertyType.real:
                     inst = new BACnetTypes.BACnetReal();
                     break;
-                case Enums.BACnetPropTypes.characterString:
+                case Enums.BACnet.PropertyType.characterString:
                     inst = new BACnetTypes.BACnetCharacterString();
                     break;
-                case Enums.BACnetPropTypes.bitString:
+                case Enums.BACnet.PropertyType.bitString:
                     inst = new BACnetTypes.BACnetStatusFlags();
                     break;
-                case Enums.BACnetPropTypes.enumerated:
+                case Enums.BACnet.PropertyType.enumerated:
                     inst = new BACnetTypes.BACnetEnumerated();
                     break;
-                case Enums.BACnetPropTypes.objectIdentifier:
+                case Enums.BACnet.PropertyType.objectIdentifier:
                     inst = new BACnetTypes.BACnetObjectId();
                     break;
             }

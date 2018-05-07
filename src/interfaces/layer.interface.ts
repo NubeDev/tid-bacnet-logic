@@ -16,7 +16,7 @@ export namespace BLVC {
     export namespace Read {
         export interface Layer {
             type: number;
-            func: Enums.BLVCFunction;
+            func: Enums.BACnet.BLVCFunction;
             length: number;
             npdu: NPDU.Read.Layer;
         }
@@ -24,7 +24,7 @@ export namespace BLVC {
 
     export namespace Write {
         export interface Layer {
-            func: Enums.BLVCFunction;
+            func: Enums.BACnet.BLVCFunction;
             npdu: BACnetWriter;
             apdu: BACnetWriter;
         }
@@ -100,14 +100,14 @@ export namespace APDU {
 export namespace ConfirmedRequest {
     export namespace Read {
         export interface Layer {
-            type: Enums.BACnetServiceTypes;
+            type: Enums.BACnet.ServiceType;
             seg: boolean;
             mor: boolean;
             sa: boolean;
             maxSegs: number;
             maxResp: number;
             invokeId: number;
-            serviceChoice: Enums.BACnetConfirmedService;
+            serviceChoice: Enums.BACnet.ConfirmedServiceChoice;
             service: ServiceChoice;
         }
 
@@ -182,8 +182,8 @@ export namespace ConfirmedRequest {
 export namespace UnconfirmedRequest {
     export namespace Read {
         export interface Layer {
-            type: Enums.BACnetServiceTypes;
-            serviceChoice: Enums.BACnetUnconfirmedService;
+            type: Enums.BACnet.ServiceType;
+            serviceChoice: Enums.BACnet.UnconfirmedServiceChoice;
             service: ServiceChoice;
         }
 
@@ -250,13 +250,13 @@ export namespace UnconfirmedRequest {
 export namespace ComplexACK {
     export namespace Read {
         export interface Layer {
-            type: Enums.BACnetServiceTypes;
+            type: Enums.BACnet.ServiceType;
             seg: boolean;
             mor: boolean;
             invokeId: number;
             sequenceNumber: number;
             proposedWindowSize: number;
-            serviceChoice: Enums.BACnetConfirmedService;
+            serviceChoice: Enums.BACnet.ConfirmedServiceChoice;
             service: ServiceChoice;
         }
 
@@ -291,9 +291,9 @@ export namespace ComplexACK {
 export namespace SimpleACK {
     export namespace Read {
         export interface Layer {
-            type: Enums.BACnetServiceTypes;
+            type: Enums.BACnet.ServiceType;
             invokeId: number;
-            serviceChoice: Enums.BACnetConfirmedService;
+            serviceChoice: Enums.BACnet.ConfirmedServiceChoice;
             service: ServiceChoice;
         }
 

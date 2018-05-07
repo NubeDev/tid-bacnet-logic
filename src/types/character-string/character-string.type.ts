@@ -2,9 +2,7 @@ import * as _ from 'lodash';
 
 import { BACnetTypeBase } from '../type.base';
 
-import {
-    BACnetPropTypes,
-} from '../../enums';
+import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
@@ -14,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetCharacterString extends BACnetTypeBase {
     public readonly className: string = 'BACnetCharacterString';
-    public readonly type: BACnetPropTypes = BACnetPropTypes.characterString;
+    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.characterString;
 
     protected tag: Interfaces.BACnet.Tag;
     private encoding: string;
@@ -61,7 +59,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         // DataType - Application tag - Extended value (5)
-        writer.writeTag(BACnetPropTypes.characterString, 0, 5);
+        writer.writeTag(Enums.BACnet.PropertyType.characterString, 0, 5);
 
         // Write lenght
         const paramValueLen = this.data.length + 1;

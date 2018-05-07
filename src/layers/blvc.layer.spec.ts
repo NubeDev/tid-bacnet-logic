@@ -7,9 +7,7 @@ import { spy, SinonSpy } from 'sinon';
 import { BLVC } from './blvc.layer';
 import { NPDU } from './npdu.layer';
 
-import {
-    BLVCFunction,
-} from '../enums';
+import * as Enums from '../enums';
 
 import { BACnetWriter } from '../io';
 
@@ -61,7 +59,7 @@ describe('BLVC', () => {
 
         it('should return writer with correct signature if APDU and NPDU are not defined', () => {
             const writer = blvc.writeBLVCLayer({
-                func: BLVCFunction.originalBroadcastNPDU,
+                func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
                 npdu: null,
                 apdu: null,
             });
@@ -73,7 +71,7 @@ describe('BLVC', () => {
         it('should return writer with correct signature if APDU is not defained and NPDU is defined', () => {
             const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
             const writer = blvc.writeBLVCLayer({
-                func: BLVCFunction.originalBroadcastNPDU,
+                func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
                 npdu: npduWriter,
                 apdu: null,
             });
@@ -85,7 +83,7 @@ describe('BLVC', () => {
         it('should return writer with correct signature if APDU is defained and NPDU is not defined', () => {
             const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
             const writer = blvc.writeBLVCLayer({
-                func: BLVCFunction.originalBroadcastNPDU,
+                func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
                 npdu: null,
                 apdu: apduWriter,
             });
@@ -98,7 +96,7 @@ describe('BLVC', () => {
             const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
             const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
             const writer = blvc.writeBLVCLayer({
-                func: BLVCFunction.originalBroadcastNPDU,
+                func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
                 npdu: npduWriter,
                 apdu: apduWriter,
             });

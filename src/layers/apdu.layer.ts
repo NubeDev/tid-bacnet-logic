@@ -11,7 +11,7 @@ import {
     ComplexACKPDU,
 } from './apdus';
 
-import { BACnetServiceTypes } from '../enums';
+import * as Enums from '../enums';
 
 import * as Interfaces from '../interfaces';
 
@@ -34,19 +34,19 @@ export class APDU {
 
             let reqInst;
             switch (pduType) {
-                case BACnetServiceTypes.ConfirmedReqPDU: {
+                case Enums.BACnet.ServiceType.ConfirmedReqPDU: {
                     reqInst = new ConfirmedReqPDU();
                     break;
                 }
-                case BACnetServiceTypes.UnconfirmedReqPDU: {
+                case Enums.BACnet.ServiceType.UnconfirmedReqPDU: {
                     reqInst = new UnconfirmedReqPDU();
                     break;
                 }
-                case BACnetServiceTypes.SimpleACKPDU: {
+                case Enums.BACnet.ServiceType.SimpleACKPDU: {
                     reqInst = new SimpleACKPDU();
                     break;
                 }
-                case BACnetServiceTypes.ComplexACKPDU: {
+                case Enums.BACnet.ServiceType.ComplexACKPDU: {
                     reqInst = new ComplexACKPDU();
                     break;
                 }

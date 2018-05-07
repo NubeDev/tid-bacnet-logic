@@ -1,6 +1,4 @@
-import {
-    BLVCFunction,
-} from '../enums';
+import * as Enums from '../enums';
 
 import { unconfirmedReqPDU } from '../layers/apdus';
 import { blvc, npdu } from '../layers';
@@ -38,7 +36,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: BLVCFunction.originalBroadcastNPDU,
+            func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });
@@ -75,7 +73,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: BLVCFunction.originalBroadcastNPDU,
+            func: Enums.BACnet.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });
@@ -106,7 +104,7 @@ export class UnconfirmedReqService {
 
         // Generate BLVC writer
         const writerBLVC = blvc.writeBLVCLayer({
-            func: BLVCFunction.originalUnicastNPDU,
+            func: Enums.BACnet.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
         });

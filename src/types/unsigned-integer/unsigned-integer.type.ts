@@ -2,11 +2,7 @@ import * as _ from 'lodash';
 
 import { BACnetTypeBase } from '../type.base';
 
-import {
-    BACnetPropTypes,
-    BACnetTagTypes,
-    OpertionMaxValue,
-} from '../../enums';
+import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
@@ -16,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetUnsignedInteger extends BACnetTypeBase {
     public readonly className: string = 'BACnetUnsignedInteger';
-    public readonly type: BACnetPropTypes = BACnetPropTypes.unsignedInt;
+    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.unsignedInt;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: number;
@@ -67,8 +63,8 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         this.writeParam(writer, {
-            num: BACnetPropTypes.unsignedInt,
-            type: BACnetTagTypes.application,
+            num: Enums.BACnet.PropertyType.unsignedInt,
+            type: Enums.BACnet.TagType.application,
         });
     }
 
@@ -158,11 +154,11 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * @return {number}
      */
     public getUIntSize (uIntValue: number): number {
-        if (uIntValue <= OpertionMaxValue.uInt8) {
+        if (uIntValue <= Enums.OpertionMaxValue.uInt8) {
             return 1;
-        } else if (uIntValue <= OpertionMaxValue.uInt16) {
+        } else if (uIntValue <= Enums.OpertionMaxValue.uInt16) {
             return 2;
-        } else if (uIntValue <= OpertionMaxValue.uInt32) {
+        } else if (uIntValue <= Enums.OpertionMaxValue.uInt32) {
             return 4;
         }
     }

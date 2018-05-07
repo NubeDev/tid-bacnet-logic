@@ -25,7 +25,8 @@ export class UnconfirmedReqPDU {
         const reader = new BACnetReader(buf);
 
         let reqMap: Interfaces.UnconfirmedRequest.Read.Layer;
-        let serviceChoice: Enums.BACnetUnconfirmedService, serviceData: Interfaces.UnconfirmedRequest.Read.ServiceChoice;
+        let serviceChoice: Enums.BACnet.UnconfirmedServiceChoice;
+        let serviceData: Interfaces.UnconfirmedRequest.Read.ServiceChoice;
         let pduType: number;
 
         try {
@@ -37,13 +38,13 @@ export class UnconfirmedReqPDU {
             serviceChoice = reader.readUInt8();
 
             switch (serviceChoice) {
-                case Enums.BACnetUnconfirmedService.iAm:
+                case Enums.BACnet.UnconfirmedServiceChoice.iAm:
                     serviceData = this.getIAm(reader);
                     break;
-                case Enums.BACnetUnconfirmedService.whoIs:
+                case Enums.BACnet.UnconfirmedServiceChoice.whoIs:
                     serviceData = this.getWhoIs(reader);
                     break;
-                case Enums.BACnetUnconfirmedService.covNotification:
+                case Enums.BACnet.UnconfirmedServiceChoice.covNotification:
                     serviceData = this.getCOVNotification(reader);
                     break;
             }
@@ -158,7 +159,7 @@ export class UnconfirmedReqPDU {
 
         // Write Service Type
         const mMeta = TyperUtil.setBitRange(0x00,
-            Enums.BACnetServiceTypes.UnconfirmedReqPDU, 4, 4);
+            Enums.BACnet.ServiceType.UnconfirmedReqPDU, 4, 4);
         writer.writeUInt8(mMeta);
 
         return writer;
@@ -174,7 +175,7 @@ export class UnconfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnetUnconfirmedService.whoIs);
+        writer.writeUInt8(Enums.BACnet.UnconfirmedServiceChoice.whoIs);
 
         return writer;
     }
@@ -189,7 +190,7 @@ export class UnconfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnetUnconfirmedService.iAm);
+        writer.writeUInt8(Enums.BACnet.UnconfirmedServiceChoice.iAm);
 
         // Write Object identifier
         params.objId.writeValue(writer);
@@ -218,26 +219,26 @@ export class UnconfirmedReqPDU {
         const writer = new BACnetWriter();
 
         // Write Service choice
-        writer.writeUInt8(Enums.BACnetUnconfirmedService.covNotification);
+        writer.writeUInt8(Enums.BACnet.UnconfirmedServiceChoice.covNotification);
 
         // Write Process Identifier
-        params.subProcessId.writeParam(writer, { num: 0, type: Enums.BACnetTagTypes.context });
+        params.subProcessId.writeParam(writer, { num: 0, type: Enums.BACnet.TagType.context });
 
         // Write Object Identifier for master Object
-        params.devId.writeParam(writer, { num: 1, type: Enums.BACnetTagTypes.context });
+        params.devId.writeParam(writer, { num: 1, type: Enums.BACnet.TagType.context });
 
         // Write Object Identifier for slave Object
-        params.objId.writeParam(writer, { num: 2, type: Enums.BACnetTagTypes.context });
+        params.objId.writeParam(writer, { num: 2, type: Enums.BACnet.TagType.context });
 
         // Write timer remaining
         if (params.timeRemaining) {
-            params.timeRemaining.writeParam(writer, { num: 3, type: Enums.BACnetTagTypes.context });
+            params.timeRemaining.writeParam(writer, { num: 3, type: Enums.BACnet.TagType.context });
         } else {
             const timeRemaining = new BACnetTypes.BACnetUnsignedInteger(0x00);
-            timeRemaining.writeParam(writer, { num: 3, type: Enums.BACnetTagTypes.context });
+            timeRemaining.writeParam(writer, { num: 3, type: Enums.BACnet.TagType.context });
         }
 
-        BACnetWriterUtil.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.BACnetTagTypes.context });
+        BACnetWriterUtil.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.BACnet.TagType.context });
 
         return writer;
     }

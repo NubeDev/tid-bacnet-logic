@@ -2,10 +2,7 @@ import * as _ from 'lodash';
 
 import { BACnetTypeBase } from '../type.base';
 
-import {
-    BACnetPropTypes,
-    BACnetTagTypes,
-} from '../../enums';
+import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
@@ -15,7 +12,7 @@ import { BACnetReader, BACnetWriter } from '../../io';
 
 export class BACnetObjectId extends BACnetTypeBase {
     public readonly className: string = 'BACnetObjectId';
-    public readonly type: BACnetPropTypes = BACnetPropTypes.objectIdentifier;
+    public readonly type: Enums.BACnet.PropertyType = Enums.BACnet.PropertyType.objectIdentifier;
 
     protected tag: Interfaces.BACnet.Tag;
     protected data: Interfaces.BACnet.Type.ObjectId;
@@ -57,8 +54,8 @@ export class BACnetObjectId extends BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void {
         this.writeParam(writer, {
-            num: BACnetPropTypes.objectIdentifier,
-            type: BACnetTagTypes.application,
+            num: Enums.BACnet.PropertyType.objectIdentifier,
+            type: Enums.BACnet.TagType.application,
         });
     }
 
