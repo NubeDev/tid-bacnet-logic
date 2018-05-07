@@ -29,7 +29,7 @@ export class BACnetStatusFlags extends BACnetTypeBase {
         this.data = this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetStatusFlags {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetStatusFlags {
         return super.readParam(reader, opts);
     }
 
@@ -40,7 +40,7 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions) {
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions) {
         const tag = reader.readTag(opts);
         this.tag = tag;
 

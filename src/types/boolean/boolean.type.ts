@@ -27,7 +27,7 @@ export class BACnetBoolean extends BACnetTypeBase {
             ? false : this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetBoolean {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetBoolean {
         return super.readParam(reader, opts);
     }
 
@@ -38,7 +38,7 @@ export class BACnetBoolean extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 

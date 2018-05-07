@@ -16,7 +16,7 @@ export class BACnetReaderUtil {
      *
      * @return {Map<string, any>}
      */
-    static readProperty (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.PropertyValue {
+    static readProperty (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.BACnet.PropertyValue {
         const propId = BACnetTypes.BACnetEnumerated.readParam(reader);
         const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true });
         const propValues = BACnetReaderUtil.readPropertyValues(reader, opts);
@@ -35,7 +35,7 @@ export class BACnetReaderUtil {
      *
      * @return {Map<string, any>}
      */
-    static readProperties (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.PropertyValue[] {
+    static readProperties (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.BACnet.PropertyValue[] {
         // Context Number - Context tag - "Opening" Tag
         const openTag = reader.readTag(opts);
 
@@ -61,7 +61,7 @@ export class BACnetReaderUtil {
      *
      * @return {Map<string, any>}
      */
-    static readPropertyValues (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetTypes.BACnetTypeBase[] {
+    static readPropertyValues (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetTypes.BACnetTypeBase[] {
         // Context Number - Context tag - "Opening" Tag
         const openTag = reader.readTag(opts);
 

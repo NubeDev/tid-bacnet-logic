@@ -28,7 +28,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
             ? 0 : this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetUnsignedInteger {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetUnsignedInteger {
         return super.readParam(reader, opts);
     }
 
@@ -39,7 +39,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 

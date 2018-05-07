@@ -42,7 +42,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt8 (opts?: Interfaces.BACnet.ReaderOptions): number {
+    public readUInt8 (opts?: Interfaces.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt8(this.offset.inc());
         }, opts, `readUInt8`);
@@ -53,7 +53,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt16BE (opts?: Interfaces.BACnet.ReaderOptions): number {
+    public readUInt16BE (opts?: Interfaces.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt16BE(this.offset.inc(2));
         }, opts, `readUInt16BE`);
@@ -64,7 +64,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt32BE (opts?: Interfaces.BACnet.ReaderOptions): number {
+    public readUInt32BE (opts?: Interfaces.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt32BE(this.offset.inc(4));
         }, opts, `readUInt32BE`);
@@ -75,7 +75,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readFloatBE (opts?: Interfaces.BACnet.ReaderOptions): number {
+    public readFloatBE (opts?: Interfaces.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readFloatBE(this.offset.inc(4));
         }, opts, `readFloatBE`);
@@ -89,7 +89,7 @@ export class BACnetReader {
      * @param  {number} len - lenght of string
      * @return {string}
      */
-    public readString (encoding: string, len: number, opts?: Interfaces.BACnet.ReaderOptions): string {
+    public readString (encoding: string, len: number, opts?: Interfaces.ReaderOptions): string {
         return this.handleReadOperation(() => {
             const offStart = this.offset.inc(len);
             const offEnd = this.offset.getVaule();
@@ -106,7 +106,7 @@ export class BACnetReader {
      *
      * @return {Map<string, number>}
      */
-    public readTag (opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.Tag {
+    public readTag (opts?: Interfaces.ReaderOptions): Interfaces.BACnet.Tag {
         let tagData: Interfaces.BACnet.Tag;
 
         const tag = this.readUInt8(opts);
@@ -137,7 +137,7 @@ export class BACnetReader {
      * @return {T}
      */
     private handleReadOperation <T> (operationFn: ReaderOperation<T>,
-            opts: Interfaces.BACnet.ReaderOptions, methodName: string): T {
+            opts: Interfaces.ReaderOptions, methodName: string): T {
         const readerOpts = this.extractOpts(opts);
 
         if (readerOpts.silent) {
@@ -172,8 +172,8 @@ export class BACnetReader {
         throw error;
     }
 
-    private extractOpts (opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.ReaderOptions {
-        const defOpts: Interfaces.BACnet.ReaderOptions = {
+    private extractOpts (opts?: Interfaces.ReaderOptions): Interfaces.ReaderOptions {
+        const defOpts: Interfaces.ReaderOptions = {
             optional: false,
             silent: false,
         };

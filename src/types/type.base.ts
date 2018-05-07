@@ -9,7 +9,7 @@ export class BACnetTypeBase {
     protected tag: Interfaces.BACnet.Tag;
     protected data: any;
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): any {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): any {
         const inst = new this();
         inst.readValue(reader, opts);
         return inst;
@@ -22,7 +22,7 @@ export class BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void { ; }
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void { ; }
 
     /**
      * writeValue - writes the BACnet value.

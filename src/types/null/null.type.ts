@@ -22,7 +22,7 @@ export class BACnetNull extends BACnetTypeBase {
         super();
     }
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetNull {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetNull {
         return super.readParam(reader, opts);
     }
 
@@ -33,7 +33,7 @@ export class BACnetNull extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
     }

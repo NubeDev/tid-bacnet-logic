@@ -28,7 +28,7 @@ export class BACnetObjectId extends BACnetTypeBase {
             : this.checkAndGetValue(_.clone(defValue));
     }
 
-    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetObjectId {
+    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetObjectId {
         return super.readParam(reader, opts);
     }
 
@@ -39,7 +39,7 @@ export class BACnetObjectId extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 

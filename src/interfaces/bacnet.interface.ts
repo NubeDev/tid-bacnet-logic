@@ -6,11 +6,6 @@ import {
 import * as BACnetTypes from '../types';
 
 export namespace BACnet {
-    export interface ReaderOptions {
-        optional?: boolean;
-        silent?: boolean;
-    }
-
     export interface PropertyValue {
         id: BACnetTypes.BACnetEnumerated;
         index?: BACnetTypes.BACnetUnsignedInteger;
