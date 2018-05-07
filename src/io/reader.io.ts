@@ -2,12 +2,7 @@ import * as _ from 'lodash';
 
 import * as Errors from '../errors';
 
-import {
-    IBACnetTag,
-    IBACnetTypeObjectId,
-    IBACnetPropertyValue,
-    IBACnetReaderOptions,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 import {
     BACnetPropertyId,
@@ -47,7 +42,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt8 (opts?: IBACnetReaderOptions): number {
+    public readUInt8 (opts?: Interfaces.BACnet.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt8(this.offset.inc());
         }, opts, `readUInt8`);
@@ -58,7 +53,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt16BE (opts?: IBACnetReaderOptions): number {
+    public readUInt16BE (opts?: Interfaces.BACnet.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt16BE(this.offset.inc(2));
         }, opts, `readUInt16BE`);
@@ -69,7 +64,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readUInt32BE (opts?: IBACnetReaderOptions): number {
+    public readUInt32BE (opts?: Interfaces.BACnet.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readUInt32BE(this.offset.inc(4));
         }, opts, `readUInt32BE`);
@@ -80,7 +75,7 @@ export class BACnetReader {
      *
      * @return {number}
      */
-    public readFloatBE (opts?: IBACnetReaderOptions): number {
+    public readFloatBE (opts?: Interfaces.BACnet.ReaderOptions): number {
         return this.handleReadOperation(() => {
             return this.buffer.readFloatBE(this.offset.inc(4));
         }, opts, `readFloatBE`);
@@ -94,7 +89,7 @@ export class BACnetReader {
      * @param  {number} len - lenght of string
      * @return {string}
      */
-    public readString (encoding: string, len: number, opts?: IBACnetReaderOptions): string {
+    public readString (encoding: string, len: number, opts?: Interfaces.BACnet.ReaderOptions): string {
         return this.handleReadOperation(() => {
             const offStart = this.offset.inc(len);
             const offEnd = this.offset.getVaule();
@@ -111,8 +106,8 @@ export class BACnetReader {
      *
      * @return {Map<string, number>}
      */
-    public readTag (opts?: IBACnetReaderOptions): IBACnetTag {
-        let tagData: IBACnetTag;
+    public readTag (opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.Tag {
+        let tagData: Interfaces.BACnet.Tag;
 
         const tag = this.readUInt8(opts);
 
@@ -142,7 +137,7 @@ export class BACnetReader {
      * @return {T}
      */
     private handleReadOperation <T> (operationFn: ReaderOperation<T>,
-            opts: IBACnetReaderOptions, methodName: string): T {
+            opts: Interfaces.BACnet.ReaderOptions, methodName: string): T {
         const readerOpts = this.extractOpts(opts);
 
         if (readerOpts.silent) {
@@ -177,8 +172,8 @@ export class BACnetReader {
         throw error;
     }
 
-    private extractOpts (opts?: IBACnetReaderOptions): IBACnetReaderOptions {
-        const defOpts: IBACnetReaderOptions = {
+    private extractOpts (opts?: Interfaces.BACnet.ReaderOptions): Interfaces.BACnet.ReaderOptions {
+        const defOpts: Interfaces.BACnet.ReaderOptions = {
             optional: false,
             silent: false,
         };
@@ -192,7 +187,7 @@ export class BACnetReader {
      * @param  {Map<string,number>} tag - tag
      * @return {boolean}
      */
-    public isOpeningTag (tag: IBACnetTag): boolean {
+    public isOpeningTag (tag: Interfaces.BACnet.Tag): boolean {
         return tag.type === BACnetTagTypes.context
             && tag.value === 0x06;
     }
@@ -203,7 +198,7 @@ export class BACnetReader {
      * @param  {Map<string,number>} tag - tag
      * @return {boolean}
      */
-    public isClosingTag (tag: IBACnetTag): boolean {
+    public isClosingTag (tag: Interfaces.BACnet.Tag): boolean {
         return tag.type === BACnetTagTypes.context
             && tag.value === 0x07;
     }

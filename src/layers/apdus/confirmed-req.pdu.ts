@@ -162,7 +162,7 @@ export class ConfirmedReqPDU {
     private getWriteProperty (reader: BACnetReader): Interfaces.ConfirmedRequest.Read.WriteProperty {
         let serviceData: Interfaces.ConfirmedRequest.Read.WriteProperty;
         let objId: BACnetTypes.BACnetObjectId;
-        let prop: Interfaces.IBACnetPropertyValue;
+        let prop: Interfaces.BACnet.PropertyValue;
 
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);

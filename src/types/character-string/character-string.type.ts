@@ -6,10 +6,7 @@ import {
     BACnetPropTypes,
 } from '../../enums';
 
-import {
-    IBACnetTag,
-    IBACnetReaderOptions,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
@@ -19,7 +16,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
     public readonly className: string = 'BACnetCharacterString';
     public readonly type: BACnetPropTypes = BACnetPropTypes.characterString;
 
-    protected tag: IBACnetTag;
+    protected tag: Interfaces.BACnet.Tag;
     private encoding: string;
     protected data: string;
 
@@ -30,7 +27,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
             ? '' : this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): BACnetCharacterString {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetCharacterString {
         return super.readParam(reader, opts);
     }
 
@@ -41,7 +38,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 

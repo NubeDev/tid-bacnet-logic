@@ -2,14 +2,9 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../errors';
 
-import {
-    IBACnetTypeObjectId,
-    IBACnetTag,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
-import {
-    OpertionMaxValue,
-} from '../enums';
+import * as Enums from '../enums';
 
 import { Offset } from './offset.io';
 
@@ -150,11 +145,11 @@ export class BACnetWriter {
      * writeValue - writes BACnet property value to the internal buffer.
      *
      * @param  {BACnetTypes.BACnetTypeBase|BACnetTypes.BACnetTypeBase[]} propValues - bacnet property value
-     * @param  {IBACnetTag} tag - bacnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - bacnet tag
      * @return {void}
      */
     public writeValue (propValues: BACnetTypes.BACnetTypeBase | BACnetTypes.BACnetTypeBase[],
-            tag: IBACnetTag): void {
+            tag: Interfaces.BACnet.Tag): void {
         // Context Number - Context tag - "Opening" Tag
         this.writeTag(tag.num, tag.type, 6);
 
@@ -177,11 +172,11 @@ export class BACnetWriter {
      */
     public writeUIntValue (uIntValue: number): void {
         // DataType - Application tag - DataTypeSize
-        if (uIntValue <= OpertionMaxValue.uInt8) {
+        if (uIntValue <= Enums.OpertionMaxValue.uInt8) {
             this.writeUInt8(uIntValue);
-        } else if (uIntValue <= OpertionMaxValue.uInt16) {
+        } else if (uIntValue <= Enums.OpertionMaxValue.uInt16) {
             this.writeUInt16BE(uIntValue);
-        } else if (uIntValue <= OpertionMaxValue.uInt32) {
+        } else if (uIntValue <= Enums.OpertionMaxValue.uInt32) {
             this.writeUInt32BE(uIntValue);
         }
     }

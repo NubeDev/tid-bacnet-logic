@@ -7,10 +7,7 @@ import {
     BACnetTagTypes,
 } from '../../enums';
 
-import {
-    IBACnetTag,
-    IBACnetReaderOptions,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
@@ -20,7 +17,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
     public readonly className: string = 'BACnetEnumerated';
     public readonly type: BACnetPropTypes = BACnetPropTypes.enumerated;
 
-    protected tag: IBACnetTag;
+    protected tag: Interfaces.BACnet.Tag;
     protected data: number;
 
     constructor (defValue?: number) {
@@ -30,7 +27,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
             ? 0 : this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): BACnetEnumerated {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetEnumerated {
         return super.readParam(reader, opts);
     }
 
@@ -41,7 +38,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -66,10 +63,10 @@ export class BACnetEnumerated extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "enumerated" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {IBACnetTag} tag - BACnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: IBACnetTag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
         const dataSize: number = 1;
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

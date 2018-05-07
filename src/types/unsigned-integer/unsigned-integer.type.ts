@@ -8,10 +8,7 @@ import {
     OpertionMaxValue,
 } from '../../enums';
 
-import {
-    IBACnetTag,
-    IBACnetReaderOptions,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
@@ -21,7 +18,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     public readonly className: string = 'BACnetUnsignedInteger';
     public readonly type: BACnetPropTypes = BACnetPropTypes.unsignedInt;
 
-    protected tag: IBACnetTag;
+    protected tag: Interfaces.BACnet.Tag;
     protected data: number;
 
     constructor (defValue?: number) {
@@ -31,7 +28,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
             ? 0 : this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): BACnetUnsignedInteger {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetUnsignedInteger {
         return super.readParam(reader, opts);
     }
 
@@ -42,7 +39,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -79,10 +76,10 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "unsigned integer" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {IBACnetTag} tag - BACnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: IBACnetTag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
         const dataSize = this.getUIntSize(this.data);
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

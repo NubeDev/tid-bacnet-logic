@@ -2,14 +2,14 @@ import { APIError } from '../errors';
 
 import { BACnetReader, BACnetWriter } from '../io';
 
-import { IBACnetTag, IBACnetReaderOptions } from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 export class BACnetTypeBase {
     public readonly className: string = 'BACnetTypeBase';
-    protected tag: IBACnetTag;
+    protected tag: Interfaces.BACnet.Tag;
     protected data: any;
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): any {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): any {
         const inst = new this();
         inst.readValue(reader, opts);
         return inst;
@@ -22,7 +22,7 @@ export class BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions): void { ; }
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void { ; }
 
     /**
      * writeValue - writes the BACnet value.
@@ -32,7 +32,7 @@ export class BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void { ; }
 
-    public writeParam (writer: BACnetWriter, tag: IBACnetTag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
         throw new APIError(`${this.className} - writeParam: Not implemented yet`);
     }
 
@@ -68,9 +68,9 @@ export class BACnetTypeBase {
     /**
      * getTag - returns the BACnet tag.
      *
-     * @return {IBACnetTag}
+     * @return {Interfaces.BACnet.Tag}
      */
-    public getTag (): IBACnetTag {
+    public getTag (): Interfaces.BACnet.Tag {
         return this.tag;
     }
 }

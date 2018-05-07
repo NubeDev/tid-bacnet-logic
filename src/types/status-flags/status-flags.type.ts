@@ -6,11 +6,7 @@ import {
     BACnetPropTypes,
 } from '../../enums';
 
-import {
-    IBACnetTag,
-    IBACnetTypeStatusFlags,
-    IBACnetReaderOptions,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
@@ -24,16 +20,16 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     public readonly className: string = 'BACnetBitString';
     public readonly type: BACnetPropTypes = BACnetPropTypes.bitString;
 
-    protected tag: IBACnetTag;
-    protected data: IBACnetTypeStatusFlags;
+    protected tag: Interfaces.BACnet.Tag;
+    protected data: Interfaces.BACnet.Type.StatusFlags;
 
-    constructor (defValue?: IBACnetTypeStatusFlags) {
+    constructor (defValue?: Interfaces.BACnet.Type.StatusFlags) {
         super();
 
         this.data = this.checkAndGetValue(defValue);
     }
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): BACnetStatusFlags {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetStatusFlags {
         return super.readParam(reader, opts);
     }
 
@@ -44,7 +40,7 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions) {
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions) {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -90,37 +86,37 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     /**
      * setValue - sets the new BACnet "status flags" value as internal state.
      *
-     * @param  {IBACnetTypeStatusFlags} newValue - new "status flags" value
+     * @param  {Interfaces.BACnet.Type.StatusFlags} newValue - new "status flags" value
      * @return {void}
      */
-    public setValue (newValue: IBACnetTypeStatusFlags): void {
+    public setValue (newValue: Interfaces.BACnet.Type.StatusFlags): void {
         this.data = this.checkAndGetValue(newValue);
     }
 
     /**
      * getValue - returns the internal state as current BACnet "status flags" value.
      *
-     * @return {IBACnetTypeStatusFlags}
+     * @return {Interfaces.BACnet.Type.StatusFlags}
      */
-    public getValue (): IBACnetTypeStatusFlags {
+    public getValue (): Interfaces.BACnet.Type.StatusFlags {
         return _.cloneDeep(this.data);
     }
 
     /**
      * value - sets the new BACnet "status flags" value as internal state
      *
-     * @type {IBACnetTypeStatusFlags}
+     * @type {Interfaces.BACnet.Type.StatusFlags}
      */
-    public set value (newValue: IBACnetTypeStatusFlags) {
+    public set value (newValue: Interfaces.BACnet.Type.StatusFlags) {
         this.setValue(newValue);
     }
 
     /**
      * value - returns the internal state as current BACnet "status flags" value.
      *
-     * @type {IBACnetTypeStatusFlags}
+     * @type {Interfaces.BACnet.Type.StatusFlags}
      */
-    public get value (): IBACnetTypeStatusFlags {
+    public get value (): Interfaces.BACnet.Type.StatusFlags {
         return this.getValue();
     }
 
@@ -128,10 +124,10 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * checkAndGetValue - checks if "value" is a correct "status flags" value,
      * throws the error if "value" has incorrect type.
      *
-     * @param  {IBACnetTypeStatusFlags} value - "status flags" value
-     * @return {IBACnetTypeStatusFlags}
+     * @param  {Interfaces.BACnet.Type.StatusFlags} value - "status flags" value
+     * @return {Interfaces.BACnet.Type.StatusFlags}
      */
-    private checkAndGetValue (value: IBACnetTypeStatusFlags): IBACnetTypeStatusFlags {
+    private checkAndGetValue (value: Interfaces.BACnet.Type.StatusFlags): Interfaces.BACnet.Type.StatusFlags {
         return _.assign({}, {
             fault: false,
             inAlarm: false,

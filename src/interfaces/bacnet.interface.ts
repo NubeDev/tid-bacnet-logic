@@ -5,37 +5,36 @@ import {
 
 import * as BACnetTypes from '../types';
 
-export interface IBACnetReaderOptions {
-    optional?: boolean;
-    silent?: boolean;
-}
+export namespace BACnet {
+    export interface ReaderOptions {
+        optional?: boolean;
+        silent?: boolean;
+    }
 
-export interface IBACnetPropertyValue {
-    id: BACnetTypes.BACnetEnumerated;
-    index?: BACnetTypes.BACnetUnsignedInteger;
-    values?: BACnetTypes.BACnetTypeBase[];
-    priority?: BACnetTypes.BACnetUnsignedInteger;
-}
+    export interface PropertyValue {
+        id: BACnetTypes.BACnetEnumerated;
+        index?: BACnetTypes.BACnetUnsignedInteger;
+        values?: BACnetTypes.BACnetTypeBase[];
+        priority?: BACnetTypes.BACnetUnsignedInteger;
+    }
 
-export interface IBACnetTag {
-    num: number;
-    type: BACnetTagTypes;
-    value?: number;
-}
+    export interface Tag {
+        num: number;
+        type: BACnetTagTypes;
+        value?: number;
+    }
 
+    export namespace Type {
+        export interface ObjectId {
+            type: number; // enum
+            instance: number;
+        }
 
-/**
- * Types
- */
-
-export interface IBACnetTypeObjectId {
-    type: number; // enum
-    instance: number;
-}
-
-export interface IBACnetTypeStatusFlags {
-    inAlarm?: boolean,
-    fault?: boolean,
-    overridden?: boolean,
-    outOfService?: boolean,
+        export interface StatusFlags {
+            inAlarm?: boolean,
+            fault?: boolean,
+            overridden?: boolean,
+            outOfService?: boolean,
+        }
+    }
 }

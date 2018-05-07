@@ -83,7 +83,7 @@ export class ComplexACKPDU {
         let serviceData: Interfaces.ComplexACK.Read.ReadProperty;
 
         let objId: BACnetTypes.BACnetObjectId;
-        let prop: Interfaces.IBACnetPropertyValue;
+        let prop: Interfaces.BACnet.PropertyValue;
 
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);

@@ -7,11 +7,7 @@ import {
     BACnetTagTypes,
 } from '../../enums';
 
-import {
-    IBACnetTag,
-    IBACnetTypeObjectId,
-    IBACnetReaderOptions,
-} from '../../interfaces';
+import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
@@ -21,10 +17,10 @@ export class BACnetObjectId extends BACnetTypeBase {
     public readonly className: string = 'BACnetObjectId';
     public readonly type: BACnetPropTypes = BACnetPropTypes.objectIdentifier;
 
-    protected tag: IBACnetTag;
-    protected data: IBACnetTypeObjectId;
+    protected tag: Interfaces.BACnet.Tag;
+    protected data: Interfaces.BACnet.Type.ObjectId;
 
-    constructor (defValue?: IBACnetTypeObjectId) {
+    constructor (defValue?: Interfaces.BACnet.Type.ObjectId) {
         super();
 
         this.data = _.isUndefined(defValue)
@@ -32,7 +28,7 @@ export class BACnetObjectId extends BACnetTypeBase {
             : this.checkAndGetValue(_.clone(defValue));
     }
 
-    static readParam (reader: BACnetReader, opts?: IBACnetReaderOptions): BACnetObjectId {
+    static readParam (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): BACnetObjectId {
         return super.readParam(reader, opts);
     }
 
@@ -43,7 +39,7 @@ export class BACnetObjectId extends BACnetTypeBase {
      * @param  {type} [opts = true] - change offset in the buffer of reader
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: IBACnetReaderOptions): void {
+    public readValue (reader: BACnetReader, opts?: Interfaces.BACnet.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -70,10 +66,10 @@ export class BACnetObjectId extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "object identifier" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {IBACnetTag} tag - BACnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: IBACnetTag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
         const dataSize: number = 4;
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);
@@ -86,37 +82,37 @@ export class BACnetObjectId extends BACnetTypeBase {
     /**
      * setValue - sets the new BACnet "object identifier" value as internal state.
      *
-     * @param  {IBACnetTypeObjectId} newValue - new "object identifier" value
+     * @param  {Interfaces.BACnet.Type.ObjectId} newValue - new "object identifier" value
      * @return {void}
      */
-    public setValue (newValue: IBACnetTypeObjectId): void {
+    public setValue (newValue: Interfaces.BACnet.Type.ObjectId): void {
         this.data = this.checkAndGetValue(_.clone(newValue));
     }
 
     /**
      * getValue - returns the internal state as current BACnet "object identifier" value.
      *
-     * @return {IBACnetTypeObjectId}
+     * @return {Interfaces.BACnet.Type.ObjectId}
      */
-    public getValue (): IBACnetTypeObjectId {
+    public getValue (): Interfaces.BACnet.Type.ObjectId {
         return _.cloneDeep(this.data);
     }
 
     /**
      * value - sets the new BACnet "object identifier" value as internal state
      *
-     * @type {IBACnetTypeObjectId}
+     * @type {Interfaces.BACnet.Type.ObjectId}
      */
-    public set value (newValue: IBACnetTypeObjectId) {
+    public set value (newValue: Interfaces.BACnet.Type.ObjectId) {
         this.setValue(newValue);
     }
 
     /**
      * value - returns the internal state as current BACnet "object identifier" value.
      *
-     * @type {IBACnetTypeObjectId}
+     * @type {Interfaces.BACnet.Type.ObjectId}
      */
-    public get value (): IBACnetTypeObjectId {
+    public get value (): Interfaces.BACnet.Type.ObjectId {
         return this.getValue();
     }
 
@@ -124,10 +120,10 @@ export class BACnetObjectId extends BACnetTypeBase {
      * Performs a comparison between current BACnet value and `data` to determine if
      * they are equivalent.
      *
-     * @param  {IBACnetTypeObjectId|BACnetObjectId} data - data for comparison
+     * @param  {Interfaces.BACnet.Type.ObjectId|BACnetObjectId} data - data for comparison
      * @return {boolean} - result of the comparison
      */
-    public isEqual (data: IBACnetTypeObjectId|BACnetObjectId): boolean {
+    public isEqual (data: Interfaces.BACnet.Type.ObjectId|BACnetObjectId): boolean {
         if (_.isNil(data)) {
             return false;
         }
@@ -147,10 +143,10 @@ export class BACnetObjectId extends BACnetTypeBase {
      * checkAndGetValue - checks if "value" is a correct "object identifier" value,
      * throws the error if "value" has incorrect type.
      *
-     * @param  {IBACnetTypeObjectId} value - "object identifier" value
-     * @return {IBACnetTypeObjectId}
+     * @param  {Interfaces.BACnet.Type.ObjectId} value - "object identifier" value
+     * @return {Interfaces.BACnet.Type.ObjectId}
      */
-    private checkAndGetValue (value: IBACnetTypeObjectId): IBACnetTypeObjectId {
+    private checkAndGetValue (value: Interfaces.BACnet.Type.ObjectId): Interfaces.BACnet.Type.ObjectId {
         if (!_.has(value, 'type') || !_.has(value, 'instance')) {
             throw new BACnetError('BACnetObjectId - updateValue: Value must be of type "object identifier"!');
         }
@@ -165,12 +161,12 @@ export class BACnetObjectId extends BACnetTypeBase {
      /**
       * Compares two BACnet "object identifier" values.
       *
-      * @param  {IBACnetTypeObjectId} objId1 - first "object identifier" value
-      * @param  {IBACnetTypeObjectId} objId2 - second "object identifier" value
+      * @param  {Interfaces.BACnet.Type.ObjectId} objId1 - first "object identifier" value
+      * @param  {Interfaces.BACnet.Type.ObjectId} objId2 - second "object identifier" value
       * @return {boolean} - result of the comparison
       */
-     private isEqualObjectId (objId1: IBACnetTypeObjectId,
-             objId2: IBACnetTypeObjectId): boolean {
+     private isEqualObjectId (objId1: Interfaces.BACnet.Type.ObjectId,
+             objId2: Interfaces.BACnet.Type.ObjectId): boolean {
          return objId1.type === objId2.type
              && objId1.instance === objId2.instance;
      }
@@ -182,8 +178,8 @@ export class BACnetObjectId extends BACnetTypeBase {
      * @param  {number} objId - 4 bytes of object identifier
      * @return {Map<string, any>}
      */
-    private decodeObjectIdentifier (objId: number): IBACnetTypeObjectId {
-        let objIdPayload: IBACnetTypeObjectId;
+    private decodeObjectIdentifier (objId: number): Interfaces.BACnet.Type.ObjectId {
+        let objIdPayload: Interfaces.BACnet.Type.ObjectId;
         const objType = (objId >> 22) & 0x03FF;
 
         const objInstance = objId & 0x03FFFFF;

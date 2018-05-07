@@ -2,11 +2,11 @@ import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
-import { IBACnetPropertyValue } from './bacnet.interface';
+import { BACnet } from './bacnet.interface';
 
 import { BACnetWriter } from '../io';
 
-export interface ILayerLogic {
+export interface BACnetLayer {
     blvc: BLVC.Read.Layer;
     npdu: NPDU.Read.Layer;
     apdu: APDU.Read.Layer;
@@ -115,12 +115,12 @@ export namespace ConfirmedRequest {
 
         export interface ReadProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
 
         export interface WriteProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
 
         export interface SubscribeCOV {
@@ -139,12 +139,12 @@ export namespace ConfirmedRequest {
 
         export interface ReadProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
 
         export interface WriteProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
 
         export interface SubscribeCOV {
@@ -209,7 +209,7 @@ export namespace UnconfirmedRequest {
             // Remaining lifetime of the subscription in seconds. 00 - indefinite lifetime
             timeRemaining: BACnetTypes.BACnetUnsignedInteger;
             // List of one or more `notification` property values
-            listOfValues: IBACnetPropertyValue[];
+            listOfValues: BACnet.PropertyValue[];
         }
     }
 
@@ -230,7 +230,7 @@ export namespace UnconfirmedRequest {
             devId: BACnetTypes.BACnetObjectId;
             objId: BACnetTypes.BACnetObjectId;
             timeRemaining?: BACnetTypes.BACnetUnsignedInteger;
-            listOfValues: IBACnetPropertyValue[];
+            listOfValues: BACnet.PropertyValue[];
         }
     }
 
@@ -264,7 +264,7 @@ export namespace ComplexACK {
 
         export interface ReadProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
     }
 
@@ -277,7 +277,7 @@ export namespace ComplexACK {
 
         export interface ReadProperty {
             objId: BACnetTypes.BACnetObjectId;
-            prop: IBACnetPropertyValue;
+            prop: BACnet.PropertyValue;
         }
     }
 

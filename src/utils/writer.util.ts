@@ -2,11 +2,7 @@ import * as _ from 'lodash';
 
 import * as Errors from '../errors';
 
-import {
-    IBACnetPropertyValue,
-    IBACnetReaderOptions,
-    IBACnetTag,
-} from '../interfaces';
+import * as Interfaces from '../interfaces';
 
 import * as Enums from '../enums';
 
@@ -22,7 +18,7 @@ export class BACnetWriterUtil {
      * @param  {IBACnetPropertyValue} prop - BACnet property
      * @return {Map<string, any>}
      */
-    static writeProperty (writer: BACnetWriter, prop: IBACnetPropertyValue): void {
+    static writeProperty (writer: BACnetWriter, prop: Interfaces.BACnet.PropertyValue): void {
         prop.id.writeParam(writer, { num: 0, type: Enums.BACnetTagTypes.context });
 
         if (prop.index) {
@@ -40,10 +36,10 @@ export class BACnetWriterUtil {
      *
      * @param  {BACnetWriter} writer - instance of the `writer`
      * @param  {IBACnetPropertyValue[]} props - BACnet properties
-     * @param  {IBACnetTag} tag - BACnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
      * @return {void}
      */
-    static writeProperties (writer: BACnetWriter, props: IBACnetPropertyValue[], tag: IBACnetTag): void {
+    static writeProperties (writer: BACnetWriter, props: Interfaces.BACnet.PropertyValue[], tag: Interfaces.BACnet.Tag): void {
         // Write opening tag for list of properties
         writer.writeTag(tag.num, tag.type, 6);
 
@@ -60,11 +56,11 @@ export class BACnetWriterUtil {
      *
      * @param  {BACnetWriter} writer - instance of the `writer`
      * @param  {BACnetTypes.BACnetTypeBase|BACnetTypes.BACnetTypeBase[]} propValues - BACnet property value
-     * @param  {IBACnetTag} tag - BACnet tag
+     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
      * @return {void}
      */
     static writeValue (writer: BACnetWriter, propValues: BACnetTypes.BACnetTypeBase | BACnetTypes.BACnetTypeBase[],
-            tag: IBACnetTag): void {
+            tag: Interfaces.BACnet.Tag): void {
         // Context Number - Context tag - "Opening" Tag
         writer.writeTag(tag.num, tag.type, 6);
 
