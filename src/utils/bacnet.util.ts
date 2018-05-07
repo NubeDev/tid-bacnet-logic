@@ -15,7 +15,7 @@ export class BACnetUtil {
      * @param  {Buffer} buf - buffer with BACnet message
      * @return {Interfaces.ILayerLogic}
      */
-    static bufferToLayer (buf: Buffer): Interfaces.BACnetLayer {
+    static bufferToLayer (buf: Buffer): Interfaces.Layers {
         let blvcMessage = blvc.getFromBuffer(buf);
         return {
             blvc: blvcMessage,

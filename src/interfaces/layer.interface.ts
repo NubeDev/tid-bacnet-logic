@@ -6,7 +6,7 @@ import { BACnet } from './bacnet.interface';
 
 import { BACnetWriter } from '../io';
 
-export interface BACnetLayer {
+export interface Layers {
     blvc: BLVC.Read.Layer;
     npdu: NPDU.Read.Layer;
     apdu: APDU.Read.Layer;
