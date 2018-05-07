@@ -7,7 +7,7 @@ import * as IO from './io';
 import * as Services from './services';
 import * as Errors from './errors';
 
-export const BACnet = {
+export {
     Enums,
     Interfaces,
     Utils,
