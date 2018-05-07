@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "description": "",
     "main": "dist/index.js",
-    "types" : "dist/index.d.ts",
+    "types": "dist/index.d.ts",
     "scripts": {
         "test": "gulp watch:test:unit",
         "start": "npm run build && node ./dist/index.js",
