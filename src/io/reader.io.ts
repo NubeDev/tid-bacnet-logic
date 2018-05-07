@@ -100,8 +100,8 @@ export class BACnetReader {
      *
      * @return {Map<string, number>}
      */
-    public readTag (opts?: Interfaces.ReaderOptions): Interfaces.BACnet.Tag {
-        let tagData: Interfaces.BACnet.Tag;
+    public readTag (opts?: Interfaces.ReaderOptions): Interfaces.Tag {
+        let tagData: Interfaces.Tag;
 
         const tag = this.readUInt8(opts);
 
@@ -181,7 +181,7 @@ export class BACnetReader {
      * @param  {Map<string,number>} tag - tag
      * @return {boolean}
      */
-    public isOpeningTag (tag: Interfaces.BACnet.Tag): boolean {
+    public isOpeningTag (tag: Interfaces.Tag): boolean {
         return tag.type === Enums.TagType.context
             && tag.value === 0x06;
     }
@@ -192,7 +192,7 @@ export class BACnetReader {
      * @param  {Map<string,number>} tag - tag
      * @return {boolean}
      */
-    public isClosingTag (tag: Interfaces.BACnet.Tag): boolean {
+    public isClosingTag (tag: Interfaces.Tag): boolean {
         return tag.type === Enums.TagType.context
             && tag.value === 0x07;
     }

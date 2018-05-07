@@ -2,7 +2,7 @@ import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
-import { BACnet } from './bacnet.interface';
+import * as BACnet from './bacnet.interface';
 
 import { BACnetWriter } from '../io';
 

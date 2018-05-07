@@ -14,7 +14,7 @@ export class BACnetNull extends BACnetTypeBase {
     public readonly className: string = 'BACnetNull';
     public readonly type: Enums.PropertyType = Enums.PropertyType.nullData;
 
-    protected tag: Interfaces.BACnet.Tag;
+    protected tag: Interfaces.Tag;
 
     constructor () {
         super();
@@ -50,10 +50,10 @@ export class BACnetNull extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "null" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
+     * @param  {Interfaces.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
         const dataSize: number = 1;
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

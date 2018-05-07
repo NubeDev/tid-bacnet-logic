@@ -18,10 +18,10 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     public readonly className: string = 'BACnetBitString';
     public readonly type: Enums.PropertyType = Enums.PropertyType.bitString;
 
-    protected tag: Interfaces.BACnet.Tag;
-    protected data: Interfaces.BACnet.Type.StatusFlags;
+    protected tag: Interfaces.Tag;
+    protected data: Interfaces.Type.StatusFlags;
 
-    constructor (defValue?: Interfaces.BACnet.Type.StatusFlags) {
+    constructor (defValue?: Interfaces.Type.StatusFlags) {
         super();
 
         this.data = this.checkAndGetValue(defValue);
@@ -84,37 +84,37 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     /**
      * setValue - sets the new BACnet "status flags" value as internal state.
      *
-     * @param  {Interfaces.BACnet.Type.StatusFlags} newValue - new "status flags" value
+     * @param  {Interfaces.Type.StatusFlags} newValue - new "status flags" value
      * @return {void}
      */
-    public setValue (newValue: Interfaces.BACnet.Type.StatusFlags): void {
+    public setValue (newValue: Interfaces.Type.StatusFlags): void {
         this.data = this.checkAndGetValue(newValue);
     }
 
     /**
      * getValue - returns the internal state as current BACnet "status flags" value.
      *
-     * @return {Interfaces.BACnet.Type.StatusFlags}
+     * @return {Interfaces.Type.StatusFlags}
      */
-    public getValue (): Interfaces.BACnet.Type.StatusFlags {
+    public getValue (): Interfaces.Type.StatusFlags {
         return _.cloneDeep(this.data);
     }
 
     /**
      * value - sets the new BACnet "status flags" value as internal state
      *
-     * @type {Interfaces.BACnet.Type.StatusFlags}
+     * @type {Interfaces.Type.StatusFlags}
      */
-    public set value (newValue: Interfaces.BACnet.Type.StatusFlags) {
+    public set value (newValue: Interfaces.Type.StatusFlags) {
         this.setValue(newValue);
     }
 
     /**
      * value - returns the internal state as current BACnet "status flags" value.
      *
-     * @type {Interfaces.BACnet.Type.StatusFlags}
+     * @type {Interfaces.Type.StatusFlags}
      */
-    public get value (): Interfaces.BACnet.Type.StatusFlags {
+    public get value (): Interfaces.Type.StatusFlags {
         return this.getValue();
     }
 
@@ -122,10 +122,10 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * checkAndGetValue - checks if "value" is a correct "status flags" value,
      * throws the error if "value" has incorrect type.
      *
-     * @param  {Interfaces.BACnet.Type.StatusFlags} value - "status flags" value
-     * @return {Interfaces.BACnet.Type.StatusFlags}
+     * @param  {Interfaces.Type.StatusFlags} value - "status flags" value
+     * @return {Interfaces.Type.StatusFlags}
      */
-    private checkAndGetValue (value: Interfaces.BACnet.Type.StatusFlags): Interfaces.BACnet.Type.StatusFlags {
+    private checkAndGetValue (value: Interfaces.Type.StatusFlags): Interfaces.Type.StatusFlags {
         return _.assign({}, {
             fault: false,
             inAlarm: false,

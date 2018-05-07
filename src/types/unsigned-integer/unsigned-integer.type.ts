@@ -14,7 +14,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     public readonly className: string = 'BACnetUnsignedInteger';
     public readonly type: Enums.PropertyType = Enums.PropertyType.unsignedInt;
 
-    protected tag: Interfaces.BACnet.Tag;
+    protected tag: Interfaces.Tag;
     protected data: number;
 
     constructor (defValue?: number) {
@@ -72,10 +72,10 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "unsigned integer" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
+     * @param  {Interfaces.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
         const dataSize = this.getUIntSize(this.data);
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

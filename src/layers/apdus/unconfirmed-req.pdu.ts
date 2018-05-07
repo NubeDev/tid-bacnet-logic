@@ -121,7 +121,7 @@ export class UnconfirmedReqPDU {
         let devId: BACnetTypes.BACnetObjectId;
         let objId: BACnetTypes.BACnetObjectId;
         let timeRemaining: BACnetTypes.BACnetUnsignedInteger;
-        let listOfValues: Interfaces.BACnet.PropertyValue[];
+        let listOfValues: Interfaces.PropertyValue[];
 
         try {
             subProcessId = BACnetTypes.BACnetUnsignedInteger.readParam(reader);

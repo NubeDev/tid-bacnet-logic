@@ -14,7 +14,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
     public readonly className: string = 'BACnetEnumerated';
     public readonly type: Enums.PropertyType = Enums.PropertyType.enumerated;
 
-    protected tag: Interfaces.BACnet.Tag;
+    protected tag: Interfaces.Tag;
     protected data: number;
 
     constructor (defValue?: number) {
@@ -60,10 +60,10 @@ export class BACnetEnumerated extends BACnetTypeBase {
      * writeParam - writes the BACnet Param as "enumerated" value.
      *
      * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.BACnet.Tag} tag - BACnet tag
+     * @param  {Interfaces.Tag} tag - BACnet tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
         const dataSize: number = 1;
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

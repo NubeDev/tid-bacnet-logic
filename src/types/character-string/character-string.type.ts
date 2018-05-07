@@ -14,7 +14,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
     public readonly className: string = 'BACnetCharacterString';
     public readonly type: Enums.PropertyType = Enums.PropertyType.characterString;
 
-    protected tag: Interfaces.BACnet.Tag;
+    protected tag: Interfaces.Tag;
     private encoding: string;
     protected data: string;
 

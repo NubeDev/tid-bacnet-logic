@@ -6,7 +6,7 @@ import * as Interfaces from '../interfaces';
 
 export class BACnetTypeBase {
     public readonly className: string = 'BACnetTypeBase';
-    protected tag: Interfaces.BACnet.Tag;
+    protected tag: Interfaces.Tag;
     protected data: any;
 
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): any {
@@ -32,7 +32,7 @@ export class BACnetTypeBase {
      */
     public writeValue (writer: BACnetWriter): void { ; }
 
-    public writeParam (writer: BACnetWriter, tag: Interfaces.BACnet.Tag): void {
+    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
         throw new APIError(`${this.className} - writeParam: Not implemented yet`);
     }
 
@@ -68,9 +68,9 @@ export class BACnetTypeBase {
     /**
      * getTag - returns the BACnet tag.
      *
-     * @return {Interfaces.BACnet.Tag}
+     * @return {Interfaces.Tag}
      */
-    public getTag (): Interfaces.BACnet.Tag {
+    public getTag (): Interfaces.Tag {
         return this.tag;
     }
 }

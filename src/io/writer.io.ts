@@ -145,11 +145,11 @@ export class BACnetWriter {
      * writeValue - writes BACnet property value to the internal buffer.
      *
      * @param  {BACnetTypes.BACnetTypeBase|BACnetTypes.BACnetTypeBase[]} propValues - bacnet property value
-     * @param  {Interfaces.BACnet.Tag} tag - bacnet tag
+     * @param  {Interfaces.Tag} tag - bacnet tag
      * @return {void}
      */
     public writeValue (propValues: BACnetTypes.BACnetTypeBase | BACnetTypes.BACnetTypeBase[],
-            tag: Interfaces.BACnet.Tag): void {
+            tag: Interfaces.Tag): void {
         // Context Number - Context tag - "Opening" Tag
         this.writeTag(tag.num, tag.type, 6);
 
