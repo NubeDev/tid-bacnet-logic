@@ -119,6 +119,13 @@ export enum EngineeringUnits {
     noUnits = 95,
 }
 
+
+/**
+ * Convey whether the COV-server device shall issue `Confirmed` or `Unconfirmed`
+ * COV Notifications.
+ *
+ * @enum
+ */
 export enum COVNotificationType {
     Unconfirmed = 0,
     Confirmed = 1,
