@@ -118,3 +118,8 @@ export enum EngineeringUnits {
     // Other
     noUnits = 95,
 }
+
+export enum COVNotificationType {
+    Unconfirmed = 0,
+    Confirmed = 1,
+}
