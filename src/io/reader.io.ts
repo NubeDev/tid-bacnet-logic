@@ -204,8 +204,14 @@ export class BACnetReader {
      * @return {boolean}
      */
     public isTag (tag: Interfaces.Tag): boolean {
+        if (_.isNil(tag)) {
+            return false;
+        }
+
         const respTag = this.readTag({ silent: true, optional: true });
-        return !_.isNil(respTag) && respTag.num === tag.num
+
+        return !_.isNil(respTag)
+            && respTag.num === tag.num
             && respTag.type === tag.type;
     }
 }
