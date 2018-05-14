@@ -110,6 +110,8 @@ export class BACnetReaderUtil {
             paramValues.push(inst);
         }
 
+        const closingTag = reader.readTag();
+
         return paramValues;
     }
 }
