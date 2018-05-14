@@ -43,7 +43,7 @@ export class BACnetReaderUtil {
      */
     static readProperties (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue[] {
         // Context Number - Context tag - "Opening" Tag
-        const openTag = reader.readTag(opts);
+        const openingTag = reader.readTag(opts);
 
         const params: Interfaces.PropertyValue[] = [];
         while (true) {
@@ -69,7 +69,7 @@ export class BACnetReaderUtil {
      */
     static readPropertyValues (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetTypes.BACnetTypeBase[] {
         // Context Number - Context tag - "Opening" Tag
-        const openTag = reader.readTag(opts);
+        const openingTag = reader.readTag(opts);
 
         const paramValues: BACnetTypes.BACnetTypeBase[] = [];
         while (true) {
