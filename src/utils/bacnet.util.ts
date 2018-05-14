@@ -36,7 +36,7 @@ export class BACnetUtil {
     static findPropById (props: Interfaces.PropertyValue[],
             propId: Enums.PropertyId): Interfaces.PropertyValue {
         return _.find(props, (prop) => {
-            return prop.id.value === Enums.PropertyId.statusFlags;
+            return prop.id.value === propId;
         });
     }
 }
