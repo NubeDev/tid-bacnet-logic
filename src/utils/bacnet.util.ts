@@ -4,6 +4,8 @@ import { blvc, npdu, apdu } from '../layers';
 
 import * as Interfaces from '../interfaces';
 
+import * as Enums from '../enums';
+
 import * as BACnetTypes from '../types';
 
 export class BACnetUtil {
@@ -22,5 +24,19 @@ export class BACnetUtil {
             npdu: _.get(blvcMessage, 'npdu'),
             apdu: _.get(blvcMessage, 'npdu.apdu'),
         };
+    }
+
+    /**
+     * Searches the property by property ID.
+     *
+     * @param  {Interfaces.PropertyValue[]} props - list of properties
+     * @param  {Enums.PropertyId} propId - property ID
+     * @return {Interfaces.PropertyValue}
+     */
+    static findPropById (props: Interfaces.PropertyValue[],
+            propId: Enums.PropertyId): Interfaces.PropertyValue {
+        return _.find(props, (prop) => {
+            return prop.id.value === Enums.PropertyId.statusFlags;
+        });
     }
 }
