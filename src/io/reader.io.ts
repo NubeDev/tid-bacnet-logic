@@ -166,7 +166,7 @@ export class BACnetReader {
         throw error;
     }
 
-    private extractOpts (opts?: Interfaces.ReaderOptions): Interfaces.ReaderOptions {
+    public extractOpts (opts?: Interfaces.ReaderOptions): Interfaces.ReaderOptions {
         const defOpts: Interfaces.ReaderOptions = {
             optional: false,
             silent: false,
