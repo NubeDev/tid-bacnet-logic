@@ -21,7 +21,7 @@ export class ComplexACKPDU {
      * @param  {Buffer} buf - js Buffer with "APDU Complex ACK" message
      * @return {Interfaces.ComplexACK.Read.Layer}
      */
-    private getFromBuffer (buf: Buffer): Interfaces.ComplexACK.Read.Layer {
+    public getFromBuffer (buf: Buffer): Interfaces.ComplexACK.Read.Layer {
         const reader = new BACnetReader(buf);
 
         let reqMap: Interfaces.ComplexACK.Read.Layer;
