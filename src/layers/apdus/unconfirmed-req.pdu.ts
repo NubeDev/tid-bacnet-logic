@@ -134,7 +134,7 @@ export class UnconfirmedReqPDU {
 
             listOfValues = BACnetReaderUtil.readProperties(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getIAm: Parse - ${error}`);
+            throw new BACnetError(`${this.className} - getCOVNotification: Parse - ${error}`);
         }
 
         serviceData = {
