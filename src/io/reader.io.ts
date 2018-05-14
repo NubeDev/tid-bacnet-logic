@@ -178,7 +178,7 @@ export class BACnetReader {
     /**
      * isOpeningTag - return true if tag is an opening tag
      *
-     * @param  {Map<string,number>} tag - tag
+     * @param  {Interfaces.Tag} tag - tag
      * @return {boolean}
      */
     public isOpeningTag (tag: Interfaces.Tag): boolean {
@@ -189,11 +189,23 @@ export class BACnetReader {
     /**
      * isClosingTag - return true if tag is a closing tag
      *
-     * @param  {Map<string,number>} tag - tag
+     * @param  {Interfaces.Tag} tag - tag
      * @return {boolean}
      */
     public isClosingTag (tag: Interfaces.Tag): boolean {
         return tag.type === Enums.TagType.context
             && tag.value === 0x07;
+    }
+
+    /**
+     * Checks the tag number and tag type.
+     *
+     * @param  {Interfaces.Tag} tag - tag
+     * @return {boolean}
+     */
+    public isTag (tag: Interfaces.Tag): boolean {
+        const respTag = this.readTag({ silent: true, optional: true });
+        return !_.isNil(respTag) && respTag.num === tag.num
+            && respTag.type === tag.type;
     }
 }
