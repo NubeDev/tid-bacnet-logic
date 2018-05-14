@@ -13,7 +13,8 @@ export class BACnetTypeBase {
         const inst = new this();
 
         const readOpts = reader.extractOpts(opts);
-        if (readOpts.optional && !reader.isTag(readOpts.tag)) {
+        if (readOpts.optional && readOpts.tag
+            && !reader.isTag(readOpts.tag)) {
             return inst;
         }
 
