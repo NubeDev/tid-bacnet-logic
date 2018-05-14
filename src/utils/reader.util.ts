@@ -18,9 +18,15 @@ export class BACnetReaderUtil {
      */
     static readProperty (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue {
         const propId = BACnetTypes.BACnetEnumerated.readParam(reader);
-        const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true });
+        const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
+            optional: true,
+            tag: { num: 2, type: Enums.TagType.context },
+        });
         const propValues = BACnetReaderUtil.readPropertyValues(reader, opts);
-        const propPriority = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true });
+        const propPriority = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
+            optional: true,
+            tag: { num: 4, type: Enums.TagType.context },
+        });
 
         return {
             id: propId,
