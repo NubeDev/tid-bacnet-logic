@@ -12,7 +12,8 @@ export class BACnetTypeBase {
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): any {
         const inst = new this();
 
-        if (opts.optional && !reader.isTag(opts.tag)) {
+        const readOpts = reader.extractOpts(opts);
+        if (readOpts.optional && !reader.isTag(readOpts.tag)) {
             return inst;
         }
 
