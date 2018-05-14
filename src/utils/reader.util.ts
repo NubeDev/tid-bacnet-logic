@@ -20,12 +20,12 @@ export class BACnetReaderUtil {
         const propId = BACnetTypes.BACnetEnumerated.readParam(reader);
         const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
-            tag: { num: 2, type: Enums.TagType.context },
+            tag: { num: 1, type: Enums.TagType.context },
         });
         const propValues = BACnetReaderUtil.readPropertyValues(reader, opts);
         const propPriority = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
-            tag: { num: 4, type: Enums.TagType.context },
+            tag: { num: 3, type: Enums.TagType.context },
         });
 
         return {
