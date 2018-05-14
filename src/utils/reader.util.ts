@@ -83,6 +83,9 @@ export class BACnetReaderUtil {
 
             let inst: BACnetTypes.BACnetTypeBase;
             switch (paramValueType) {
+                case Enums.PropertyType.nullData:
+                    inst = new BACnetTypes.BACnetNull();
+                    break;
                 case Enums.PropertyType.boolean:
                     inst = new BACnetTypes.BACnetBoolean();
                     break;
