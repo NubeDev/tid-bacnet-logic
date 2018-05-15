@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 import { BACnetTypeBase } from '../types';
 

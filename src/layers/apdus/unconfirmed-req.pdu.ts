@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as Utils from '../../utils';
 
@@ -49,7 +49,7 @@ export class UnconfirmedReqPDU {
                     break;
             }
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         reqMap = {
@@ -83,7 +83,7 @@ export class UnconfirmedReqPDU {
 
             vendorId = BACnetTypes.BACnetUnsignedInteger.readParam(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getIAm: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getIAm: Parse - ${error}`);
         }
 
         serviceData = {
@@ -134,7 +134,7 @@ export class UnconfirmedReqPDU {
 
             listOfValues = Utils.Reader.readProperties(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getCOVNotification: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getCOVNotification: Parse - ${error}`);
         }
 
         serviceData = {

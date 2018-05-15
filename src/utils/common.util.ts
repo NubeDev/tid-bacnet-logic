@@ -8,7 +8,7 @@ import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
-export class BACnetUtil {
+export class Common {
 
     /**
      * Converts the `BACnet message` with `Buffer` type to the `Layer` entity

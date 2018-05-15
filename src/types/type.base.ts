@@ -1,4 +1,4 @@
-import { APIError } from '../errors';
+import * as Errors from '../errors';
 
 import * as IOs from '../io';
 
@@ -55,7 +55,7 @@ export class BACnetTypeBase {
      * @return {void}
      */
     public writeParam (writer: IOs.Writer, tag: Interfaces.Tag): void {
-        throw new APIError(`${this.className} - writeParam: Not implemented yet`);
+        throw new Errors.API(`${this.className} - writeParam: Not implemented yet`);
     }
 
     /**

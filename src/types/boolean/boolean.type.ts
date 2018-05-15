@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -118,7 +118,7 @@ export class BACnetBoolean extends BACnetTypeBase {
      */
     private checkAndGetValue (value: boolean): boolean {
         if (!_.isBoolean(value)) {
-            throw new BACnetError('BACnetBoolean - updateValue: Value must be of type "boolean"!');
+            throw new Errors.BACnet('BACnetBoolean - updateValue: Value must be of type "boolean"!');
         }
 
         return value;

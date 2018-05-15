@@ -1,5 +1,5 @@
-import { BaseError } from './base.error';
+import { Base } from './base.error';
 
-export class ReaderError extends BaseError {
-    public name: string = 'ReaderError';
+export class Reader extends Base {
+    public name: string = 'Reader';
 }

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 import * as IOs from '../io';
 
@@ -38,7 +38,7 @@ export class BLVC {
 
             NPDUMessage = this.npdu.getFromBuffer(NPDUbuffer);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         const BLVCMessage: Interfaces.BLVC.Read.Layer = {

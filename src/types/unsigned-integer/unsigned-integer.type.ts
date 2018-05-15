@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -177,7 +177,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      */
     private checkAndGetValue (value: number): number {
         if (!_.isNumber(value) || !_.isFinite(value)) {
-            throw new BACnetError('BACnetUnsignedInteger - updateValue: Value must be of type "unsigned integer"!');
+            throw new Errors.BACnet('BACnetUnsignedInteger - updateValue: Value must be of type "unsigned integer"!');
         }
 
         return value;

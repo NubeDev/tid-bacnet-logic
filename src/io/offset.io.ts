@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 export class Offset {
     private curValue: number;

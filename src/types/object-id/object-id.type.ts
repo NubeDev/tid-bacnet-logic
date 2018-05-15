@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -150,7 +150,7 @@ export class BACnetObjectId extends BACnetTypeBase {
      */
     private checkAndGetValue (value: Interfaces.Type.ObjectId): Interfaces.Type.ObjectId {
         if (!_.has(value, 'type') || !_.has(value, 'instance')) {
-            throw new BACnetError('BACnetObjectId - updateValue: Value must be of type "object identifier"!');
+            throw new Errors.BACnet('BACnetObjectId - updateValue: Value must be of type "object identifier"!');
         }
 
         return value;

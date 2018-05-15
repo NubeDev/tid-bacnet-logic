@@ -1,5 +1,5 @@
 
-export class BaseError extends Error {
+export class Base extends Error {
     public status?: number;
 
     constructor(message: string, status?: number) {

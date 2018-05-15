@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 

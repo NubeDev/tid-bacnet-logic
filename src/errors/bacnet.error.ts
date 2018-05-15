@@ -1,5 +1,5 @@
-import { BaseError } from './base.error';
+import { Base } from './base.error';
 
-export class BACnetError extends BaseError {
-    public name: string = 'BACnetError';
+export class BACnet extends Base {
+    public name: string = 'BACnet';
 }

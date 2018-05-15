@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -122,7 +122,7 @@ export class BACnetReal extends BACnetTypeBase {
      */
     private checkAndGetValue (value: number): number {
         if (!_.isNumber(value) || !_.isFinite(value)) {
-            throw new BACnetError('BACnetReal - updateValue: Value must be of type "real"!');
+            throw new Errors.BACnet('BACnetReal - updateValue: Value must be of type "real"!');
         }
 
         return this.toFixed(value);

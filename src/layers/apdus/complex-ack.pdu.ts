@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as Utils from '../../utils';
 
@@ -57,7 +57,7 @@ export class ComplexACKPDU {
                     break;
             }
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         reqMap = {
@@ -91,7 +91,7 @@ export class ComplexACKPDU {
 
             prop = Utils.Reader.readProperty(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getReadProperty: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getReadProperty: Parse - ${error}`);
         }
 
         serviceData = {

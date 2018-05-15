@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as Utils from '../../utils';
 
@@ -73,7 +73,7 @@ export class ConfirmedReqPDU {
                     break;
             }
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         reqMap = {
@@ -106,7 +106,7 @@ export class ConfirmedReqPDU {
 
             propId = BACnetTypes.BACnetEnumerated.readParam(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getReadProperty: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getReadProperty: Parse - ${error}`);
         }
 
         serviceData = {
@@ -141,7 +141,7 @@ export class ConfirmedReqPDU {
 
             lifeTime = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true });
         } catch (error) {
-            throw new BACnetError(`${this.className} - getSubscribeCOV: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getSubscribeCOV: Parse - ${error}`);
         }
 
         serviceData = {
@@ -170,7 +170,7 @@ export class ConfirmedReqPDU {
 
             prop = Utils.Reader.readProperty(reader);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getWriteProperty: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getWriteProperty: Parse - ${error}`);
         }
 
         serviceData = {

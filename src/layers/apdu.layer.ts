@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 import * as IOs from '../io';
 
@@ -54,7 +54,7 @@ export class APDU {
 
             APDUMessage = reqInst.getFromBuffer(buf);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         return APDUMessage;

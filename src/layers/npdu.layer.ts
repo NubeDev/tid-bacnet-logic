@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 import * as Utils from '../utils';
 
@@ -117,7 +117,7 @@ export class NPDU {
 
             APDUMessage = this.apdu.getFromBuffer(APDUbuffer);
         } catch (error) {
-            throw new BACnetError(`${this.className} - getFromBuffer: Parse - ${error}`);
+            throw new Errors.BACnet(`${this.className} - getFromBuffer: Parse - ${error}`);
         }
 
         const NPDUMessage: Interfaces.NPDU.Read.Layer = {

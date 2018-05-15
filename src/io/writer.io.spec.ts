@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import { expect } from 'chai';
 import { spy, SinonSpy } from 'sinon';
 
-import { BACnetError } from '../errors';
+import * as Errors from '../errors';
 
 import * as IOs from './writer.io';
 

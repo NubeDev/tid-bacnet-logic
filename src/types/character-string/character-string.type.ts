@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -127,7 +127,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
      */
     private checkAndGetValue (value: string): string {
         if (!_.isString(value)) {
-            throw new BACnetError('BACnetCharacterString - updateValue: Value must be of type "character string"!');
+            throw new Errors.BACnet('BACnetCharacterString - updateValue: Value must be of type "character string"!');
         }
 
         return value;

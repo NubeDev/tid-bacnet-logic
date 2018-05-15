@@ -6,7 +6,7 @@ import * as Enums from '../../enums';
 
 import * as Interfaces from '../../interfaces';
 
-import { BACnetError } from '../../errors';
+import * as Errors from '../../errors';
 
 import * as IOs from '../../io';
 
@@ -145,7 +145,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
      */
     private checkAndGetValue (value: number): number {
         if (!_.isNumber(value) || !_.isFinite(value)) {
-            throw new BACnetError('BACnetEnumerated - updateValue: Value must be of type "enumerated"!');
+            throw new Errors.BACnet('BACnetEnumerated - updateValue: Value must be of type "enumerated"!');
         }
 
         return value;

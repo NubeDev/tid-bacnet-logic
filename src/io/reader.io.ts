@@ -139,14 +139,14 @@ export class Reader {
         }
 
         let result: T = null;
-        let error: Errors.ReaderError = null;
+        let error: Errors.Reader = null;
         let oldOffset: number = this.offset.value;
 
         try {
             result = operationFn();
         } catch (error) {
             if (!readerOpts.optional) {
-                error = new Errors.ReaderError(`IOs.Reader - ${methodName}: ${error}`,
+                error = new Errors.Reader(`IOs.Reader - ${methodName}: ${error}`,
                     Enums.ReaderError.IsNotOptional);
             }
 

@@ -1,5 +1,5 @@
-import { BaseError } from './base.error';
+import { Base } from './base.error';
 
-export class APIError extends BaseError {
-    public name: string = 'APIError';
+export class API extends Base {
+    public name: string = 'API';
 }
