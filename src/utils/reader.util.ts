@@ -17,15 +17,25 @@ export class Reader {
      * @return {Map<string, any>}
      */
     static readProperty (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue {
+        // Read first tag to get first context number
+        const firstTag = reader.readTag({ silent: true });
+
+        // Read property ID
         const propId = BACnetTypes.BACnetEnumerated.readParam(reader);
+
+        // Read property index
         const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
-            tag: { num: 1, type: Enums.TagType.context },
+            tag: { num: firstTag.num + 1, type: Enums.TagType.context },
         });
+
+        // Read property values
         const propValues = Reader.readPropertyValues(reader, opts);
+
+        // Read property priority
         const propPriority = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
-            tag: { num: 3, type: Enums.TagType.context },
+            tag: { num: firstTag.num + 3, type: Enums.TagType.context },
         });
 
         return {
