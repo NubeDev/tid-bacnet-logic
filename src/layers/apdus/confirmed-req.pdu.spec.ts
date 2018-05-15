@@ -1,8 +1,4 @@
-// Import all chai for type matching with "chai-as-promised" lib
-import * as chai from 'chai';
-
 import { expect } from 'chai';
-import { spy, SinonSpy } from 'sinon';
 
 import { confirmedReqPDU } from './confirmed-req.pdu';
 
