@@ -3,16 +3,16 @@ import { spy, SinonSpy } from 'sinon';
 
 import { BACnetCharacterString } from './character-string.type';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 describe('BACnetCharacterString', () => {
     describe('readValue', () => {
         let bacnetCharacterString: BACnetCharacterString;
-        let bacnetReaderUtil: BACnetReader;
+        let bacnetReaderUtil: IOs.Reader;
 
         beforeEach(() => {
             bacnetCharacterString = new BACnetCharacterString();
-            bacnetReaderUtil = new BACnetReader(Buffer.from([
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([
                 0x75, 0x04, 0x00, 0x4c, 0x30, 0x32,
             ]));
             bacnetCharacterString.readValue(bacnetReaderUtil);
@@ -31,10 +31,10 @@ describe('BACnetCharacterString', () => {
 
     describe('writeValue', () => {
         let bacnetCharacterString: BACnetCharacterString;
-        let bacnetWriterUtil: BACnetWriter;
+        let bacnetWriterUtil: IOs.Writer;
 
         beforeEach(() => {
-            bacnetWriterUtil = new BACnetWriter();
+            bacnetWriterUtil = new IOs.Writer();
         });
 
         it('should write correct buffer for "L02" value', () => {

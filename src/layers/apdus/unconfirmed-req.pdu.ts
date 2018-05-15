@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../../errors';
 
-import { TyperUtil, BACnetReaderUtil, BACnetWriterUtil } from '../../utils';
+import * as Utils from '../../utils';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 import * as Interfaces from '../../interfaces';
 
@@ -22,7 +22,7 @@ export class UnconfirmedReqPDU {
      * @return {Interfaces.UnconfirmedRequest.Read.Layer}
      */
     public getFromBuffer (buf: Buffer): Interfaces.UnconfirmedRequest.Read.Layer {
-        const reader = new BACnetReader(buf);
+        const reader = new IOs.Reader(buf);
 
         let reqMap: Interfaces.UnconfirmedRequest.Read.Layer;
         let serviceChoice: Enums.UnconfirmedServiceChoice;
@@ -33,7 +33,7 @@ export class UnconfirmedReqPDU {
             // --- Read meta byte
             const mMeta = reader.readUInt8();
 
-            pduType = TyperUtil.getBitRange(mMeta, 4, 4);
+            pduType = Utils.Typer.getBitRange(mMeta, 4, 4);
 
             serviceChoice = reader.readUInt8();
 
@@ -64,10 +64,10 @@ export class UnconfirmedReqPDU {
     /**
      * getIAm - parses the "APDU Unconfirmed Request I Am" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Unconfirmed Request I Am" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Unconfirmed Request I Am" message
      * @return {Interfaces.UnconfirmedRequest.Read.IAm}
      */
-    private getIAm (reader: BACnetReader): Interfaces.UnconfirmedRequest.Read.IAm {
+    private getIAm (reader: IOs.Reader): Interfaces.UnconfirmedRequest.Read.IAm {
         let serviceData: Interfaces.UnconfirmedRequest.Read.IAm;
         let objId: BACnetTypes.BACnetObjectId,
             maxAPDUlength: BACnetTypes.BACnetUnsignedInteger,
@@ -99,10 +99,10 @@ export class UnconfirmedReqPDU {
     /**
      * getWhoIs - parses the "APDU Unconfirmed Request Who Is" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Unconfirmed Request Who Is" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Unconfirmed Request Who Is" message
      * @return {Interfaces.UnconfirmedRequest.Read.WhoIs}
      */
-    private getWhoIs (reader: BACnetReader): Interfaces.UnconfirmedRequest.Read.WhoIs {
+    private getWhoIs (reader: IOs.Reader): Interfaces.UnconfirmedRequest.Read.WhoIs {
         const serviceData: Interfaces.UnconfirmedRequest.Read.WhoIs = {};
 
         return serviceData;
@@ -111,10 +111,10 @@ export class UnconfirmedReqPDU {
     /**
      * Parses the "APDU Unconfirmed Request COV Notification" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Unconfirmed Request COV Notification" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Unconfirmed Request COV Notification" message
      * @return {Interfaces.UnconfirmedRequest.Read.COVNotification}
      */
-    private getCOVNotification (reader: BACnetReader): Interfaces.UnconfirmedRequest.Read.COVNotification {
+    private getCOVNotification (reader: IOs.Reader): Interfaces.UnconfirmedRequest.Read.COVNotification {
         let serviceData: Interfaces.UnconfirmedRequest.Read.COVNotification;
 
         let subProcessId: BACnetTypes.BACnetUnsignedInteger;
@@ -132,7 +132,7 @@ export class UnconfirmedReqPDU {
 
             timeRemaining = BACnetTypes.BACnetUnsignedInteger.readParam(reader);
 
-            listOfValues = BACnetReaderUtil.readProperties(reader);
+            listOfValues = Utils.Reader.readProperties(reader);
         } catch (error) {
             throw new BACnetError(`${this.className} - getCOVNotification: Parse - ${error}`);
         }
@@ -152,13 +152,13 @@ export class UnconfirmedReqPDU {
      * writeReq - writes the "APDU Unconfirmed Request" header.
      *
      * @param  {Interfaces.UnconfirmedRequest.Write.Layer} params - "APDU Unconfirmed Request" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeReq (params: Interfaces.UnconfirmedRequest.Write.Layer): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeReq (params: Interfaces.UnconfirmedRequest.Write.Layer): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service Type
-        const mMeta = TyperUtil.setBitRange(0x00,
+        const mMeta = Utils.Typer.setBitRange(0x00,
             Enums.ServiceType.UnconfirmedReqPDU, 4, 4);
         writer.writeUInt8(mMeta);
 
@@ -169,10 +169,10 @@ export class UnconfirmedReqPDU {
      * writeWhoIs - writes the "APDU Unconfirmed Request Who Is" message.
      *
      * @param  {Interfaces.UnconfirmedRequest.Write.WhoIs} params - "APDU Unconfirmed Request Who Is" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeWhoIs (params: Interfaces.UnconfirmedRequest.Write.WhoIs): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeWhoIs (params: Interfaces.UnconfirmedRequest.Write.WhoIs): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.UnconfirmedServiceChoice.whoIs);
@@ -184,10 +184,10 @@ export class UnconfirmedReqPDU {
      * writeIAm - writes the "APDU Unconfirmed Request I Am" message.
      *
      * @param  {Interfaces.UnconfirmedRequest.Write.IAm} params - "APDU Unconfirmed Request I Am" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeIAm (params: Interfaces.UnconfirmedRequest.Write.IAm): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeIAm (params: Interfaces.UnconfirmedRequest.Write.IAm): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.UnconfirmedServiceChoice.iAm);
@@ -213,10 +213,10 @@ export class UnconfirmedReqPDU {
      * writeCOVNotification - writes the "APDU Unconfirmed Request CoV Notification" message.
      *
      * @param  {Interfaces.UnconfirmedRequest.Write.COVNotification} params - "APDU Unconfirmed Request CoV Notification" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeCOVNotification (params: Interfaces.UnconfirmedRequest.Write.COVNotification): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeCOVNotification (params: Interfaces.UnconfirmedRequest.Write.COVNotification): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.UnconfirmedServiceChoice.covNotification);
@@ -238,7 +238,7 @@ export class UnconfirmedReqPDU {
             timeRemaining.writeParam(writer, { num: 3, type: Enums.TagType.context });
         }
 
-        BACnetWriterUtil.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.TagType.context });
+        Utils.Writer.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.TagType.context });
 
         return writer;
     }

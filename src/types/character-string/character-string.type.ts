@@ -8,7 +8,7 @@ import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 export class BACnetCharacterString extends BACnetTypeBase {
     public readonly className: string = 'BACnetCharacterString';
@@ -29,22 +29,22 @@ export class BACnetCharacterString extends BACnetTypeBase {
      * Creates the instance of the BACnetCharacterString and calls the `readValue`
      * method.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {BACnetCharacterString}
      */
-    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetCharacterString {
+    static readParam (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): BACnetCharacterString {
         return super.readParam(reader, opts);
     }
 
     /**
      * Parses the message with BACnet `character string` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
+    public readValue (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -62,10 +62,10 @@ export class BACnetCharacterString extends BACnetTypeBase {
     /**
      * Writes the BACnet `character string` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter): void {
+    public writeValue (writer: IOs.Writer): void {
         // DataType - Application tag - Extended value (5)
         writer.writeTag(Enums.PropertyType.characterString, 0, 5);
 

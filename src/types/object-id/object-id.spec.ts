@@ -3,16 +3,16 @@ import { spy, SinonSpy } from 'sinon';
 
 import { BACnetObjectId } from './object-id.type';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 describe('BACnetObjectId', () => {
     describe('readValue', () => {
         let bacnetObjectId: BACnetObjectId;
-        let bacnetReaderUtil: BACnetReader;
+        let bacnetReaderUtil: IOs.Reader;
 
         beforeEach(() => {
             bacnetObjectId = new BACnetObjectId();
-            bacnetReaderUtil = new BACnetReader(Buffer.from([
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([
                 0xc4, 0x02, 0x00, 0x27, 0x0f,
             ]));
             bacnetObjectId.readValue(bacnetReaderUtil);
@@ -31,10 +31,10 @@ describe('BACnetObjectId', () => {
 
     describe('writeValue', () => {
         let bacnetObjectId: BACnetObjectId;
-        let bacnetWriterUtil: BACnetWriter;
+        let bacnetWriterUtil: IOs.Writer;
 
         beforeEach(() => {
-            bacnetWriterUtil = new BACnetWriter();
+            bacnetWriterUtil = new IOs.Writer();
         });
 
         it('should write correct buffer for "type: 8, instance: 9999" value', () => {

@@ -7,13 +7,13 @@ import * as Interfaces from '../interfaces';
 import * as Enums from '../enums';
 
 import { Offset } from './offset.io';
-import { TyperUtil } from '../utils';
+import * as Utils from '../utils';
 
 import * as BACnetTypes from '../types';
 
 type ReaderOperation <T> = () => T;
 
-export class BACnetReader {
+export class Reader {
     public offset: Offset;
 
     constructor (private buffer: Buffer) {
@@ -146,7 +146,7 @@ export class BACnetReader {
             result = operationFn();
         } catch (error) {
             if (!readerOpts.optional) {
-                error = new Errors.ReaderError(`BACnetReader - ${methodName}: ${error}`,
+                error = new Errors.ReaderError(`IOs.Reader - ${methodName}: ${error}`,
                     Enums.ReaderError.IsNotOptional);
             }
 

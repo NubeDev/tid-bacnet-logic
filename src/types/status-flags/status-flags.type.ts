@@ -8,11 +8,9 @@ import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
-import {
-    TyperUtil,
-} from '../../utils';
+import * as Utils from '../../utils';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 export class BACnetStatusFlags extends BACnetTypeBase {
     public readonly className: string = 'BACnetBitString';
@@ -31,22 +29,22 @@ export class BACnetStatusFlags extends BACnetTypeBase {
      * Creates the instance of the BACnetStatusFlags and calls the `readValue`
      * method.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {BACnetStatusFlags}
      */
-    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetStatusFlags {
+    static readParam (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): BACnetStatusFlags {
         return super.readParam(reader, opts);
     }
 
     /**
      * Parses the message with BACnet `status flags` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions) {
+    public readValue (reader: IOs.Reader, opts?: Interfaces.ReaderOptions) {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -54,10 +52,10 @@ export class BACnetStatusFlags extends BACnetTypeBase {
         // Contains the status bits
         const value = reader.readUInt8(opts);
 
-        const inAlarm = !!TyperUtil.getBit(value, 7);
-        const fault = !!TyperUtil.getBit(value, 6);
-        const overridden = !!TyperUtil.getBit(value, 5);
-        const outOfService = !!TyperUtil.getBit(value, 4);
+        const inAlarm = !!Utils.Typer.getBit(value, 7);
+        const fault = !!Utils.Typer.getBit(value, 6);
+        const overridden = !!Utils.Typer.getBit(value, 5);
+        const outOfService = !!Utils.Typer.getBit(value, 4);
 
         this.data = {
             inAlarm: inAlarm,
@@ -70,20 +68,20 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     /**
      * Writes the BACnet `status flags` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter): void {
+    public writeValue (writer: IOs.Writer): void {
         writer.writeTag(Enums.PropertyType.bitString, 0, 2);
 
         // Write unused bits
         writer.writeUInt8(0x04);
 
         let statusFlags = 0x00;
-        statusFlags = TyperUtil.setBit(statusFlags, 7, this.data.inAlarm);
-        statusFlags = TyperUtil.setBit(statusFlags, 6, this.data.fault);
-        statusFlags = TyperUtil.setBit(statusFlags, 5, this.data.overridden);
-        statusFlags = TyperUtil.setBit(statusFlags, 4, this.data.outOfService);
+        statusFlags = Utils.Typer.setBit(statusFlags, 7, this.data.inAlarm);
+        statusFlags = Utils.Typer.setBit(statusFlags, 6, this.data.fault);
+        statusFlags = Utils.Typer.setBit(statusFlags, 5, this.data.overridden);
+        statusFlags = Utils.Typer.setBit(statusFlags, 4, this.data.outOfService);
 
         // Write status flags
         writer.writeUInt8(statusFlags);

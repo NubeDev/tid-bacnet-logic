@@ -4,7 +4,7 @@ import { BACnetError } from '../errors';
 
 import { BACnetTypeBase } from '../types';
 
-export class TyperUtil {
+export class Typer {
 
     /**
      * setBit - sets the bit value in specific position.

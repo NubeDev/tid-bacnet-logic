@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../errors';
 
-import { TyperUtil } from '../utils';
+import * as Utils from '../utils';
 
-import { BACnetReader, BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 import { apdu, APDU } from './apdu.layer';
 
@@ -25,21 +25,21 @@ export class NPDU {
      * @return {Interfaces.NPDU.Read.Control}
      */
     public getControlFlags (mControl: number): Interfaces.NPDU.Read.Control {
-        const noApduMessageType = !!TyperUtil.getBit(mControl, 7);
+        const noApduMessageType = !!Utils.Typer.getBit(mControl, 7);
 
-        const reserved1 = TyperUtil.getBit(mControl, 6);
+        const reserved1 = Utils.Typer.getBit(mControl, 6);
 
-        const destSpecifier = !!TyperUtil.getBit(mControl, 5);
+        const destSpecifier = !!Utils.Typer.getBit(mControl, 5);
 
-        const reserved2 = TyperUtil.getBit(mControl, 4);
+        const reserved2 = Utils.Typer.getBit(mControl, 4);
 
-        const srcSpecifier = !!TyperUtil.getBit(mControl, 3);
+        const srcSpecifier = !!Utils.Typer.getBit(mControl, 3);
 
-        const expectingReply = !!TyperUtil.getBit(mControl, 2);
+        const expectingReply = !!Utils.Typer.getBit(mControl, 2);
 
-        const priority1 = TyperUtil.getBit(mControl, 1);
+        const priority1 = Utils.Typer.getBit(mControl, 1);
 
-        const priority2 = TyperUtil.getBit(mControl, 0);
+        const priority2 = Utils.Typer.getBit(mControl, 0);
 
         const mControlMap: Interfaces.NPDU.Read.Control = {
             noApduMessageType: noApduMessageType,
@@ -62,7 +62,7 @@ export class NPDU {
      * @return {Interfaces.NPDU.Read.Layer}
      */
     public getFromBuffer (buf: Buffer): Interfaces.NPDU.Read.Layer {
-        const readerUtil = new BACnetReader(buf);
+        const readerUtil = new IOs.Reader(buf);
 
         let mVersion: number, mControl: Interfaces.NPDU.Read.Control;
         let destNetwork: Interfaces.NPDU.Read.NetworkDest,
@@ -135,17 +135,17 @@ export class NPDU {
      * writeNPDULayer - writes the "NPDU" layer message.
      *
      * @param  {Interfaces.NPDU.Write.Layer} params - "NPDU" write params
-     * @return {BACnetWriter} - instance of the writer utility
+     * @return {IOs.Writer} - instance of the writer utility
      */
-    public writeNPDULayer (params: Interfaces.NPDU.Write.Layer): BACnetWriter {
-        let writer = new BACnetWriter();
+    public writeNPDULayer (params: Interfaces.NPDU.Write.Layer): IOs.Writer {
+        let writer = new IOs.Writer();
 
         // Write NPDU version
         writer.writeUInt8(0x01);
 
         // Write control byte
         const writerControl = this.writeNPDULayerControl(params.control);
-        writer = BACnetWriter.concat(writer, writerControl);
+        writer = IOs.Writer.concat(writer, writerControl);
 
         if (_.get(params, 'control.destSpecifier')) {
             // Write destination network address
@@ -187,10 +187,10 @@ export class NPDU {
      * writeNPDULayerControl - writes the "control byte" of "NPDU" layer.
      *
      * @param  {Interfaces.NPDU.Write.Control} params - "NPDU" write params for "control byte"
-     * @return {BACnetWriter} - instance of the writer utility
+     * @return {IOs.Writer} - instance of the writer utility
      */
-    public writeNPDULayerControl (params: Interfaces.NPDU.Write.Control): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeNPDULayerControl (params: Interfaces.NPDU.Write.Control): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         let control = 0x00;
@@ -198,27 +198,27 @@ export class NPDU {
         if (params) {
             // Set "no APDU Message" flag
             control = params.noApduMessageType
-                ? TyperUtil.setBit(control, 7, params.noApduMessageType) : control;
+                ? Utils.Typer.setBit(control, 7, params.noApduMessageType) : control;
 
             // Set "destination specifier" flag
             control = params.destSpecifier
-                ? TyperUtil.setBit(control, 5, params.destSpecifier) : control;
+                ? Utils.Typer.setBit(control, 5, params.destSpecifier) : control;
 
             // Set "source specifier" flag
             control = params.srcSpecifier
-                ? TyperUtil.setBit(control, 3, params.srcSpecifier) : control;
+                ? Utils.Typer.setBit(control, 3, params.srcSpecifier) : control;
 
             // Set "expecting reply" flag
             control = params.expectingReply
-                ? TyperUtil.setBit(control, 2, params.expectingReply) : control;
+                ? Utils.Typer.setBit(control, 2, params.expectingReply) : control;
 
             // Set second priority bit
             control = _.isNumber(params.priority1)
-                ? TyperUtil.setBit(control, 1, !!params.priority1) : control;
+                ? Utils.Typer.setBit(control, 1, !!params.priority1) : control;
 
             // Set first priority bit
             control = _.isNumber(params.priority2)
-                ? TyperUtil.setBit(control, 0, !!params.priority2) : control;
+                ? Utils.Typer.setBit(control, 0, !!params.priority2) : control;
         }
 
         writer.writeUInt8(control);

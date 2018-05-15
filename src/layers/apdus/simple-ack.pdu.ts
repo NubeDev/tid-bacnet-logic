@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../../errors';
 
-import { TyperUtil } from '../../utils';
+import * as Utils from '../../utils';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 import * as Interfaces from '../../interfaces';
 
@@ -22,7 +22,7 @@ export class SimpleACKPDU {
      * @return {Interfaces.SimpleACK.Read.Layer}
      */
     public getFromBuffer (buf: Buffer): Interfaces.SimpleACK.Read.Layer {
-        const reader = new BACnetReader(buf);
+        const reader = new IOs.Reader(buf);
 
         let reqMap: Interfaces.SimpleACK.Read.Layer;
         let serviceChoice: Enums.ConfirmedServiceChoice, serviceData: Interfaces.SimpleACK.Read.ServiceChoice;
@@ -32,7 +32,7 @@ export class SimpleACKPDU {
             // --- Read meta byte
             const mMeta = reader.readUInt8();
 
-            pduType = TyperUtil.getBitRange(mMeta, 4, 4);
+            pduType = Utils.Typer.getBitRange(mMeta, 4, 4);
 
             // --- Read InvokeID byte
             invokeId = reader.readUInt8();
@@ -64,10 +64,10 @@ export class SimpleACKPDU {
     /**
      * getSubscribeCOV - parses the "APDU Simple ACK Subscribe CoV" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Simple ACK Subscribe CoV" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Simple ACK Subscribe CoV" message
      * @return {Interfaces.SimpleACK.Read.SubscribeCOV}
      */
-    private getSubscribeCOV (reader: BACnetReader): Interfaces.SimpleACK.Read.SubscribeCOV {
+    private getSubscribeCOV (reader: IOs.Reader): Interfaces.SimpleACK.Read.SubscribeCOV {
         const serviceMap: Interfaces.SimpleACK.Read.SubscribeCOV = {};
 
         return serviceMap;
@@ -76,10 +76,10 @@ export class SimpleACKPDU {
     /**
      * getSubscribeCOV - parses the "APDU Simple ACK Write Property" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Simple ACK Subscribe CoV" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Simple ACK Subscribe CoV" message
      * @return {Interfaces.SimpleACK.Read.WriteProperty}
      */
-    private getWriteProperty (reader: BACnetReader): Interfaces.SimpleACK.Read.WriteProperty {
+    private getWriteProperty (reader: IOs.Reader): Interfaces.SimpleACK.Read.WriteProperty {
         const serviceMap: Interfaces.SimpleACK.Read.WriteProperty = {};
 
         return serviceMap;
@@ -89,13 +89,13 @@ export class SimpleACKPDU {
      * writeReq - writes the "APDU Simple ACK" header.
      *
      * @param  {Interfaces.SimpleACK.Write.Layer} params - "APDU Simple ACK" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeReq (params: Interfaces.SimpleACK.Write.Layer): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeReq (params: Interfaces.SimpleACK.Write.Layer): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service Type
-        const mMeta = TyperUtil.setBitRange(0x00,
+        const mMeta = Utils.Typer.setBitRange(0x00,
             Enums.ServiceType.SimpleACKPDU, 4, 4);
         writer.writeUInt8(mMeta);
 
@@ -109,10 +109,10 @@ export class SimpleACKPDU {
      * writeSubscribeCOV - writes the "APDU Simple ACK Subscribe CoV" message.
      *
      * @param  {Interfaces.SimpleACK.Write.SubscribeCOV} params - "APDU Simple ACK Subscribe CoV" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeSubscribeCOV (params: Interfaces.SimpleACK.Write.SubscribeCOV): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeSubscribeCOV (params: Interfaces.SimpleACK.Write.SubscribeCOV): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.ConfirmedServiceChoice.SubscribeCOV);
@@ -124,10 +124,10 @@ export class SimpleACKPDU {
      * writeWriteProperty - writes the "APDU Simple ACK Write Property" message.
      *
      * @param  {Interfaces.SimpleACK.Write.WriteProperty} params - "APDU Simple ACK Write Property" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeWriteProperty (params: Interfaces.SimpleACK.Write.WriteProperty): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeWriteProperty (params: Interfaces.SimpleACK.Write.WriteProperty): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.ConfirmedServiceChoice.WriteProperty);

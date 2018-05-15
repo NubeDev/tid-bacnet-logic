@@ -10,7 +10,7 @@ import { Offset } from './offset.io';
 
 import * as BACnetTypes from '../types';
 
-export class BACnetWriter {
+export class Writer {
     public offset: Offset;
     private buffer: Buffer;
 
@@ -39,15 +39,15 @@ export class BACnetWriter {
      * concat - concatenates the writers and returns the writer with common buffer.
      *
      * @static
-     * @param  {BACnetWriter[]} restsOfWriters - description
+     * @param  {IOs.Writer[]} restsOfWriters - description
      * @return {type}
      */
-    static concat (...restsOfWriters: BACnetWriter[]) {
+    static concat (...restsOfWriters: Writer[]) {
         const resultBuf = _.reduce(restsOfWriters, (result, writer) => {
             const bufOfWriter = writer.getBuffer();
             return Buffer.concat([result, bufOfWriter]);
         }, Buffer.alloc(0));
-        return new BACnetWriter(resultBuf);
+        return new Writer(resultBuf);
     }
 
     public getBuffer () {

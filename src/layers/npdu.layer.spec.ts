@@ -196,7 +196,7 @@ describe('NPDU', () => {
 
         //
         // it('should return writer with correct signature if APDU is not defained and NPDU is defined', () => {
-        //     const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
+        //     const npduWriter = new IOs.Writer(Buffer.from([0x32, 0x55, 0x12]));
         //     const writer = blvc.writeBLVCLayer({
         //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: npduWriter,
@@ -208,7 +208,7 @@ describe('NPDU', () => {
         // });
         //
         // it('should return writer with correct signature if APDU is defained and NPDU is not defined', () => {
-        //     const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
+        //     const apduWriter = new IOs.Writer(Buffer.from([0x32, 0x55]));
         //     const writer = blvc.writeBLVCLayer({
         //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: null,
@@ -220,8 +220,8 @@ describe('NPDU', () => {
         // });
         //
         // it('should return writer with correct signature if APDU and NPDU are defined', () => {
-        //     const npduWriter = new BACnetWriter(Buffer.from([0x32, 0x55, 0x12]));
-        //     const apduWriter = new BACnetWriter(Buffer.from([0x32, 0x55]));
+        //     const npduWriter = new IOs.Writer(Buffer.from([0x32, 0x55, 0x12]));
+        //     const apduWriter = new IOs.Writer(Buffer.from([0x32, 0x55]));
         //     const writer = blvc.writeBLVCLayer({
         //         func: Enums.BLVCFunction.originalBroadcastNPDU,
         //         npdu: npduWriter,

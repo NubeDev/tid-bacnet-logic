@@ -3,7 +3,7 @@ import * as Enums from '../enums';
 import { complexACKPDU } from '../layers/apdus';
 import { blvc, npdu } from '../layers';
 
-import { BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 import {
     ComplexACK,
@@ -23,7 +23,7 @@ export class ComplexACKService {
         // Generate APDU writer
         const writerComplexACK = complexACKPDU.writeReq(opts);
         const writerReadProperty = complexACKPDU.writeReadProperty(opts);
-        const writerAPDU = BACnetWriter.concat(writerComplexACK, writerReadProperty);
+        const writerAPDU = IOs.Writer.concat(writerComplexACK, writerReadProperty);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -36,7 +36,7 @@ export class ComplexACKService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();

@@ -8,7 +8,7 @@ import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 export class BACnetUnsignedInteger extends BACnetTypeBase {
     public readonly className: string = 'BACnetUnsignedInteger';
@@ -28,22 +28,22 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      * Creates the instance of the BACnetUnsignedInteger and calls the `readValue`
      * method.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {BACnetUnsignedInteger}
      */
-    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetUnsignedInteger {
+    static readParam (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): BACnetUnsignedInteger {
         return super.readParam(reader, opts);
     }
 
     /**
      * Parses the message with BACnet `unsigned integer` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
+    public readValue (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -66,10 +66,10 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     /**
      * Writes the BACnet `unsigned integer` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter): void {
+    public writeValue (writer: IOs.Writer): void {
         this.writeParam(writer, {
             num: Enums.PropertyType.unsignedInt,
             type: Enums.TagType.application,
@@ -79,11 +79,11 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     /**
      * Writes the BACnet `unsigned integer` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
+    public writeParam (writer: IOs.Writer, tag: Interfaces.Tag): void {
         const dataSize = this.getUIntSize(this.data);
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

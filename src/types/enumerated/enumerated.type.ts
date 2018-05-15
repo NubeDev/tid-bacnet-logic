@@ -8,7 +8,7 @@ import * as Interfaces from '../../interfaces';
 
 import { BACnetError } from '../../errors';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 export class BACnetEnumerated extends BACnetTypeBase {
     public readonly className: string = 'BACnetEnumerated';
@@ -28,22 +28,22 @@ export class BACnetEnumerated extends BACnetTypeBase {
      * Creates the instance of the BACnetEnumerated and calls the `readValue`
      * method.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {BACnetEnumerated}
      */
-    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetEnumerated {
+    static readParam (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): BACnetEnumerated {
         return super.readParam(reader, opts);
     }
 
     /**
      * Parses the message with BACnet `enumerated` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
+    public readValue (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): void {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
@@ -54,10 +54,10 @@ export class BACnetEnumerated extends BACnetTypeBase {
     /**
      * Writes the BACnet `enumerated` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter): void {
+    public writeValue (writer: IOs.Writer): void {
         this.writeParam(writer, {
             num: Enums.PropertyType.enumerated,
             type: Enums.TagType.application,
@@ -67,11 +67,11 @@ export class BACnetEnumerated extends BACnetTypeBase {
     /**
      * Writes the BACnet `enumerated` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
+    public writeParam (writer: IOs.Writer, tag: Interfaces.Tag): void {
         const dataSize: number = 1;
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);

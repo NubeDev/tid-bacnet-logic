@@ -3,19 +3,19 @@ import { spy, SinonSpy } from 'sinon';
 
 import { BACnetEnumerated } from './enumerated.type';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 describe('BACnetEnumerated', () => {
     describe('readValue', () => {
         let bacnetEnumerated: BACnetEnumerated;
-        let bacnetReaderUtil: BACnetReader;
+        let bacnetReaderUtil: IOs.Reader;
 
         beforeEach(() => {
             bacnetEnumerated = new BACnetEnumerated();
         });
 
         it('should read correct tag', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([0x91, 0x12]));
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([0x91, 0x12]));
             bacnetEnumerated.readValue(bacnetReaderUtil);
 
             const tag = bacnetEnumerated.getTag();
@@ -23,7 +23,7 @@ describe('BACnetEnumerated', () => {
         });
 
         it('should read "0x12" value', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([0x91, 0x12]));
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([0x91, 0x12]));
             bacnetEnumerated.readValue(bacnetReaderUtil);
 
             const value = bacnetEnumerated.getValue();
@@ -31,7 +31,7 @@ describe('BACnetEnumerated', () => {
         });
 
         it('should read "0x44" value', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([0x91, 0x44]));
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([0x91, 0x44]));
             bacnetEnumerated.readValue(bacnetReaderUtil);
 
             const value = bacnetEnumerated.getValue();
@@ -41,10 +41,10 @@ describe('BACnetEnumerated', () => {
 
     describe('writeValue', () => {
         let bacnetEnumerated: BACnetEnumerated;
-        let bacnetWriterUtil: BACnetWriter;
+        let bacnetWriterUtil: IOs.Writer;
 
         beforeEach(() => {
-            bacnetWriterUtil = new BACnetWriter();
+            bacnetWriterUtil = new IOs.Writer();
         });
 
         it('should write correct buffer for "true" value', () => {

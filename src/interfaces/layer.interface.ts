@@ -4,7 +4,7 @@ import * as BACnetTypes from '../types';
 
 import * as BACnet from './bacnet.interface';
 
-import { BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 export interface Layers {
     blvc: BLVC.Read.Layer;
@@ -25,8 +25,8 @@ export namespace BLVC {
     export namespace Write {
         export interface Layer {
             func: Enums.BLVCFunction;
-            npdu: BACnetWriter;
-            apdu: BACnetWriter;
+            npdu: IOs.Writer;
+            apdu: IOs.Writer;
         }
     }
 }

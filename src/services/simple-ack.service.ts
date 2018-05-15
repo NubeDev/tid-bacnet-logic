@@ -3,7 +3,7 @@ import * as Enums from '../enums';
 import { complexACKPDU, simpleACKPDU } from '../layers/apdus';
 import { blvc, npdu } from '../layers';
 
-import { BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 import {
     SimpleACK,
@@ -23,7 +23,7 @@ export class SimpleACKService {
         // Generate APDU writer
         const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
         const writerSubscribeCOV = simpleACKPDU.writeSubscribeCOV(opts);
-        const writerAPDU = BACnetWriter.concat(writerSimpleACKPDU, writerSubscribeCOV);
+        const writerAPDU = IOs.Writer.concat(writerSimpleACKPDU, writerSubscribeCOV);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -36,7 +36,7 @@ export class SimpleACKService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();
@@ -54,7 +54,7 @@ export class SimpleACKService {
         // Generate APDU writer
         const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
         const writerSubscribeCOV = simpleACKPDU.writeWriteProperty(opts);
-        const writerAPDU = BACnetWriter.concat(writerSimpleACKPDU, writerSubscribeCOV);
+        const writerAPDU = IOs.Writer.concat(writerSimpleACKPDU, writerSubscribeCOV);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -67,7 +67,7 @@ export class SimpleACKService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();

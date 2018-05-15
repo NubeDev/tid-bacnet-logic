@@ -3,19 +3,19 @@ import { spy, SinonSpy } from 'sinon';
 
 import { BACnetUnsignedInteger } from './unsigned-integer.type';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 describe('BACnetUnsignedInteger', () => {
     describe('readValue', () => {
         let bacnetUnsignedInteger: BACnetUnsignedInteger;
-        let bacnetReaderUtil: BACnetReader;
+        let bacnetReaderUtil: IOs.Reader;
 
         beforeEach(() => {
             bacnetUnsignedInteger = new BACnetUnsignedInteger();
         });
 
         it('should read correct tag', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([
                 0x21, 0x23,
             ]));
             bacnetUnsignedInteger.readValue(bacnetReaderUtil);
@@ -25,7 +25,7 @@ describe('BACnetUnsignedInteger', () => {
         });
 
         it('should read "0x23" value', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([
                 0x21, 0x23,
             ]));
             bacnetUnsignedInteger.readValue(bacnetReaderUtil);
@@ -35,7 +35,7 @@ describe('BACnetUnsignedInteger', () => {
         });
 
         it('should read "0x1211" value', () => {
-            bacnetReaderUtil = new BACnetReader(Buffer.from([
+            bacnetReaderUtil = new IOs.Reader(Buffer.from([
                 0x22, 0x12, 0x11,
             ]));
             bacnetUnsignedInteger.readValue(bacnetReaderUtil);
@@ -47,10 +47,10 @@ describe('BACnetUnsignedInteger', () => {
 
     describe('writeValue', () => {
         let bacnetUnsignedInteger: BACnetUnsignedInteger;
-        let bacnetWriterUtil: BACnetWriter;
+        let bacnetWriterUtil: IOs.Writer;
 
         beforeEach(() => {
-            bacnetWriterUtil = new BACnetWriter();
+            bacnetWriterUtil = new IOs.Writer();
         });
 
         it('should write correct buffer for "0x23" value', () => {

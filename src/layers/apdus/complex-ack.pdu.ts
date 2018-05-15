@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 
 import { BACnetError } from '../../errors';
 
-import { TyperUtil, BACnetReaderUtil, BACnetWriterUtil } from '../../utils';
+import * as Utils from '../../utils';
 
-import { BACnetReader, BACnetWriter } from '../../io';
+import * as IOs from '../../io';
 
 import * as Interfaces from '../../interfaces';
 
@@ -22,7 +22,7 @@ export class ComplexACKPDU {
      * @return {Interfaces.ComplexACK.Read.Layer}
      */
     public getFromBuffer (buf: Buffer): Interfaces.ComplexACK.Read.Layer {
-        const reader = new BACnetReader(buf);
+        const reader = new IOs.Reader(buf);
 
         let reqMap: Interfaces.ComplexACK.Read.Layer;
         let serviceChoice: Enums.ConfirmedServiceChoice;
@@ -34,11 +34,11 @@ export class ComplexACKPDU {
             // --- Read meta byte
             const mMeta = reader.readUInt8();
 
-            pduType = TyperUtil.getBitRange(mMeta, 4, 4);
+            pduType = Utils.Typer.getBitRange(mMeta, 4, 4);
 
-            pduSeg = !!TyperUtil.getBit(mMeta, 3);
+            pduSeg = !!Utils.Typer.getBit(mMeta, 3);
 
-            pduMor = !!TyperUtil.getBit(mMeta, 2);
+            pduMor = !!Utils.Typer.getBit(mMeta, 2);
 
             // --- Read InvokeID byte
             invokeId = reader.readUInt8();
@@ -77,10 +77,10 @@ export class ComplexACKPDU {
     /**
      * getReadProperty - parses the "APDU Complex ACK Read Property" message.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "APDU Complex ACK Read Property" message
+     * @param  {IOs.Reader} reader - BACnet reader with "APDU Complex ACK Read Property" message
      * @return {Interfaces.ComplexACK.Read.ReadProperty}
      */
-    private getReadProperty (reader: BACnetReader): Interfaces.ComplexACK.Read.ReadProperty {
+    private getReadProperty (reader: IOs.Reader): Interfaces.ComplexACK.Read.ReadProperty {
         let serviceData: Interfaces.ComplexACK.Read.ReadProperty;
 
         let objId: BACnetTypes.BACnetObjectId;
@@ -89,7 +89,7 @@ export class ComplexACKPDU {
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);
 
-            prop = BACnetReaderUtil.readProperty(reader);
+            prop = Utils.Reader.readProperty(reader);
         } catch (error) {
             throw new BACnetError(`${this.className} - getReadProperty: Parse - ${error}`);
         }
@@ -106,24 +106,24 @@ export class ComplexACKPDU {
      * writeReq - writes the "APDU Complex ACK" header.
      *
      * @param  {Interfaces.ComplexACK.Write.Layer} params - "APDU Complex ACK" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeReq (params: Interfaces.ComplexACK.Write.Layer): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeReq (params: Interfaces.ComplexACK.Write.Layer): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write service meta
         // Set service type
-        let mMeta = TyperUtil.setBitRange(0x00,
+        let mMeta = Utils.Typer.setBitRange(0x00,
             Enums.ServiceType.ComplexACKPDU, 4, 4);
 
         // Set service SEG flag
         if (!_.isNil(params.seg)) {
-            mMeta = TyperUtil.setBit(mMeta, 3, params.seg);
+            mMeta = Utils.Typer.setBit(mMeta, 3, params.seg);
         }
 
         // Set service MOR flag
         if (!_.isNil(params.mor)) {
-            mMeta = TyperUtil.setBit(mMeta, 2, params.mor);
+            mMeta = Utils.Typer.setBit(mMeta, 2, params.mor);
         }
 
         writer.writeUInt8(mMeta);
@@ -138,10 +138,10 @@ export class ComplexACKPDU {
      * writeReq - writes the "APDU Complex ACK Read Property" message.
      *
      * @param  {Interfaces.ComplexACK.Write.ReadProperty} params - "APDU Complex ACK Read Property" write params
-     * @return {BACnetWriter}
+     * @return {IOs.Writer}
      */
-    public writeReadProperty (params: Interfaces.ComplexACK.Write.ReadProperty): BACnetWriter {
-        const writer = new BACnetWriter();
+    public writeReadProperty (params: Interfaces.ComplexACK.Write.ReadProperty): IOs.Writer {
+        const writer = new IOs.Writer();
 
         // Write Service choice
         writer.writeUInt8(Enums.ConfirmedServiceChoice.ReadProperty);
@@ -158,7 +158,7 @@ export class ComplexACKPDU {
         }
 
         // Write Property Value
-        BACnetWriterUtil.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
+        Utils.Writer.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
 
         return writer;
     }

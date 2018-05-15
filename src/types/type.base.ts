@@ -1,6 +1,6 @@
 import { APIError } from '../errors';
 
-import { BACnetReader, BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 import * as Interfaces from '../interfaces';
 
@@ -13,11 +13,11 @@ export class BACnetTypeBase {
      * Creates the instance of the BACnet Type and calls the `readValue`
      * method.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {any}
      */
-    static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): any {
+    static readParam (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): any {
         const inst = new this();
 
         const readOpts = reader.extractOpts(opts);
@@ -33,28 +33,28 @@ export class BACnetTypeBase {
     /**
      * Parses the message with BACnet value.
      *
-     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {IOs.Reader} reader - BACnet reader (IO logic)
      * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
-    public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void { ; }
+    public readValue (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): void { ; }
 
     /**
      * Writes the BACnet Type as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter): void { ; }
+    public writeValue (writer: IOs.Writer): void { ; }
 
     /**
      * Writes the BACnet Type as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {IOs.Writer} writer - BACnet writer (IO logic)
      * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
-    public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
+    public writeParam (writer: IOs.Writer, tag: Interfaces.Tag): void {
         throw new APIError(`${this.className} - writeParam: Not implemented yet`);
     }
 

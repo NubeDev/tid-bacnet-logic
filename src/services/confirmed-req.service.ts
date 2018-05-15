@@ -3,7 +3,7 @@ import * as Enums from '../enums';
 import { confirmedReqPDU } from '../layers/apdus';
 import { blvc, npdu } from '../layers';
 
-import { BACnetWriter } from '../io';
+import * as IOs from '../io';
 
 import {
     ConfirmedRequest,
@@ -23,7 +23,7 @@ export class ConfirmedReqService {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerReadProperty = confirmedReqPDU.writeReadProperty(opts);
-        const writerAPDU = BACnetWriter.concat(writerConfirmedReq, writerReadProperty);
+        const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerReadProperty);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -36,7 +36,7 @@ export class ConfirmedReqService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();
@@ -54,7 +54,7 @@ export class ConfirmedReqService {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerWriteProperty = confirmedReqPDU.writeWriteProperty(opts);
-        const writerAPDU = BACnetWriter.concat(writerConfirmedReq, writerWriteProperty);
+        const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerWriteProperty);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -67,7 +67,7 @@ export class ConfirmedReqService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();
@@ -85,7 +85,7 @@ export class ConfirmedReqService {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerSubscribeCOV = confirmedReqPDU.writeSubscribeCOV(opts);
-        const writerAPDU = BACnetWriter.concat(writerConfirmedReq, writerSubscribeCOV);
+        const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerSubscribeCOV);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -98,7 +98,7 @@ export class ConfirmedReqService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();
@@ -116,7 +116,7 @@ export class ConfirmedReqService {
         // Generate APDU writer
         const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
         const writerUnsubscribeCOV = confirmedReqPDU.writeUnsubscribeCOV(opts);
-        const writerAPDU = BACnetWriter.concat(writerConfirmedReq, writerUnsubscribeCOV);
+        const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerUnsubscribeCOV);
 
         // Generate NPDU writer
         const writerNPDU = npdu.writeNPDULayer({});
@@ -129,7 +129,7 @@ export class ConfirmedReqService {
         });
 
         // Concat messages
-        const writerBACnet = BACnetWriter.concat(writerBLVC, writerNPDU, writerAPDU);
+        const writerBACnet = IOs.Writer.concat(writerBLVC, writerNPDU, writerAPDU);
 
         // Get and send BACnet message
         const msgBACnet = writerBACnet.getBuffer();

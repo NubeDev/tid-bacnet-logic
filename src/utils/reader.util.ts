@@ -8,21 +8,21 @@ import * as Enums from '../enums';
 
 import * as BACnetTypes from '../types';
 
-import { BACnetReader } from '../io';
+import * as IOs from '../io';
 
-export class BACnetReaderUtil {
+export class Reader {
     /**
      * Reads BACnet property from buffer of the reader.
      *
      * @return {Map<string, any>}
      */
-    static readProperty (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue {
+    static readProperty (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue {
         const propId = BACnetTypes.BACnetEnumerated.readParam(reader);
         const propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
             tag: { num: 1, type: Enums.TagType.context },
         });
-        const propValues = BACnetReaderUtil.readPropertyValues(reader, opts);
+        const propValues = Reader.readPropertyValues(reader, opts);
         const propPriority = BACnetTypes.BACnetUnsignedInteger.readParam(reader, {
             optional: true,
             tag: { num: 3, type: Enums.TagType.context },
@@ -41,7 +41,7 @@ export class BACnetReaderUtil {
      *
      * @return {Map<string, any>}
      */
-    static readProperties (reader: BACnetReader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue[] {
+    static readProperties (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): Interfaces.PropertyValue[] {
         // Context Number - Context tag - "Opening" Tag
         const openingTag = reader.readTag(opts);
 
@@ -67,7 +67,7 @@ export class BACnetReaderUtil {
      *
      * @return {Map<string, any>}
      */
-    static readPropertyValues (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetTypes.BACnetTypeBase[] {
+    static readPropertyValues (reader: IOs.Reader, opts?: Interfaces.ReaderOptions): BACnetTypes.BACnetTypeBase[] {
         // Context Number - Context tag - "Opening" Tag
         const openingTag = reader.readTag(opts);
 
