@@ -25,15 +25,23 @@ export class BACnetObjectId extends BACnetTypeBase {
             : this.checkAndGetValue(_.clone(defValue));
     }
 
+    /**
+     * Creates the instance of the BACnetObjectId and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetObjectId}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetObjectId {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "object identifier" value.
+     * Parses the message with BACnet `object ID` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "object identifier" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -47,9 +55,9 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "object identifier" value.
+     * Writes the BACnet `object ID` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -60,10 +68,10 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * writeParam - writes the BACnet Param as "object identifier" value.
+     * Writes the BACnet `object ID` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.Tag} tag - BACnet tag
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
@@ -77,9 +85,9 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "object identifier" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {Interfaces.Type.ObjectId} newValue - new "object identifier" value
+     * @param  {Interfaces.Type.ObjectId} newValue - new value
      * @return {void}
      */
     public setValue (newValue: Interfaces.Type.ObjectId): void {
@@ -87,7 +95,7 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "object identifier" value.
+     * Returns the value of the BACnet type.
      *
      * @return {Interfaces.Type.ObjectId}
      */
@@ -96,17 +104,14 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "object identifier" value as internal state
+     * `object ID` value
      *
      * @type {Interfaces.Type.ObjectId}
      */
     public set value (newValue: Interfaces.Type.ObjectId) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "object identifier" value.
-     *
      * @type {Interfaces.Type.ObjectId}
      */
     public get value (): Interfaces.Type.ObjectId {
@@ -137,7 +142,7 @@ export class BACnetObjectId extends BACnetTypeBase {
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "object identifier" value,
+     * Returns `true` if "value" is a correct "object identifier" value,
      * throws the error if "value" has incorrect type.
      *
      * @param  {Interfaces.Type.ObjectId} value - "object identifier" value
@@ -169,7 +174,7 @@ export class BACnetObjectId extends BACnetTypeBase {
      }
 
     /**
-     * decodeObjectIdentifier - decodes the Object Identifier and returns the
+     * Decodes the Object Identifier and returns the
      * map with object type and object instance.
      *
      * @param  {number} objId - 4 bytes of object identifier

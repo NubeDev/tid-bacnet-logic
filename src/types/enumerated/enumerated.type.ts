@@ -24,15 +24,23 @@ export class BACnetEnumerated extends BACnetTypeBase {
             ? 0 : this.checkAndGetValue(defValue);
     }
 
+    /**
+     * Creates the instance of the BACnetEnumerated and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetEnumerated}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetEnumerated {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "enumerated" value.
+     * Parses the message with BACnet `enumerated` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "enumerated" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -44,9 +52,9 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "enumerated" value.
+     * Writes the BACnet `enumerated` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -57,10 +65,10 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * writeParam - writes the BACnet Param as "enumerated" value.
+     * Writes the BACnet `enumerated` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.Tag} tag - BACnet tag
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
@@ -72,9 +80,9 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "enumerated" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {number} newValue - new "enumerated" value
+     * @param  {number} newValue - new value
      * @return {void}
      */
     public setValue (newValue: number): void {
@@ -82,7 +90,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "enumerated" value.
+     * Returns the value of the BACnet type.
      *
      * @return {number}
      */
@@ -91,17 +99,14 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "enumerated" value as internal state
+     * `enumerated` value
      *
      * @type {number}
      */
     public set value (newValue: number) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "enumerated" value.
-     *
      * @type {number}
      */
     public get value (): number {
@@ -132,7 +137,7 @@ export class BACnetEnumerated extends BACnetTypeBase {
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "enumerated" value, throws
+     * Returns `true` if "value" is a correct "enumerated" value, throws
      * the error if "value" has incorrect type.
      *
      * @param  {number} value - "enumerated" value

@@ -9,6 +9,14 @@ export class BACnetTypeBase {
     protected tag: Interfaces.Tag;
     protected data: any;
 
+    /**
+     * Creates the instance of the BACnet Type and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {any}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): any {
         const inst = new this();
 
@@ -23,57 +31,61 @@ export class BACnetTypeBase {
     }
 
     /**
-     * readValue - parses the message with BACnet value.
+     * Parses the message with BACnet value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "unsigned integer" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void { ; }
 
     /**
-     * writeValue - writes the BACnet value.
+     * Writes the BACnet Type as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void { ; }
 
+    /**
+     * Writes the BACnet Type as BACnet property (param).
+     *
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
+     * @return {void}
+     */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
         throw new APIError(`${this.className} - writeParam: Not implemented yet`);
     }
 
     /**
-     * setValue - sets the new internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {any} newValue - new "unsigned integer" value
+     * @param  {any} newValue - new value
      * @return {void}
      */
     public setValue (newValute: any): void { ; }
 
     /**
-     * getValue - returns the internal state.
+     * Returns the value of the BACnet type.
      *
      * @return {any}
      */
     public getValue (): any { ; }
 
     /**
-     * value - sets the new internal state
+     * `Type` value
      *
      * @type {any}
      */
     public get value (): any { return null; }
-
     /**
-     * value - returns the internal state..
-     *
      * @type {any}
      */
     public set value (newValute: any) { ; }
 
     /**
-     * getTag - returns the BACnet tag.
+     * Returns the BACnet tag of the BACnet property.
      *
      * @return {Interfaces.Tag}
      */

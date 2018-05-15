@@ -25,15 +25,23 @@ export class BACnetCharacterString extends BACnetTypeBase {
             ? '' : this.checkAndGetValue(defValue);
     }
 
+    /**
+     * Creates the instance of the BACnetCharacterString and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetCharacterString}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetCharacterString {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "character string" value.
+     * Parses the message with BACnet `character string` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "character string" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -52,9 +60,9 @@ export class BACnetCharacterString extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "character string" value.
+     * Writes the BACnet `character string` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -73,9 +81,9 @@ export class BACnetCharacterString extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "character string" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {string} newValue - new "character string" value
+     * @param  {string} newValue - new value
      * @return {void}
      */
     public setValue (newValue: string): void {
@@ -83,7 +91,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "character string" value.
+     * Returns the value of the BACnet type.
      *
      * @return {string}
      */
@@ -92,25 +100,26 @@ export class BACnetCharacterString extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "character string" value as internal state
+     * `character string` value
      *
-     * @type {string}
+     * @type {number}
      */
     public set value (newValue: string) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "character string" value.
-     *
-     * @type {string}
+     * @type {number}
      */
     public get value (): string {
         return this.getValue();
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "character string" value, throws
+     * HELPERs
+     */
+
+    /**
+     * Returns `true` if "value" is a correct "character string" value, throws
      * the error if "value" has incorrect type.
      *
      * @param  {string} value - "character string" value
@@ -125,11 +134,7 @@ export class BACnetCharacterString extends BACnetTypeBase {
     }
 
     /**
-     * HELPERs
-     */
-
-    /**
-     * getStringEncode - returns the "string" representation of the character
+     * Returns the "string" representation of the character
      * encoding.
      *
      * @param  {number} charSet - character encoding

@@ -24,15 +24,23 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
             ? 0 : this.checkAndGetValue(defValue);
     }
 
+    /**
+     * Creates the instance of the BACnetUnsignedInteger and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetUnsignedInteger}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetUnsignedInteger {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "unsigned integer" value.
+     * Parses the message with BACnet `unsigned integer` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "unsigned integer" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -56,9 +64,9 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "unsigned integer" value.
+     * Writes the BACnet `unsigned integer` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -69,10 +77,10 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * writeParam - writes the BACnet Param as "unsigned integer" value.
+     * Writes the BACnet `unsigned integer` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.Tag} tag - BACnet tag
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
@@ -84,9 +92,9 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "unsigned integer" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {number} newValue - new "unsigned integer" value
+     * @param  {number} newValue - new value
      * @return {void}
      */
     public setValue (newValue: number): void {
@@ -94,7 +102,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "unsigned integer" value.
+     * Returns the value of the BACnet type.
      *
      * @return {number}
      */
@@ -103,17 +111,14 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "unsigned integer" value as internal state
+     * `unsigned integer` value
      *
      * @type {number}
      */
     public set value (newValue: number) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "unsigned integer" value.
-     *
      * @type {number}
      */
     public get value (): number {
@@ -148,7 +153,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
      */
 
     /**
-     * getUIntSize - returns the size (byte) of the unsigned int value.
+     * Returns the size (byte) of the unsigned int value.
      *
      * @param  {number} uIntValue - unsigned int value
      * @return {number}
@@ -164,7 +169,7 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "unsigned integer" value, throws
+     * Returns `true` if "value" is a correct "unsigned integer" value. Throws
      * the error if "value" has incorrect type.
      *
      * @param  {number} value - "unsigned integer" value

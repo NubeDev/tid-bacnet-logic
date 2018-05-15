@@ -27,15 +27,23 @@ export class BACnetStatusFlags extends BACnetTypeBase {
         this.data = this.checkAndGetValue(defValue);
     }
 
+    /**
+     * Creates the instance of the BACnetStatusFlags and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetStatusFlags}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetStatusFlags {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "status flags" value.
+     * Parses the message with BACnet `status flags` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "status flags" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions) {
@@ -60,12 +68,12 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "status flags" value.
+     * Writes the BACnet `status flags` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
-    public writeValue (writer: BACnetWriter) {
+    public writeValue (writer: BACnetWriter): void {
         writer.writeTag(Enums.PropertyType.bitString, 0, 2);
 
         // Write unused bits
@@ -82,9 +90,9 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "status flags" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {Interfaces.Type.StatusFlags} newValue - new "status flags" value
+     * @param  {Interfaces.Type.StatusFlags} newValue - new value
      * @return {void}
      */
     public setValue (newValue: Interfaces.Type.StatusFlags): void {
@@ -92,7 +100,7 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "status flags" value.
+     * Returns the value of the BACnet type.
      *
      * @return {Interfaces.Type.StatusFlags}
      */
@@ -101,17 +109,14 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "status flags" value as internal state
+     * `status flags` value
      *
      * @type {Interfaces.Type.StatusFlags}
      */
     public set value (newValue: Interfaces.Type.StatusFlags) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "status flags" value.
-     *
      * @type {Interfaces.Type.StatusFlags}
      */
     public get value (): Interfaces.Type.StatusFlags {
@@ -119,7 +124,11 @@ export class BACnetStatusFlags extends BACnetTypeBase {
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "status flags" value,
+     * HELPERs
+     */
+
+    /**
+     * Returns `true` if "value" is a correct "status flags" value,
      * throws the error if "value" has incorrect type.
      *
      * @param  {Interfaces.Type.StatusFlags} value - "status flags" value

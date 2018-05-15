@@ -20,15 +20,23 @@ export class BACnetNull extends BACnetTypeBase {
         super();
     }
 
+    /**
+     * Creates the instance of the BACnetNull and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetNull}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetNull {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "null" value.
+     * Parses the message with BACnet `null` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "null" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -37,9 +45,9 @@ export class BACnetNull extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "null" value.
+     * Writes the BACnet `null` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -47,10 +55,10 @@ export class BACnetNull extends BACnetTypeBase {
     }
 
     /**
-     * writeParam - writes the BACnet Param as "null" value.
+     * Writes the BACnet `null` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.Tag} tag - BACnet tag
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
@@ -62,16 +70,16 @@ export class BACnetNull extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "null" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {null} newValue - new "null" value
+     * @param  {null} newValue - new value
      * @return {void}
      */
     public setValue (newValue: null): void {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "null" value.
+     * Returns the value of the BACnet type.
      *
      * @return {null}
      */
@@ -80,17 +88,14 @@ export class BACnetNull extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "null" value as internal state
+     * `null` value
      *
-     * @type {null}
+     * @type {number}
      */
     public set value (newValue: null) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "null" value.
-     *
      * @type {null}
      */
     public get value (): null {

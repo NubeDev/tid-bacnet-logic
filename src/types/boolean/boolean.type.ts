@@ -24,15 +24,23 @@ export class BACnetBoolean extends BACnetTypeBase {
             ? false : this.checkAndGetValue(defValue);
     }
 
+    /**
+     * Creates the instance of the BACnetBoolean and calls the `readValue`
+     * method.
+     *
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
+     * @return {BACnetBoolean}
+     */
     static readParam (reader: BACnetReader, opts?: Interfaces.ReaderOptions): BACnetBoolean {
         return super.readParam(reader, opts);
     }
 
     /**
-     * readValue - parses the message with BACnet "boolean" value.
+     * Parses the message with BACnet `boolean` value.
      *
-     * @param  {BACnetReader} reader - BACnet reader with "boolean" BACnet value
-     * @param  {type} [opts = true] - change offset in the buffer of reader
+     * @param  {BACnetReader} reader - BACnet reader (IO logic)
+     * @param  {Interfaces.ReaderOptions} [opts] - reader options
      * @return {void}
      */
     public readValue (reader: BACnetReader, opts?: Interfaces.ReaderOptions): void {
@@ -43,9 +51,9 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * writeValue - writes the BACnet "boolean" value.
+     * Writes the BACnet `boolean` as BACnet value.
      *
-     * @param  {BACnetWriter} writer - BACnet writer
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
      * @return {void}
      */
     public writeValue (writer: BACnetWriter): void {
@@ -53,10 +61,10 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * writeParam - writes the BACnet Param as "boolean" value.
+     * Writes the BACnet `boolean` as BACnet property (param).
      *
-     * @param  {BACnetWriter} writer - BACnet writer
-     * @param  {Interfaces.Tag} tag - BACnet tag
+     * @param  {BACnetWriter} writer - BACnet writer (IO logic)
+     * @param  {Interfaces.Tag} tag - BACnet property tag
      * @return {void}
      */
     public writeParam (writer: BACnetWriter, tag: Interfaces.Tag): void {
@@ -68,9 +76,9 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * setValue - sets the new BACnet "boolean" value as internal state.
+     * Sets the new value of the BACnet type.
      *
-     * @param  {boolean} newValue - new "boolean" value
+     * @param  {boolean} newValue - new value
      * @return {void}
      */
     public setValue (newValue: boolean): void {
@@ -78,7 +86,7 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * getValue - returns the internal state as current BACnet "boolean" value.
+     * Returns the value of the BACnet type.
      *
      * @return {boolean}
      */
@@ -87,17 +95,14 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * value - sets the new BACnet "boolean" value as internal state
+     * `boolean` value
      *
-     * @type {boolean}
+     * @type {number}
      */
     public set value (newValue: boolean) {
         this.setValue(newValue);
     }
-
     /**
-     * value - returns the internal state as current BACnet "boolean" value.
-     *
      * @type {boolean}
      */
     public get value (): boolean {
@@ -105,7 +110,7 @@ export class BACnetBoolean extends BACnetTypeBase {
     }
 
     /**
-     * checkAndGetValue - checks if "value" is a correct "boolean" value, throws
+     * Returns `true` if "value" is a correct "boolean" value, throws
      * the error if "value" has incorrect type.
      *
      * @param  {boolean} value - "boolean" value
