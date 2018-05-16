@@ -69,6 +69,8 @@ export class Reader {
             params.push(param);
         }
 
+        const closingTag = reader.readTag();
+
         return params;
     }
 
