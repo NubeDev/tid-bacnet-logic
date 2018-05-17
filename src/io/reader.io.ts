@@ -7,6 +7,7 @@ import * as Interfaces from '../interfaces';
 import * as Enums from '../enums';
 
 import { Offset } from './offset.io';
+
 import * as Utils from '../utils';
 
 import * as BACnetTypes from '../types';
@@ -109,11 +110,11 @@ export class Reader {
             return null;
         }
 
-        const tagNumber = tag >> 4;
+        const tagNumber = Utils.Typer.getBitRange(tag, 4, 4);
 
-        const tagType = (tag >> 3) & 0x01;
+        const tagType =  Utils.Typer.getBit(tag, 3);
 
-        const tagValue = tag & 0x07;
+        const tagValue = Utils.Typer.getBitRange(tag, 0, 3);
 
         tagData = {
             num: tagNumber,

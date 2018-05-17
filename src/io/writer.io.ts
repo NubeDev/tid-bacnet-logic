@@ -8,6 +8,8 @@ import * as Enums from '../enums';
 
 import { Offset } from './offset.io';
 
+import * as Utils from '../utils';
+
 import * as BACnetTypes from '../types';
 
 export class Writer {
@@ -128,16 +130,18 @@ export class Writer {
      * writeTag - writes BACnet tag to the internal buffer.
      *
      * @param  {number} tagNumber - tag number/context
-     * @param  {number} tagClass - tag class
+     * @param  {Enums.TagType} tagType - tag class
      * @param  {number} tagValue - tag value
      * @return {void}
      */
     public writeTag (
-            tagNumber: number, tagClass: number, tagValue: number): void {
+            tagNumber: number, tagType: Enums.TagType, tagValue: number): void {
         // Tag = Tag Number 4 bits, Tag Class 1 bits, Tag Value 3 bits
-        const tag = ((tagNumber & 0x0F) << 4)
-            | ((tagClass & 0x01) << 3)
-            | (tagValue & 0x07);
+        let tag = 0x00;
+        tag = Utils.Typer.setBitRange(tag, tagNumber, 4, 4);
+        tag = Utils.Typer.setBit(tag, 3, tagType);
+        tag = Utils.Typer.setBitRange(tag, tagValue, 0, 3);
+
         this.writeUInt8(tag);
     }
 
