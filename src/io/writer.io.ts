@@ -142,29 +142,6 @@ export class Writer {
     }
 
     /**
-     * writeValue - writes BACnet property value to the internal buffer.
-     *
-     * @param  {BACnetTypes.BACnetTypeBase|BACnetTypes.BACnetTypeBase[]} propValues - bacnet property value
-     * @param  {Interfaces.Tag} tag - bacnet tag
-     * @return {void}
-     */
-    public writeValue (propValues: BACnetTypes.BACnetTypeBase | BACnetTypes.BACnetTypeBase[],
-            tag: Interfaces.Tag): void {
-        // Context Number - Context tag - "Opening" Tag
-        this.writeTag(tag.num, tag.type, 6);
-
-        let values: BACnetTypes.BACnetTypeBase[] = _.isArray(propValues)
-            ? propValues : [ propValues ];
-
-        _.map(values, (value) => {
-            value.writeValue(this);
-        });
-
-        // Context Number - Context tag - "Closing" Tag
-        this.writeTag(tag.num, tag.type, 7);
-    }
-
-    /**
      * writeUIntValue - writes unsigned integer value to the internal buffer.
      *
      * @param  {number} uIntValue - unsigned int value
