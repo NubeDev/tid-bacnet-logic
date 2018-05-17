@@ -81,8 +81,7 @@ export class BACnetObjectId extends BACnetTypeBase {
         // Tag Number - Tag Type - Param Length (bytes)
         writer.writeTag(tag.num, tag.type, dataSize);
         // Write "object identifier" value
-        const objectIdentifier = ((this.data.type & 0x03FF) << 22)
-            | (this.data.instance & 0x03FFFFF);
+        const objectIdentifier = this.encodeObjectIdentifier(this.data)
         writer.writeUInt32BE(objectIdentifier);
     }
 
@@ -189,6 +188,21 @@ export class BACnetObjectId extends BACnetTypeBase {
             type: objType,
             instance: objInstance,
         };
+    }
 
+    /**
+     * Encodes the Object Identifier.
+     *
+     * @param  {Interfaces.Type.ObjectId} objId - object identifier (object)
+     * @return {number} - object identifier (dword)
+     */
+    private encodeObjectIdentifier (objId: Interfaces.Type.ObjectId): number {
+        let encodedObjectIdentifier: number = 0x00;
+        encodedObjectIdentifier = Utils.Typer
+            .setBitRange(encodedObjectIdentifier, 22, 10, objId.type);
+        encodedObjectIdentifier = Utils.Typer
+            .setBitRange(encodedObjectIdentifier, 0, 22, objId.instance);
+
+        return encodedObjectIdentifier;
     }
 }
