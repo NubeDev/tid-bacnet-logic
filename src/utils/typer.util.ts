@@ -11,12 +11,12 @@ export class Typer {
      *
      * @param  {number} bitMap - old value
      * @param  {number} pos - bit position
-     * @param  {number} bitValue - new bit value
+     * @param  {boolean|number} bitValue - new bit value
      * @return {number}
      */
-    static setBit (bitMap: number, pos: number, bitValue: boolean): number {
+    static setBit (bitMap: number, pos: number, bitValue: boolean|number): number {
         const byte = 0x01 << pos;
-        const mask = bitValue ? byte : ~byte;
+        const mask = !!bitValue ? byte : ~byte;
         return bitValue ? (bitMap | mask) : (bitMap & mask);
     }
 
