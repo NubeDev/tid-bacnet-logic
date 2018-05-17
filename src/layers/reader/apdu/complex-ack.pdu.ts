@@ -4,6 +4,8 @@ import * as Errors from '../../../errors';
 
 import * as Utils from '../../../utils';
 
+import * as Helpers from '../../../helpers';
+
 import * as IOs from '../../../io';
 
 import * as Interfaces from '../../../interfaces';
@@ -87,7 +89,7 @@ export class ComplexACK {
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);
 
-            prop = Utils.Reader.readProperty(reader);
+            prop = Helpers.Reader.readProperty(reader);
         } catch (error) {
             throw new Errors.BACnet(`${this.className} - readProperty: Parse - ${error}`);
         }

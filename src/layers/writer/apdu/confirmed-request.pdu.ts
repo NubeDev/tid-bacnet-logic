@@ -4,6 +4,8 @@ import * as Errors from '../../../errors';
 
 import * as Utils from '../../../utils';
 
+import * as Helpers from '../../../helpers';
+
 import * as IOs from '../../../io';
 
 import * as Interfaces from '../../../interfaces';
@@ -89,7 +91,7 @@ export class ConfirmedRequest {
         }
 
         // Write Property Value
-        Utils.Writer.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
+        Helpers.Writer.writeValue(writer, params.prop.values, { num: 3, type: Enums.TagType.context });
 
         if (params.prop.priority) {
             // Write Property Priority

@@ -4,6 +4,8 @@ import * as Errors from '../../../errors';
 
 import * as Utils from '../../../utils';
 
+import * as Helpers from '../../../helpers';
+
 import * as IOs from '../../../io';
 
 import * as Interfaces from '../../../interfaces';
@@ -105,7 +107,7 @@ export class UnconfirmedRequest {
             timeRemaining.writeParam(writer, { num: 3, type: Enums.TagType.context });
         }
 
-        Utils.Writer.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.TagType.context });
+        Helpers.Writer.writeProperties(writer, params.listOfValues, { num: 4, type: Enums.TagType.context });
 
         return writer;
     }
