@@ -8,6 +8,8 @@ import * as Interfaces from '../../interfaces';
 
 import * as Errors from '../../errors';
 
+import * as Utils from '../../utils';
+
 import * as IOs from '../../io';
 
 export class BACnetObjectId extends BACnetTypeBase {
@@ -174,23 +176,19 @@ export class BACnetObjectId extends BACnetTypeBase {
      }
 
     /**
-     * Decodes the Object Identifier and returns the
-     * map with object type and object instance.
+     * Decodes the Object Identifier.
      *
-     * @param  {number} objId - 4 bytes of object identifier
-     * @return {Map<string, any>}
+     * @param  {number} objId - object identifier (dword)
+     * @return {Interfaces.Type.ObjectId} - object identifier (object)
      */
     private decodeObjectIdentifier (objId: number): Interfaces.Type.ObjectId {
-        let objIdPayload: Interfaces.Type.ObjectId;
-        const objType = (objId >> 22) & 0x03FF;
+        const objType = Utils.Typer.getBitRange(objId, 22, 10);
+        const objInstance = Utils.Typer.getBitRange(objId, 0, 22);
 
-        const objInstance = objId & 0x03FFFFF;
-
-        objIdPayload = {
+        return {
             type: objType,
             instance: objInstance,
         };
 
-        return objIdPayload;
     }
 }
