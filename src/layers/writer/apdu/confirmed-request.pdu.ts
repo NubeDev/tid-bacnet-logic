@@ -27,8 +27,7 @@ export class ConfirmedRequest {
         const writer = new IOs.Writer();
 
         // Write Service Type
-        let mMeta = Utils.Typer.setBitRange(0x00,
-            Enums.ServiceType.ConfirmedReqPDU, 4, 4);
+        let mMeta = Utils.Typer.setBitRange(0x00, 4, 4, Enums.ServiceType.ConfirmedReqPDU);
         mMeta = Utils.Typer.setBit(mMeta, 1, params.segAccepted || false);
         writer.writeUInt8(mMeta);
 

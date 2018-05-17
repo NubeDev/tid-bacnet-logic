@@ -48,13 +48,12 @@ export class Typer {
      * setBitRange - sets the value in specific range of bits.
      *
      * @param  {number} bitMap - old value
-     * @param  {number} newValue - new value for range
      * @param  {number} startPos - start position
      * @param  {number} len - number of bits
+     * @param  {number} newValue - new value for range
      * @return {number}
      */
-    static setBitRange (bitMap: number, newValue: number,
-            startPos: number, len: number): number {
+    static setBitRange (bitMap: number, startPos: number, len: number, newValue: number): number {
         const mask = Math.pow(2, len) - 1;
         const newValueMask = (newValue & mask) << startPos;
         const bitMapMask = ~(mask << startPos);

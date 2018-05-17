@@ -138,9 +138,9 @@ export class Writer {
             tagNumber: number, tagType: Enums.TagType, tagValue: number): void {
         // Tag = Tag Number 4 bits, Tag Class 1 bits, Tag Value 3 bits
         let tag = 0x00;
-        tag = Utils.Typer.setBitRange(tag, tagNumber, 4, 4);
+        tag = Utils.Typer.setBitRange(tag, 4, 4, tagNumber);
         tag = Utils.Typer.setBit(tag, 3, tagType);
-        tag = Utils.Typer.setBitRange(tag, tagValue, 0, 3);
+        tag = Utils.Typer.setBitRange(tag, 0, 3, tagValue);
 
         this.writeUInt8(tag);
     }

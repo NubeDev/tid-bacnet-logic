@@ -28,8 +28,7 @@ export class ComplexACK {
 
         // Write service meta
         // Set service type
-        let mMeta = Utils.Typer.setBitRange(0x00,
-            Enums.ServiceType.ComplexACKPDU, 4, 4);
+        let mMeta = Utils.Typer.setBitRange(0x00, 4, 4, Enums.ServiceType.ComplexACKPDU);
 
         // Set service SEG flag
         if (!_.isNil(params.seg)) {

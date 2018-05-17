@@ -25,8 +25,7 @@ export class SimpleACK {
         const writer = new IOs.Writer();
 
         // Write Service Type
-        const mMeta = Utils.Typer.setBitRange(0x00,
-            Enums.ServiceType.SimpleACKPDU, 4, 4);
+        const mMeta = Utils.Typer.setBitRange(0x00, 4, 4, Enums.ServiceType.SimpleACKPDU);
         writer.writeUInt8(mMeta);
 
         // Write InvokeID

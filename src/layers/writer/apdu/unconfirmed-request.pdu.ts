@@ -27,8 +27,7 @@ export class UnconfirmedRequest {
         const writer = new IOs.Writer();
 
         // Write Service Type
-        const mMeta = Utils.Typer.setBitRange(0x00,
-            Enums.ServiceType.UnconfirmedReqPDU, 4, 4);
+        const mMeta = Utils.Typer.setBitRange(0x00, 4, 4, Enums.ServiceType.UnconfirmedReqPDU);
         writer.writeUInt8(mMeta);
 
         return writer;
