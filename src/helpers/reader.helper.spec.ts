@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { Reader } from './reader.util';
+import { Reader } from './reader.helper';
 
 import * as Interfaces from '../interfaces';
 
@@ -10,7 +10,7 @@ import * as Types from '../types';
 
 import * as IOs from '../io';
 
-describe('Utils.Reader', () => {
+describe('Helpers.Reader', () => {
     describe('readProperty', () => {
         let buf: Buffer;
 

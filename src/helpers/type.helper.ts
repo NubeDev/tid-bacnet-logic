@@ -1,7 +1,5 @@
 import * as _ from 'lodash';
 
-import { blvc, npdu, apdu } from '../layers';
-
 import * as Interfaces from '../interfaces';
 
 import * as Enums from '../enums';
@@ -17,14 +15,14 @@ export class Common {
      * @param  {Buffer} buf - buffer with BACnet message
      * @return {Interfaces.ILayerLogic}
      */
-    static bufferToLayer (buf: Buffer): Interfaces.Layers {
-        let blvcMessage = blvc.getFromBuffer(buf);
-        return {
-            blvc: blvcMessage,
-            npdu: _.get(blvcMessage, 'npdu'),
-            apdu: _.get(blvcMessage, 'npdu.apdu'),
-        };
-    }
+    // static bufferToLayer (buf: Buffer): Interfaces.Layers {
+    //     let blvcMessage = blvc.getFromBuffer(buf);
+    //     return {
+    //         blvc: blvcMessage,
+    //         npdu: _.get(blvcMessage, 'npdu'),
+    //         apdu: _.get(blvcMessage, 'npdu.apdu'),
+    //     };
+    // }
 
     /**
      * Searches the property by property ID.
