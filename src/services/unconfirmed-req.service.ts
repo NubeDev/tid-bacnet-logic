@@ -1,7 +1,6 @@
 import * as Enums from '../enums';
 
-import { unconfirmedReqPDU } from '../layers/apdus';
-import { blvc, npdu } from '../layers';
+import * as Layers from '../layers';
 
 import * as IOs from '../io';
 
@@ -21,12 +20,12 @@ export class UnconfirmedReqService {
      */
     static whoIs (opts: UnconfirmedRequest.Service.WhoIs): Buffer {
         // Generate APDU writer
-        const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
-        const writerWhoIs = unconfirmedReqPDU.writeWhoIs(opts);
+        const writerUnconfirmReq = Layers.Writer.APDU.UnconfirmedRequest.writeHeader(opts);
+        const writerWhoIs = Layers.Writer.APDU.UnconfirmedRequest.writeWhoIs(opts);
         const writerAPDU = IOs.Writer.concat(writerUnconfirmReq, writerWhoIs);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({
             control: {
                 destSpecifier: true,
             },
@@ -35,7 +34,7 @@ export class UnconfirmedReqService {
         });
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -58,12 +57,12 @@ export class UnconfirmedReqService {
      */
     static iAm (opts: UnconfirmedRequest.Service.IAm): Buffer {
         // Generate APDU writer
-        const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
-        const writerIAm = unconfirmedReqPDU.writeIAm(opts);
+        const writerUnconfirmReq = Layers.Writer.APDU.UnconfirmedRequest.writeHeader(opts);
+        const writerIAm = Layers.Writer.APDU.UnconfirmedRequest.writeIAm(opts);
         const writerAPDU = IOs.Writer.concat(writerUnconfirmReq, writerIAm);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({
             control: {
                 destSpecifier: true,
             },
@@ -72,7 +71,7 @@ export class UnconfirmedReqService {
         });
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalBroadcastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -95,15 +94,15 @@ export class UnconfirmedReqService {
      */
     static covNotification (opts: UnconfirmedRequest.Service.COVNotification): Buffer {
         // Generate APDU writer
-        const writerUnconfirmReq = unconfirmedReqPDU.writeReq(opts);
-        const writerCOVNotification = unconfirmedReqPDU.writeCOVNotification(opts);
+        const writerUnconfirmReq = Layers.Writer.APDU.UnconfirmedRequest.writeHeader(opts);
+        const writerCOVNotification = Layers.Writer.APDU.UnconfirmedRequest.writeCOVNotification(opts);
         const writerAPDU = IOs.Writer.concat(writerUnconfirmReq, writerCOVNotification);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,

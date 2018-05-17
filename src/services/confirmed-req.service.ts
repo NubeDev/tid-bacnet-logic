@@ -1,7 +1,6 @@
 import * as Enums from '../enums';
 
-import { confirmedReqPDU } from '../layers/apdus';
-import { blvc, npdu } from '../layers';
+import * as Layers from '../layers';
 
 import * as IOs from '../io';
 
@@ -21,15 +20,15 @@ export class ConfirmedReqService {
      */
     static readProperty (opts: ConfirmedRequest.Service.ReadProperty): Buffer {
         // Generate APDU writer
-        const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
-        const writerReadProperty = confirmedReqPDU.writeReadProperty(opts);
+        const writerConfirmedReq = Layers.Writer.APDU.ConfirmedRequest.writeHeader(opts);
+        const writerReadProperty = Layers.Writer.APDU.ConfirmedRequest.writeReadProperty(opts);
         const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerReadProperty);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -52,15 +51,15 @@ export class ConfirmedReqService {
      */
     static writeProperty (opts: ConfirmedRequest.Service.WriteProperty): Buffer {
         // Generate APDU writer
-        const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
-        const writerWriteProperty = confirmedReqPDU.writeWriteProperty(opts);
+        const writerConfirmedReq = Layers.Writer.APDU.ConfirmedRequest.writeHeader(opts);
+        const writerWriteProperty = Layers.Writer.APDU.ConfirmedRequest.writeWriteProperty(opts);
         const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerWriteProperty);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -83,15 +82,15 @@ export class ConfirmedReqService {
      */
     static subscribeCOV (opts: ConfirmedRequest.Service.SubscribeCOV): Buffer {
         // Generate APDU writer
-        const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
-        const writerSubscribeCOV = confirmedReqPDU.writeSubscribeCOV(opts);
+        const writerConfirmedReq = Layers.Writer.APDU.ConfirmedRequest.writeHeader(opts);
+        const writerSubscribeCOV = Layers.Writer.APDU.ConfirmedRequest.writeSubscribeCOV(opts);
         const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerSubscribeCOV);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -114,15 +113,15 @@ export class ConfirmedReqService {
      */
     static unsubscribeCOV (opts: ConfirmedRequest.Service.UnsubscribeCOV): Buffer {
         // Generate APDU writer
-        const writerConfirmedReq = confirmedReqPDU.writeReq(opts);
-        const writerUnsubscribeCOV = confirmedReqPDU.writeUnsubscribeCOV(opts);
+        const writerConfirmedReq = Layers.Writer.APDU.ConfirmedRequest.writeHeader(opts);
+        const writerUnsubscribeCOV = Layers.Writer.APDU.ConfirmedRequest.writeUnsubscribeCOV(opts);
         const writerAPDU = IOs.Writer.concat(writerConfirmedReq, writerUnsubscribeCOV);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,

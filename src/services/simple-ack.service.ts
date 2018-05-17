@@ -1,7 +1,6 @@
 import * as Enums from '../enums';
 
-import { complexACKPDU, simpleACKPDU } from '../layers/apdus';
-import { blvc, npdu } from '../layers';
+import * as Layers from '../layers';
 
 import * as IOs from '../io';
 
@@ -21,15 +20,15 @@ export class SimpleACKService {
      */
     static subscribeCOV (opts: SimpleACK.Service.SubscribeCOV): Buffer {
         // Generate APDU writer
-        const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
-        const writerSubscribeCOV = simpleACKPDU.writeSubscribeCOV(opts);
+        const writerSimpleACKPDU = Layers.Writer.APDU.SimpleACK.writeHeader(opts);
+        const writerSubscribeCOV = Layers.Writer.APDU.SimpleACK.writeSubscribeCOV(opts);
         const writerAPDU = IOs.Writer.concat(writerSimpleACKPDU, writerSubscribeCOV);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
@@ -52,15 +51,15 @@ export class SimpleACKService {
      */
     static writeProperty (opts: SimpleACK.Service.WriteProperty): Buffer {
         // Generate APDU writer
-        const writerSimpleACKPDU = simpleACKPDU.writeReq(opts);
-        const writerSubscribeCOV = simpleACKPDU.writeWriteProperty(opts);
+        const writerSimpleACKPDU = Layers.Writer.APDU.SimpleACK.writeHeader(opts);
+        const writerSubscribeCOV = Layers.Writer.APDU.SimpleACK.writeWriteProperty(opts);
         const writerAPDU = IOs.Writer.concat(writerSimpleACKPDU, writerSubscribeCOV);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,

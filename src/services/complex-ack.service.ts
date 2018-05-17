@@ -1,7 +1,6 @@
 import * as Enums from '../enums';
 
-import { complexACKPDU } from '../layers/apdus';
-import { blvc, npdu } from '../layers';
+import * as Layers from '../layers';
 
 import * as IOs from '../io';
 
@@ -21,15 +20,15 @@ export class ComplexACKService {
      */
     static readProperty (opts: ComplexACK.Service.ReadProperty): Buffer {
         // Generate APDU writer
-        const writerComplexACK = complexACKPDU.writeReq(opts);
-        const writerReadProperty = complexACKPDU.writeReadProperty(opts);
+        const writerComplexACK = Layers.Writer.APDU.ComplexACK.writeHeader(opts);
+        const writerReadProperty = Layers.Writer.APDU.ComplexACK.writeReadProperty(opts);
         const writerAPDU = IOs.Writer.concat(writerComplexACK, writerReadProperty);
 
         // Generate NPDU writer
-        const writerNPDU = npdu.writeNPDULayer({});
+        const writerNPDU = Layers.Writer.NPDU.writeLayer({});
 
         // Generate BLVC writer
-        const writerBLVC = blvc.writeBLVCLayer({
+        const writerBLVC = Layers.Writer.BLVC.writeLayer({
             func: Enums.BLVCFunction.originalUnicastNPDU,
             npdu: writerNPDU,
             apdu: writerAPDU,
