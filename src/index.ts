@@ -6,6 +6,7 @@ import * as Types from './types';
 import * as IO from './io';
 import * as Services from './services';
 import * as Errors from './errors';
+import * as Helpers from './helpers';
 
 export {
     Enums,
@@ -16,4 +17,5 @@ export {
     IO,
     Services,
     Errors,
+    Helpers,
 };
