@@ -1,7 +1,11 @@
 {
     "name": "bacnet-logic",
     "version": "0.0.0",
-    "description": "",
+    "description": "IO logic of the BACnet protocol",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AndreyShuleiko/bacnet-logic"
+    },
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
