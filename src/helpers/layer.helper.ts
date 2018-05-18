@@ -43,23 +43,40 @@ export class Layer {
     }
 
     /**
-     * Extracts the value of the property from the BACnet layer.
+     * Extracts the value of the property from the BACnet layer. If property is
+     * not extracted, method will return a `null` value.
      *
      * @template T {extends Types.BACnetTypeBase}
      * @param  {Interfaces.Layers} layer - BACnet layer (plain object)
-     * @return {T|T[]}
+     * @return {T}
      */
     static getPropertyValue <T extends Types.BACnetTypeBase> (
-            layer: Interfaces.Layers): T|T[] {
+            layer: Interfaces.Layers): T {
+        const propValues = this.getPropertyValues<T>(layer);
+        return _.isNil(propValues)
+            ? null : propValues[0];
+    }
+
+    /**
+     * Extracts the values of the property from the BACnet layer. If property is
+     * not extracted, method will return a `null` value.
+     *
+     * @template T {extends Types.BACnetTypeBase}
+     * @param  {Interfaces.Layers} layer - BACnet layer (plain object)
+     * @return {T[]}
+     */
+    static getPropertyValues <T extends Types.BACnetTypeBase> (
+            layer: Interfaces.Layers): T[] {
         const prop: Interfaces.PropertyValue =
             _.get(layer, 'apdu.service.prop', null);
 
-        if (!_.has(prop, 'values') || !_.isArray(prop.values)) {
+        if (!_.has(prop, 'values')
+            || !_.isArray(prop.values)
+            || !prop.values.length) {
             return null;
         }
 
         const propValues = prop.values as T[];
-        return propValues.length === 1
-            ? propValues[0] : propValues;
+        return propValues;
     }
 }
