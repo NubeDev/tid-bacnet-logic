@@ -49,7 +49,7 @@ export class Layer {
      * @param  {Interfaces.Layers} layer - BACnet layer (plain object)
      * @return {T|T[]}
      */
-    public getPropertyValue <T extends Types.BACnetTypeBase> (
+    static getPropertyValue <T extends Types.BACnetTypeBase> (
             layer: Interfaces.Layers): T|T[] {
         const prop: Interfaces.PropertyValue =
             _.get(layer, 'apdu.service.prop', null);
