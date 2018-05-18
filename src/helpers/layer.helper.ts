@@ -10,7 +10,7 @@ import * as Layers from '../layers';
 
 import * as IOs from '../io';
 
-export class Common {
+export class Layer {
 
     /**
      * Converts the `BACnet message` to the `Layer` entity.
