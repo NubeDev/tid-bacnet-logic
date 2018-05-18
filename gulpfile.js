@@ -23,7 +23,22 @@ gulp.task('clean:test', () => {
         .pipe(clean({ force: true }));
 });
 
-gulp.task('build:prod', gulp.series(['clean:code'], () => {
+gulp.task('build:prod:package', (cb) => {
+    const fs = require('fs');
+    const packageJson = require('./package.json');
+    packageJson.main = 'index.js';
+    packageJson.types = 'index.d.ts';
+    packageJson.scripts = {};
+    packageJson.devDependencies = {};
+
+    if (!fs.existsSync(folderApp)){
+        fs.mkdirSync(folderApp);
+    }
+
+    const packageJsonString = JSON.stringify(packageJson, null, 2);
+    fs.writeFile(`${folderApp}/package.json`, packageJsonString, cb);
+});
+gulp.task('build:prod', gulp.series(['clean:code'], 'build:prod:package', (cb) => {
     const tsResult = tsProject.src()
         .pipe(tsProject());
 
@@ -32,6 +47,7 @@ gulp.task('build:prod', gulp.series(['clean:code'], () => {
         tsResult.js.pipe(gulp.dest(folderApp)),
     ]);
 }));
+
 gulp.task('build:code', gulp.series(['clean:code'], () => {
     return tsProject.src()
         .pipe(tsProject())
