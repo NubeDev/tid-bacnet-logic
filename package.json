@@ -12,7 +12,7 @@
         "test": "gulp watch:test:unit",
         "start": "npm run build && node ./dist/index.js",
         "build": "gulp build:prod",
-        "postinstall": "npm install @types/node && gulp build:prod"
+        "postinstall": "npm install --ignore-scripts && gulp build:prod"
     },
     "author": "Andrey Shuleiko",
     "license": "ISC",
