@@ -58,6 +58,8 @@ export class BACnetUnsignedInteger extends BACnetTypeBase {
             case 4:
                 value = reader.readUInt32BE(opts);
                 break;
+            default:
+                value = reader.readUIntBE(tag.value, opts)
         }
 
         this.data = value;
