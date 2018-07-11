@@ -97,9 +97,17 @@ export class Reader {
      */
     public readString (encoding: string, len: number, opts?: Interfaces.ReaderOptions): string {
         return this.handleReadOperation(() => {
-            const offStart = this.offset.inc(len);
-            const offEnd = this.offset.getVaule();
-
+            let offStart;
+            let offEnd;
+            if (len > 0) {
+                offStart = this.offset.inc(len);
+                offEnd = this.offset.getVaule();
+            } else  {
+                offStart = this.offset.getVaule()
+                offEnd = this.buffer.length - 1;
+                this.offset.inc(offEnd - offStart)
+            }
+            console.log(offStart, offEnd);
             return this.buffer.toString(encoding, offStart, offEnd);
         }, opts, `readString`);
     }
