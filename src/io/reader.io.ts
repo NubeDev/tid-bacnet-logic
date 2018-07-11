@@ -66,6 +66,17 @@ export class Reader {
     }
 
     /**
+     * readUIntBE - reads the @param {number} len bytes (int) from the internal buffer.
+     *
+     * @return {number}
+     */
+    public readUIntBE (len: number, opts?: Interfaces.ReaderOptions): number {
+        return this.handleReadOperation(() => {
+            return this.buffer.readUIntBE(this.offset.inc(len), len);
+        }, opts, `readUIntBE`);
+    }
+
+    /**
      * readFloatBE - reads the 4 bytes (float) from the internal buffer.
      *
      * @return {number}
