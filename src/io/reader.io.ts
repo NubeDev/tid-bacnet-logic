@@ -107,7 +107,7 @@ export class Reader {
                 offEnd = this.buffer.length - 1;
                 this.offset.inc(offEnd - offStart)
             }
-            console.log(offStart, offEnd);
+
             return this.buffer.toString(encoding, offStart, offEnd);
         }, opts, `readString`);
     }
