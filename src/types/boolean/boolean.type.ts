@@ -47,7 +47,13 @@ export class BACnetBoolean extends BACnetTypeBase {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
-        this.data = !!tag.value;
+        switch (tag.type) {
+            case Enums.TagType.application:
+                this.data = !!tag.value;
+                break;
+            case Enums.TagType.context:
+                this.data = !!reader.readUInt8(opts)
+        }
     }
 
     /**

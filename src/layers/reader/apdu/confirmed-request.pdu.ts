@@ -137,9 +137,9 @@ export class ConfirmedRequest {
 
             objId = BACnetTypes.BACnetObjectId.readParam(reader);
 
-            issConfNotif = BACnetTypes.BACnetBoolean.readParam(reader, { optional: true });
+            issConfNotif = BACnetTypes.BACnetBoolean.readParam(reader, { optional: true, tag: { num: 2, type: Enums.TagType.context } });
 
-            lifeTime = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true });
+            lifeTime = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true, tag: { num: 3, type: Enums.TagType.context } });
         } catch (error) {
             throw new Errors.BACnet(`${this.className} - subscribeCOV: Parse - ${error}`);
         }
