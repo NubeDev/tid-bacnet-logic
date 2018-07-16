@@ -16,7 +16,6 @@ describe('ConfirmedReqPDU', () => {
             const reader = new IOs.Reader(buf);
             const msg = ConfirmedRequest.readLayer(reader);
             const subReq = msg.service as Interfaces.ConfirmedRequest.Service.SubscribeCOV;
-            //console.log(JSON.stringify(msg));
             expect(subReq.issConfNotif.value).to.equal(false);
             expect(subReq.lifetime.value).to.equal(300000);
         });
@@ -26,7 +25,6 @@ describe('ConfirmedReqPDU', () => {
             const reader = new IOs.Reader(buf);
             const msg = ConfirmedRequest.readLayer(reader);
             const subReq = msg.service as Interfaces.ConfirmedRequest.Service.SubscribeCOV;
-            // console.log(JSON.stringify(msg));
             expect(subReq.issConfNotif).to.equal(null);
             expect(subReq.lifetime).to.equal(null);
         });
