@@ -111,7 +111,7 @@ export namespace ConfirmedRequest {
             service: ServiceChoice;
         }
 
-        export type ServiceChoice = ReadProperty | SubscribeCOV | WriteProperty;
+        export type ServiceChoice = ReadProperty | SubscribeCOV | WriteProperty | UnsubscribeCOV;
 
         export interface ReadProperty {
             objId: BACnetTypes.BACnetObjectId;
@@ -128,6 +128,11 @@ export namespace ConfirmedRequest {
             subProcessId: BACnetTypes.BACnetUnsignedInteger;
             issConfNotif: BACnetTypes.BACnetBoolean;
             lifetime: BACnetTypes.BACnetUnsignedInteger;
+        }
+
+        export interface UnsubscribeCOV {
+            objId: BACnetTypes.BACnetObjectId;
+            subProcessId: BACnetTypes.BACnetUnsignedInteger;
         }
     }
 
