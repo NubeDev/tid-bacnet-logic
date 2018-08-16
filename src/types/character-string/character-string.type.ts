@@ -48,7 +48,12 @@ export class BACnetCharacterString extends BACnetTypeBase {
         const tag = reader.readTag(opts);
         this.tag = tag;
 
-        const strLen = reader.readUInt8(opts);
+        let strLen;
+        if (tag.value < 5) {
+            strLen = tag.value
+        } else {
+            strLen = reader.readUInt8(opts);
+        }
         const charSet = reader.readUInt8(opts);
 
         // Get the character encoding
