@@ -111,4 +111,6 @@ export enum PropertyId {
     protocolRevision = 139,
     databaseRevision = 155,
     currentCommandPriority = 431,
+    activeText = 4,
+    inactiveText = 46,
 }
