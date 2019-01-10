@@ -99,12 +99,14 @@ export class ConfirmedRequest {
      */
     static readReadProperty (reader: IOs.Reader): Interfaces.ConfirmedRequest.Read.ReadProperty {
         let serviceData: Interfaces.ConfirmedRequest.Read.ReadProperty;
-        let objId: BACnetTypes.BACnetObjectId, propId: BACnetTypes.BACnetEnumerated;
+        let objId: BACnetTypes.BACnetObjectId, propId: BACnetTypes.BACnetEnumerated, propIndex: BACnetTypes.BACnetUnsignedInteger;
 
         try {
             objId = BACnetTypes.BACnetObjectId.readParam(reader);
 
             propId = BACnetTypes.BACnetEnumerated.readParam(reader);
+
+            propIndex = BACnetTypes.BACnetUnsignedInteger.readParam(reader, { optional: true, tag: {num: 2, type: Enums.TagType.context} })
         } catch (error) {
             throw new Errors.BACnet(`${this.className} - readProperty: Parse - ${error}`);
         }
@@ -113,6 +115,7 @@ export class ConfirmedRequest {
             objId: objId,
             prop: {
                 id: propId,
+                index: propIndex
             },
         };
 
